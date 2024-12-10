@@ -2,19 +2,22 @@ package com.kln.FuelBackend.services.vehicle;
 
 import com.kln.FuelBackend.dataAccessObject.VehicleRepository;
 import com.kln.FuelBackend.models.Vehicle;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
-@Log4j
+@Log4j2
 public class VehicleService implements VehicleServiceRepository {
 
     private VehicleRepository vehicleRepository;
+
+    public static Logger getLog() {
+        return log;
+    }
 
 
     @Autowired

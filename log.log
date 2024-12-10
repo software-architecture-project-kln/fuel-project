@@ -30,3 +30,8 @@
 2024-12-10T21:23:26.801+05:30  WARN 19712 --- [FuelBackend] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
 2024-12-10T21:23:27.300+05:30  INFO 19712 --- [FuelBackend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
 2024-12-10T21:23:27.311+05:30  INFO 19712 --- [FuelBackend] [main] c.k.FuelBackend.FuelBackendApplication   : Started FuelBackendApplication in 5.793 seconds (process running for 6.376)
+2024-12-10T21:46:51.198+05:30  INFO 19712 --- [FuelBackend] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2024-12-10T21:46:51.211+05:30  INFO 19712 --- [FuelBackend] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2024-12-10T21:46:51.221+05:30  INFO 19712 --- [FuelBackend] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-12-10T21:46:51.228+05:30  INFO 19712 --- [FuelBackend] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-12-10T21:46:51.246+05:30  INFO 19712 --- [FuelBackend] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
