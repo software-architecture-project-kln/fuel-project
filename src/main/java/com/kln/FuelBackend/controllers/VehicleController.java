@@ -17,7 +17,7 @@ public class VehicleController {
         this.vehicleServiceRepository = vehicleServiceRepository;
     }
 
-    @GetMapping
+    @GetMapping("/{regID}")
     public Vehicle findVehicleById(@PathVariable UUID regID){
         return vehicleServiceRepository.findVehicleByRegId(regID);
     }
