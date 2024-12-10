@@ -1,10 +1,11 @@
 package com.kln.FuelBackend.controllers;
 
+import com.kln.FuelBackend.models.Vehicle;
 import com.kln.FuelBackend.services.vehicle.VehicleServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/vehicle")
@@ -17,7 +18,12 @@ public class VehicleController {
     }
 
     @GetMapping
-    public String welcome(){
-        return "HELLO WORLD";
+    public Vehicle findVehicleById(@PathVariable UUID regID){
+        return vehicleServiceRepository.findVehicleByRegId(regID);
+    }
+
+    @PostMapping
+    public Vehicle createVehicle(@RequestBody Vehicle vehicle){
+        return vehicleServiceRepository.createVehicle(vehicle);
     }
 }

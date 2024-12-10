@@ -9,4 +9,6 @@ import java.util.UUID;
 public interface VehicleServiceRepository {
     public Vehicle findVehicleByRegId (UUID regID);
     public Vehicle findVehicleByEngineNo (String engineNo);
+
+    public Vehicle createVehicle(Vehicle vehicle);
 }
