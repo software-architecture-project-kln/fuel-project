@@ -15,10 +15,6 @@ public class VehicleService implements VehicleServiceRepository {
 
     private VehicleRepository vehicleRepository;
 
-    public static Logger getLog() {
-        return log;
-    }
-
 
     @Autowired
     public VehicleService(VehicleRepository vehicleRepository){

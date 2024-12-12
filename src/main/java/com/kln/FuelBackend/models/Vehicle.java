@@ -21,7 +21,6 @@ import java.util.UUID;
         }
 )
 @Getter @Setter
-@NoArgsConstructor
 public class Vehicle {
     @Id
     @Column(nullable = false, unique = true)

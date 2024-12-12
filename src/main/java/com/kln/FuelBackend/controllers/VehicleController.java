@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/vehicle")
+@RequestMapping("/api/v1/vehicle")
 public class VehicleController {
 
     private final VehicleServiceRepository vehicleServiceRepository;
