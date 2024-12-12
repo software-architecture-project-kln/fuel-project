@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
         }
 )
 @Data
-@NoArgsConstructor
 public class User  {
 
     @Id
@@ -34,6 +33,10 @@ public class User  {
     @Column(nullable = false, unique = true)
     private String mobile;
 
+    public User(){
+
+    }
+
     public User (String f_name, String l_name, String password, String email, String mobile) throws Exception {
         this.f_name = f_name;
         this.l_name = l_name;
@@ -44,14 +47,19 @@ public class User  {
             throw new  Exception("PWD must be longer 6 chars");
         }
 
-        if(Pattern.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,6}$\n",email)){
+        if (Pattern.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$", email)) {
             this.email = email;
+        } else {
+            throw new Exception("Invalid email format");
         }
 
         if(mobile.length() ==12){
             this.mobile = mobile;
+        } else{
+            throw new RuntimeException("Invalid mobile number");
         }
     }
+
 
     public String getEmail() {
         return email;
