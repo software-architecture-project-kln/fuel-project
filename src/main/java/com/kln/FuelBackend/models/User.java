@@ -2,7 +2,6 @@ package com.kln.FuelBackend.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.regex.Pattern;
 
