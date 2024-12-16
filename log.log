@@ -1,0 +1,36 @@
+2024-12-16T07:09:48.261+05:30  INFO 33340 --- [FuelBackend] [main] c.k.FuelBackend.FuelBackendApplication   : Starting FuelBackendApplication using Java 23.0.1 with PID 33340 (C:\Users\thush\Desktop\project-kln\FuelBackend\target\classes started by thush in C:\Users\thush\Desktop\project-kln\FuelBackend)
+2024-12-16T07:09:48.264+05:30  INFO 33340 --- [FuelBackend] [main] c.k.FuelBackend.FuelBackendApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-12-16T07:09:49.334+05:30  INFO 33340 --- [FuelBackend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-12-16T07:09:49.424+05:30  INFO 33340 --- [FuelBackend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 76 ms. Found 1 JPA repository interface.
+2024-12-16T07:09:50.077+05:30  INFO 33340 --- [FuelBackend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-12-16T07:09:50.092+05:30  INFO 33340 --- [FuelBackend] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-12-16T07:09:50.093+05:30  INFO 33340 --- [FuelBackend] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-16T07:09:50.160+05:30  INFO 33340 --- [FuelBackend] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-12-16T07:09:50.160+05:30  INFO 33340 --- [FuelBackend] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1829 ms
+2024-12-16T07:09:50.418+05:30  INFO 33340 --- [FuelBackend] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-16T07:09:50.495+05:30  INFO 33340 --- [FuelBackend] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.2.Final
+2024-12-16T07:09:50.537+05:30  INFO 33340 --- [FuelBackend] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-12-16T07:09:50.906+05:30  INFO 33340 --- [FuelBackend] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-12-16T07:09:50.945+05:30  INFO 33340 --- [FuelBackend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-12-16T07:09:50.949+05:30  WARN 33340 --- [FuelBackend] [main] c.zaxxer.hikari.util.DriverDataSource    : Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2024-12-16T07:09:51.458+05:30  INFO 33340 --- [FuelBackend] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@ae3c140
+2024-12-16T07:09:51.460+05:30  INFO 33340 --- [FuelBackend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-12-16T07:09:51.536+05:30  WARN 33340 --- [FuelBackend] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-12-16T07:09:51.562+05:30  INFO 33340 --- [FuelBackend] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.36
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2024-12-16T07:09:52.513+05:30  INFO 33340 --- [FuelBackend] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-12-16T07:09:52.621+05:30  INFO 33340 --- [FuelBackend] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-12-16T07:09:52.675+05:30  WARN 33340 --- [FuelBackend] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-12-16T07:09:53.513+05:30  INFO 33340 --- [FuelBackend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2024-12-16T07:09:53.524+05:30  INFO 33340 --- [FuelBackend] [main] c.k.FuelBackend.FuelBackendApplication   : Started FuelBackendApplication in 5.892 seconds (process running for 7.346)
+2024-12-16T07:10:06.311+05:30  INFO 33340 --- [FuelBackend] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2024-12-16T07:10:06.320+05:30  INFO 33340 --- [FuelBackend] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2024-12-16T07:10:06.324+05:30  INFO 33340 --- [FuelBackend] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-12-16T07:10:06.327+05:30  INFO 33340 --- [FuelBackend] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-12-16T07:10:06.339+05:30  INFO 33340 --- [FuelBackend] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
