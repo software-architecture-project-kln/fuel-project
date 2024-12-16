@@ -1,4 +1,4 @@
-package com.kln.FuelBackend.dataTransferObject.request;
+package com.kln.FuelBackend.dataTransferObject.request.userRequestDTO;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
