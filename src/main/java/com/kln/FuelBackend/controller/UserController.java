@@ -22,17 +22,17 @@ public class UserController {
         return userServiceRepository.createUser(userRequestDTO);
     }
 
-    @PutMapping
+    @PutMapping("/{userId}")
     public ResponseEntity<?> updateUser(@RequestBody UserRequestDTO userRequestDTO, @PathVariable Integer userId){
         return userServiceRepository.updateUser(userRequestDTO,userId);
     }
 
-    @GetMapping
+    @GetMapping("/{userId}")
     public ResponseEntity<?> findUserById(@PathVariable Integer userId){
         return userServiceRepository.findUserByID(userId);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{userId}")
     public ResponseEntity<?> deleteUser(@PathVariable Integer userId){
         return userServiceRepository.deleteUser(userId);
     }

@@ -8,7 +8,9 @@ import com.kln.FuelBackend.repositoryDAO.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserService implements UserServiceRepository{
 
     private final UserRepository userRepository;
