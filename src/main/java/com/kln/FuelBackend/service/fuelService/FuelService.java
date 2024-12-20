@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 
 public class FuelService implements FuelServiceRepository{
 
-    private FuelRepository fuelRepository;
+    private final FuelRepository fuelRepository;
 
     @Autowired
     public FuelService(FuelRepository fuelRepository){
@@ -25,19 +25,21 @@ public class FuelService implements FuelServiceRepository{
         Fuel fuel = new Fuel(fuelRequestDTO.getFuelName(),fuelRequestDTO.getPrice());
 
         Fuel savedFuel = fuelRepository.save(fuel);
-        FuelResponseDTO fuelResponse = new FuelResponseDTO(
+        FuelResponseDTO responseDTO = new FuelResponseDTO(
                 savedFuel.getFuelId(),
                 savedFuel.getFuelName(),
                 savedFuel.getPrice()
         );
 
-        CustomApiResponse response = new CustomApiResponse(
-                HttpStatus.OK.value(),
-                "fuel created successfully",
-                fuelResponse
-        );
 
-        return new ResponseEntity<>(response,HttpStatus.CREATED);
+        return new ResponseEntity<>(
+                new CustomApiResponse(
+                    HttpStatus.OK.value(),
+                    "fuel created successfully",
+                    responseDTO
+                ),
+                HttpStatus.CREATED
+        );
     }
 
     @Override
@@ -45,13 +47,21 @@ public class FuelService implements FuelServiceRepository{
         Fuel fuel = fuelRepository.findById(fuelId).orElseThrow(
                 () -> new NotFoundException("fuel not found")
         );
-
-        CustomApiResponse response = new CustomApiResponse(
-                HttpStatus.OK.value(),
-                null,
-                fuel
+        FuelResponseDTO responseDTO = new FuelResponseDTO(
+                fuel.getFuelId(),
+                fuel.getFuelName(),
+                fuel.getPrice()
         );
-        return new ResponseEntity<>(response,HttpStatus.OK);
+
+
+        return new ResponseEntity<>(
+                new CustomApiResponse(
+                        HttpStatus.OK.value(),
+                        null,
+                        responseDTO
+                ),
+                HttpStatus.OK
+        );
     }
 
     @Override
@@ -63,16 +73,23 @@ public class FuelService implements FuelServiceRepository{
         fuel.setPrice(price);
         Fuel updateFuel = fuelRepository.save(fuel);
 
-        CustomApiResponse response = new CustomApiResponse(
-                HttpStatus.OK.value(),
-                "fuel price updated successfully",
-                updateFuel
+        FuelResponseDTO responseDTO = new FuelResponseDTO(
+                updateFuel.getFuelId(),
+                updateFuel.getFuelName(),
+                updateFuel.getPrice()
         );
-        return new ResponseEntity<>(response,HttpStatus.OK);
+        return new ResponseEntity<>(
+                new CustomApiResponse(
+                        HttpStatus.OK.value(),
+                        "fuelPrice updated successfully",
+                        responseDTO
+                ),
+                HttpStatus.OK
+        );
     }
 
     @Override
     public ResponseEntity<?> DeleteFuelById(Integer fuelId) {
-        return null;
+        return null;  // temporary not implemented
     }
 }
