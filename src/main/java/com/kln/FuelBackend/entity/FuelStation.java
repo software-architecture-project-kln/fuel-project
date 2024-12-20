@@ -22,9 +22,12 @@ public class FuelStation {
     @Column(nullable = false)
     private String fuelStationOwnerName;
 
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     @Email
     private String fuelStationEmail;
+
+    @Column(nullable = false)
+    private String password;
 
     public FuelStation(){
 
@@ -34,12 +37,14 @@ public class FuelStation {
             UUID fuelStationId,
             String fuelStationRegisterId,
             String fuelStationOwnerName,
-            String fuelStationEmail
+            String fuelStationEmail,
+            String password
     ) {
         this.fuelStationId = fuelStationId;
         this.fuelStationRegisterId = fuelStationRegisterId;
         this.fuelStationOwnerName = fuelStationOwnerName;
         this.fuelStationEmail = fuelStationEmail;
+        this.password = password;
     }
 
     public UUID getFuelStationId() {
@@ -72,5 +77,13 @@ public class FuelStation {
 
     public void setFuelStationEmail(String fuelStationEmail) {
         this.fuelStationEmail = fuelStationEmail;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

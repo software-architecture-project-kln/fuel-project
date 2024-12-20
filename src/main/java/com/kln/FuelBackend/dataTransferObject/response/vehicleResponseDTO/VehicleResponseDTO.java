@@ -19,9 +19,9 @@ public class VehicleResponseDTO {
 
     private Double currentFuelCapacity;
 
-    private User userId;
+    private Integer userId;
 
-    private VehicleClasses vehicleClassId;
+    private Integer vehicleClassId;
 
     public VehicleResponseDTO(){}
 
@@ -32,8 +32,8 @@ public class VehicleResponseDTO {
             String model,
             Date yearOfManufacture,
             Double currentFuelCapacity,
-            User userId,
-            VehicleClasses vehicleClassId
+            Integer userId,
+            Integer vehicleClassId
     ) {
         this.vehicleId = vehicleId;
         this.vehicleRegisterId = vehicleRegisterId;
@@ -93,19 +93,19 @@ public class VehicleResponseDTO {
         this.currentFuelCapacity = currentFuelCapacity;
     }
 
-    public User getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(User userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public VehicleClasses getVehicleClassId() {
+    public Integer getVehicleClassId() {
         return vehicleClassId;
     }
 
-    public void setVehicleClassId(VehicleClasses vehicleClassId) {
+    public void setVehicleClassId(Integer vehicleClassId) {
         this.vehicleClassId = vehicleClassId;
     }
 }
