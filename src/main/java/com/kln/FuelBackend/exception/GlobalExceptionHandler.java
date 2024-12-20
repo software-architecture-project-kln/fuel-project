@@ -20,4 +20,10 @@ public class GlobalExceptionHandler {
         ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(false, notFoundException.getMessage());
         return new ResponseEntity<>(exceptionResponseDTO,HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(Exception.class)
+    public  ResponseEntity<ExceptionResponseDTO> handleAnyException(Exception exception){
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(false,"error occurred");
+        return new ResponseEntity<>(exceptionResponseDTO,HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
