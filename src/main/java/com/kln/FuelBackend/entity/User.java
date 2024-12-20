@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(
         name = "user",
@@ -33,6 +36,10 @@ public class User {
 
     @Column(nullable = false,unique = true)
     private String mobile;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = false, cascade = CascadeType.PERSIST)
+    private List<Vehicle> vehicle = new ArrayList<>();
+
 
     public User(){
 
