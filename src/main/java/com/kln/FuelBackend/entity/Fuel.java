@@ -17,12 +17,11 @@ public class Fuel {
     private String fuelName;
 
     @Column(nullable = false)
-    private String price;
+    private Double price;
 
     public Fuel(){}
 
-    public Fuel(Integer fuelId, String fuelName, String price) {
-        this.fuelId = fuelId;
+    public Fuel(String fuelName, Double price) {
         this.fuelName = fuelName;
         this.price = price;
     }
@@ -43,11 +42,11 @@ public class Fuel {
         this.fuelName = fuelName;
     }
 
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 }

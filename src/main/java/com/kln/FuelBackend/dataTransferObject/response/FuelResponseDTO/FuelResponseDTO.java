@@ -1,21 +1,28 @@
-package com.kln.FuelBackend.dataTransferObject.request;
+package com.kln.FuelBackend.dataTransferObject.response.FuelResponseDTO;
 
-import jakarta.validation.constraints.NotBlank;
+public class FuelResponseDTO {
 
-public class FuelRequestDTO {
+    private Integer fuelId;
 
-    @NotBlank(message = "fuelName is Required")
     private String fuelName;
 
-    @NotBlank(message = "price is Required")
     private Double price;
 
-    public FuelRequestDTO() {
+    public FuelResponseDTO() {
     }
 
-    public FuelRequestDTO(String fuelName, Double price) {
+    public FuelResponseDTO(Integer fuelId, String fuelName, Double price) {
+        this.fuelId = fuelId;
         this.fuelName = fuelName;
         this.price = price;
+    }
+
+    public Integer getFuelId() {
+        return fuelId;
+    }
+
+    public void setFuelId(Integer fuelId) {
+        this.fuelId = fuelId;
     }
 
     public String getFuelName() {
