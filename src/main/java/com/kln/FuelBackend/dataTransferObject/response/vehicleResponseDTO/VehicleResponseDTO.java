@@ -1,60 +1,39 @@
-package com.kln.FuelBackend.entity;
+package com.kln.FuelBackend.dataTransferObject.response.vehicleResponseDTO;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-
+import com.kln.FuelBackend.entity.User;
+import com.kln.FuelBackend.entity.VehicleClasses;
 import java.util.Date;
 import java.util.UUID;
 
-@Entity
-@Table(
-        name = "vehicle",
-        indexes = {
-                @Index(name = "idx_vehicle_register_id", columnList = "vehicleRegisterId"),
-                @Index(name = "idx_vehicle_engine_no", columnList = "vehicleEngineNo"),
-                @Index(name = "idx_vehicle_class_id", columnList = "vehicleClassId")
-        }
-)
-public class Vehicle {
+public class VehicleResponseDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID vehicleId;
 
-    @Column(updatable = false,unique = true,nullable = false)
     private String vehicleRegisterId;
 
-    @Column(updatable = false,unique = true,nullable = false)
     private String vehicleEngineNo;
 
-    @Column(nullable = false)
     private String model;
 
-    @Column(nullable = false)
     private Date yearOfManufacture;
 
-    @Column(nullable = false, columnDefinition = "double default 0")
-    @Min(0)
     private Double currentFuelCapacity;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "userId")
-    private User user;
+    private User userId;
 
-    @ManyToOne
-    @JoinColumn(name = "vehicle_class_id", referencedColumnName = "vehicleClassId", nullable = false)
-    private VehicleClasses vehicleClasses;
+    private VehicleClasses vehicleClassId;
 
-    public Vehicle(){}
+    public VehicleResponseDTO(){}
 
-    public Vehicle(UUID vehicleId,
-                   String vehicleRegisterId,
-                   String vehicleEngineNo,
-                   String model,
-                   Date yearOfManufacture,
-                   Double currentFuelCapacity,
-                   User user,
-                   VehicleClasses vehicleClasses
+    public VehicleResponseDTO(
+            UUID vehicleId,
+            String vehicleRegisterId,
+            String vehicleEngineNo,
+            String model,
+            Date yearOfManufacture,
+            Double currentFuelCapacity,
+            User userId,
+            VehicleClasses vehicleClassId
     ) {
         this.vehicleId = vehicleId;
         this.vehicleRegisterId = vehicleRegisterId;
@@ -62,8 +41,8 @@ public class Vehicle {
         this.model = model;
         this.yearOfManufacture = yearOfManufacture;
         this.currentFuelCapacity = currentFuelCapacity;
-        this.user = user;
-        this.vehicleClasses = vehicleClasses;
+        this.userId = userId;
+        this.vehicleClassId = vehicleClassId;
     }
 
     public UUID getVehicleId() {
@@ -115,18 +94,18 @@ public class Vehicle {
     }
 
     public User getUserId() {
-        return user;
+        return userId;
     }
 
     public void setUserId(User userId) {
-        this.user = userId;
+        this.userId = userId;
     }
 
     public VehicleClasses getVehicleClassId() {
-        return vehicleClasses;
+        return vehicleClassId;
     }
 
     public void setVehicleClassId(VehicleClasses vehicleClassId) {
-        this.vehicleClasses = vehicleClasses;
+        this.vehicleClassId = vehicleClassId;
     }
 }
