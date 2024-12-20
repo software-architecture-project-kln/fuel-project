@@ -114,19 +114,19 @@ public class Vehicle {
         this.currentFuelCapacity = currentFuelCapacity;
     }
 
-    public User getUserId() {
+    public User getUser() {
         return user;
     }
 
-    public void setUserId(User userId) {
-        this.user = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public VehicleClasses getVehicleClassId() {
+    public VehicleClasses getVehicleClasses() {
         return vehicleClasses;
     }
 
-    public void setVehicleClassId(VehicleClasses vehicleClassId) {
+    public void setVehicleClasses(VehicleClasses vehicleClasses) {
         this.vehicleClasses = vehicleClasses;
     }
 }

@@ -1,5 +1,6 @@
 package com.kln.FuelBackend.entity;
 
+import com.kln.FuelBackend.enums.VehicleClassName;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 
@@ -14,20 +15,21 @@ public class VehicleClasses {
     @Column(updatable = false)
     private Integer vehicleClassId;
 
+    @Enumerated(EnumType.STRING)
     @Column(unique = true,nullable = false)
-    private String vehicleClassName;
+    private VehicleClassName vehicleClassName;
 
     @Column
     @Min(0)
     private String maxFuelCapacityPerWeek;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "fuel_id", referencedColumnName = "fuelId")
     private Fuel fuel;
 
     public VehicleClasses() {}
 
-    public VehicleClasses(Integer vehicleClassId, String vehicleClassName, String maxFuelCapacityPerWeek, Fuel fuel) {
+    public VehicleClasses(Integer vehicleClassId, VehicleClassName vehicleClassName, String maxFuelCapacityPerWeek, Fuel fuel) {
         this.vehicleClassId = vehicleClassId;
         this.vehicleClassName = vehicleClassName;
         this.maxFuelCapacityPerWeek = maxFuelCapacityPerWeek;
@@ -42,11 +44,11 @@ public class VehicleClasses {
         this.vehicleClassId = vehicleClassId;
     }
 
-    public String getVehicleClassName() {
+    public VehicleClassName getVehicleClassName() {
         return vehicleClassName;
     }
 
-    public void setVehicleClassName(String vehicleClassName) {
+    public void setVehicleClassName(VehicleClassName vehicleClassName) {
         this.vehicleClassName = vehicleClassName;
     }
 
