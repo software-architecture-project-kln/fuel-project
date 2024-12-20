@@ -21,7 +21,7 @@ public class VehicleClasses {
 
     @Column
     @Min(0)
-    private String maxFuelCapacityPerWeek;
+    private Double maxFuelCapacityPerWeek;
 
     @ManyToOne
     @JoinColumn(name = "fuel_id", referencedColumnName = "fuelId")
@@ -29,8 +29,7 @@ public class VehicleClasses {
 
     public VehicleClasses() {}
 
-    public VehicleClasses(Integer vehicleClassId, VehicleClassName vehicleClassName, String maxFuelCapacityPerWeek, Fuel fuel) {
-        this.vehicleClassId = vehicleClassId;
+    public VehicleClasses(VehicleClassName vehicleClassName, Double maxFuelCapacityPerWeek, Fuel fuel) {
         this.vehicleClassName = vehicleClassName;
         this.maxFuelCapacityPerWeek = maxFuelCapacityPerWeek;
         this.fuel = fuel;
@@ -52,19 +51,12 @@ public class VehicleClasses {
         this.vehicleClassName = vehicleClassName;
     }
 
-    public String getMaxCapacityPerWeek() {
+
+    public Double getMaxFuelCapacityPerWeek() {
         return maxFuelCapacityPerWeek;
     }
 
-    public void setMaxCapacityPerWeek(String maxCapacityPerWeek) {
-        this.maxFuelCapacityPerWeek = maxCapacityPerWeek;
-    }
-
-    public String getMaxFuelCapacityPerWeek() {
-        return maxFuelCapacityPerWeek;
-    }
-
-    public void setMaxFuelCapacityPerWeek(String maxFuelCapacityPerWeek) {
+    public void setMaxFuelCapacityPerWeek(Double maxFuelCapacityPerWeek) {
         this.maxFuelCapacityPerWeek = maxFuelCapacityPerWeek;
     }
 

@@ -7,7 +7,7 @@ public class VehicleClassesResponseDTO {
     private Integer vehicleClassId;
     private VehicleClassName vehicleClassName;
 
-    private String maxFuelCapacityPerWeek;
+    private Double maxFuelCapacityPerWeek;
 
     private Integer fuelId;
 
@@ -15,7 +15,7 @@ public class VehicleClassesResponseDTO {
     public VehicleClassesResponseDTO() {
     }
 
-    public VehicleClassesResponseDTO(Integer vehicleClassId, VehicleClassName vehicleClassName, String maxFuelCapacityPerWeek, Integer fuelId) {
+    public VehicleClassesResponseDTO(Integer vehicleClassId, VehicleClassName vehicleClassName, Double maxFuelCapacityPerWeek, Integer fuelId) {
         this.vehicleClassId = vehicleClassId;
         this.vehicleClassName = vehicleClassName;
         this.maxFuelCapacityPerWeek = maxFuelCapacityPerWeek;
@@ -38,11 +38,11 @@ public class VehicleClassesResponseDTO {
         this.vehicleClassName = vehicleClassName;
     }
 
-    public String getMaxFuelCapacityPerWeek() {
+    public Double getMaxFuelCapacityPerWeek() {
         return maxFuelCapacityPerWeek;
     }
 
-    public void setMaxFuelCapacityPerWeek(String maxFuelCapacityPerWeek) {
+    public void setMaxFuelCapacityPerWeek(Double maxFuelCapacityPerWeek) {
         this.maxFuelCapacityPerWeek = maxFuelCapacityPerWeek;
     }
 
