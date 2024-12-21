@@ -1,4 +1,4 @@
-package com.kln.FuelBackend.dataTransferObject.response.FuelResponseDTO;
+package com.kln.FuelBackend.dataTransferObject.response.fuelResponseDTO;
 
 public class FuelResponseDTO {
 

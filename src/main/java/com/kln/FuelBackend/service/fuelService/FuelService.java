@@ -3,7 +3,7 @@ package com.kln.FuelBackend.service.fuelService;
 
 import com.kln.FuelBackend.dataTransferObject.request.fuelRequestDTO.FuelRequestDTO;
 import com.kln.FuelBackend.dataTransferObject.response.CustomApiResponse;
-import com.kln.FuelBackend.dataTransferObject.response.FuelResponseDTO.FuelResponseDTO;
+import com.kln.FuelBackend.dataTransferObject.response.fuelResponseDTO.FuelResponseDTO;
 import com.kln.FuelBackend.entity.Fuel;
 import com.kln.FuelBackend.exception.NotFoundException;
 import com.kln.FuelBackend.repositoryDAO.FuelRepository;

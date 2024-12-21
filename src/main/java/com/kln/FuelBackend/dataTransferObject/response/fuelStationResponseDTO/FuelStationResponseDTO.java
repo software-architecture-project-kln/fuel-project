@@ -1,4 +1,4 @@
-package com.kln.FuelBackend.dataTransferObject.response.FuelStationResponseDTO;
+package com.kln.FuelBackend.dataTransferObject.response.fuelStationResponseDTO;
 
 
 import java.util.UUID;
