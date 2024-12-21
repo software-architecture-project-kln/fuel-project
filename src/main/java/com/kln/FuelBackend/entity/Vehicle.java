@@ -33,7 +33,7 @@ public class Vehicle {
     @Column(nullable = false)
     private Date yearOfManufacture;
 
-    @Column(nullable = false, columnDefinition = "double default 0")
+    @Column(nullable = true, columnDefinition = "double default 0")
     @Min(0)
     private Double currentFuelCapacity;
 
