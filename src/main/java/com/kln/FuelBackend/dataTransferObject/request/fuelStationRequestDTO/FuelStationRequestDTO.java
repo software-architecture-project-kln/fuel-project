@@ -1,61 +1,31 @@
-package com.kln.FuelBackend.entity;
+package com.kln.FuelBackend.dataTransferObject.request.fuelStationRequestDTO;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.UUID;
 
-@Entity
-@Table(
-        name = "fuel_station",
-        indexes = {
-                @Index(name = "idx_email", columnList = "fuelStationEmail")
-        }
-)
-public class FuelStation {
+public class FuelStationRequestDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(updatable = false,nullable = false)
-    private UUID fuelStationId;
-
-    @Column(nullable = false,unique = true,updatable = false)
+    @NotBlank(message = "fuelStationRegisterId is required")
     private String fuelStationRegisterId;
 
-    @Column(nullable = false)
+    @NotBlank(message = "fuelStationOwnerName is required")
     private String fuelStationOwnerName;
 
-    @Column(nullable = false,unique = true)
+    @NotBlank(message = "fuelStationEmail is required")
     @Email
     private String fuelStationEmail;
 
-    @Column(nullable = false)
+    @NotBlank(message = "password is required")
     private String password;
 
-    public FuelStation(){
-
-    }
-
-    public FuelStation(
-            UUID fuelStationId,
-            String fuelStationRegisterId,
-            String fuelStationOwnerName,
-            String fuelStationEmail,
-            String password
-    ) {
-        this.fuelStationId = fuelStationId;
+    public FuelStationRequestDTO(String fuelStationRegisterId, String fuelStationOwnerName, String fuelStationEmail, String password) {
         this.fuelStationRegisterId = fuelStationRegisterId;
         this.fuelStationOwnerName = fuelStationOwnerName;
         this.fuelStationEmail = fuelStationEmail;
         this.password = password;
-    }
-
-    public UUID getFuelStationId() {
-        return fuelStationId;
-    }
-
-    public void setFuelStationId(UUID fuelStationId) {
-        this.fuelStationId = fuelStationId;
     }
 
     public String getFuelStationRegisterId() {
