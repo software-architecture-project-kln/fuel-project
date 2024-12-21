@@ -12,6 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class FuelService implements FuelServiceRepository{
 
@@ -91,7 +94,34 @@ public class FuelService implements FuelServiceRepository{
     }
 
     @Override
+    public ResponseEntity<?> getAllFuel() {
+        List<Fuel> fuels = fuelRepository.findAll();
+        List<FuelResponseDTO> responseDTOList = new ArrayList<>();
+
+        fuels.forEach(
+                fuel -> {
+                    responseDTOList.add(
+                            new FuelResponseDTO(
+                                    fuel.getFuelId(),
+                                    fuel.getFuelName(),
+                                    fuel.getPrice()
+                            )
+                    );
+                }
+        );
+        return new ResponseEntity<>(
+                new CustomApiResponse(
+                        HttpStatus.OK.value(),
+                        null,
+                        responseDTOList
+                ),
+                HttpStatus.OK
+        );
+    }
+
+    @Override
     public ResponseEntity<?> DeleteFuelById(Integer fuelId) {
-        return null;  // temporary not implemented
+
+        return new ResponseEntity<>("not implemented",HttpStatus.NOT_IMPLEMENTED);  // temporary not implemented
     }
 }

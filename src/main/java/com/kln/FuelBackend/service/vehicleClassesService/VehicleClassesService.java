@@ -80,7 +80,7 @@ public class VehicleClassesService implements VehicleClassesServiceRepository{
         return new ResponseEntity<>(
                 new CustomApiResponse(
                         HttpStatus.OK.value(),
-                        "maxFuelCapacityPerWeek",
+                        "maxFuelCapacityPerWeek updated successfully",
                         responseDTO
                 ),
                 HttpStatus.OK

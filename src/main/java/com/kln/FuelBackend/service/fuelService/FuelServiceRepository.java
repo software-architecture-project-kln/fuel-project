@@ -14,4 +14,6 @@ public interface FuelServiceRepository {
 
     public ResponseEntity<?> DeleteFuelById(Integer fuelId);
 
+    public ResponseEntity<?> getAllFuel();
+
 }
