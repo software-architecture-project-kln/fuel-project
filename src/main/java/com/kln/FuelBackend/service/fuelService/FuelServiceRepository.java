@@ -8,7 +8,7 @@ public interface FuelServiceRepository {
 
     public ResponseEntity<?> createFuel(FuelRequestDTO fuelRequestDTO);
 
-    public ResponseEntity<?> findFuelById(Integer fuelId) throws NotFoundException;
+    public ResponseEntity<?> findFuelById(Integer fuelId);
 
     public ResponseEntity<?> updateFuelPrice(Integer fuelId, Double price);
 

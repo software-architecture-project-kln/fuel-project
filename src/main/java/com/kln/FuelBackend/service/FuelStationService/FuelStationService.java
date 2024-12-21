@@ -56,7 +56,7 @@ public class FuelStationService implements FuelStationServiceRepository{
                 () -> new NotFoundException("fuel station not found")
         );
         fuelStation.setFuelStationOwnerName(fuelStationRequestDTO.getFuelStationOwnerName());
-        fuelStation.setFuelStationEmail(fuelStation.getFuelStationEmail());
+        fuelStation.setFuelStationEmail(fuelStationRequestDTO.getFuelStationEmail());
         fuelStation.setPassword(fuelStationRequestDTO.getPassword());
         fuelStationRepository.save(fuelStation);
 
