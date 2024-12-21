@@ -127,6 +127,6 @@ public class FuelStationService implements FuelStationServiceRepository{
 
     @Override
     public ResponseEntity<?> deleteFuelStation(UUID fuelStationId) {
-        return null;
+        return new ResponseEntity<>("not implemented",HttpStatus.NOT_IMPLEMENTED);
     }
 }
