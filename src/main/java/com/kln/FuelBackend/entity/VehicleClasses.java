@@ -35,6 +35,18 @@ public class VehicleClasses {
         this.fuel = fuel;
     }
 
+    public VehicleClasses(
+            Integer vehicleClassId,
+            VehicleClassName vehicleClassName,
+            Double maxFuelCapacityPerWeek,
+            Fuel fuel
+    ) {
+        this.vehicleClassId = vehicleClassId;
+        this.vehicleClassName = vehicleClassName;
+        this.maxFuelCapacityPerWeek = maxFuelCapacityPerWeek;
+        this.fuel = fuel;
+    }
+
     public Integer getVehicleClassId() {
         return vehicleClassId;
     }

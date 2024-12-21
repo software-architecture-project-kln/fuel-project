@@ -37,6 +37,18 @@ public class FuelStation {
     }
 
     public FuelStation(
+            String fuelStationRegisterId,
+            String fuelStationOwnerName,
+            String fuelStationEmail,
+            String password
+    ) {
+        this.fuelStationRegisterId = fuelStationRegisterId;
+        this.fuelStationOwnerName = fuelStationOwnerName;
+        this.fuelStationEmail = fuelStationEmail;
+        this.password = password;
+    }
+
+    public FuelStation(
             UUID fuelStationId,
             String fuelStationRegisterId,
             String fuelStationOwnerName,

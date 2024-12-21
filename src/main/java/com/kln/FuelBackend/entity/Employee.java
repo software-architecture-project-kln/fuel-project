@@ -31,6 +31,13 @@ public class Employee {
 
     public Employee(){}
 
+    public Employee(String employeeUsername, String password, String employeeEmail, FuelStation fuelStation) {
+        this.employeeUsername = employeeUsername;
+        this.password = password;
+        this.employeeEmail = employeeEmail;
+        this.fuelStation = fuelStation;
+    }
+
     public Employee(
             UUID employeeId,
             String employeeUsername,

@@ -26,6 +26,12 @@ public class Fuel {
         this.price = price;
     }
 
+    public Fuel(Integer fuelId, String fuelName, Double price) {
+        this.fuelId = fuelId;
+        this.fuelName = fuelName;
+        this.price = price;
+    }
+
     public Integer getFuelId() {
         return fuelId;
     }

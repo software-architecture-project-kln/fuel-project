@@ -64,6 +64,26 @@ public class Vehicle {
         this.vehicleClasses = vehicleClasses;
     }
 
+    public Vehicle(
+            UUID vehicleId,
+            String vehicleRegisterId,
+            String vehicleEngineNo,
+            String model,
+            Date yearOfManufacture,
+            Double currentFuelCapacity,
+            User user,
+            VehicleClasses vehicleClasses
+    ) {
+        this.vehicleId = vehicleId;
+        this.vehicleRegisterId = vehicleRegisterId;
+        this.vehicleEngineNo = vehicleEngineNo;
+        this.model = model;
+        this.yearOfManufacture = yearOfManufacture;
+        this.currentFuelCapacity = currentFuelCapacity;
+        this.user = user;
+        this.vehicleClasses = vehicleClasses;
+    }
+
     public UUID getVehicleId() {
         return vehicleId;
     }

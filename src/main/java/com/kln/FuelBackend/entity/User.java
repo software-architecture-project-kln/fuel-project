@@ -53,6 +53,16 @@ public class User {
         this.mobile = mobile;
     }
 
+    public User(Integer userId, String f_name, String l_name, String email, String password, String mobile, List<Vehicle> vehicle) {
+        this.userId = userId;
+        this.f_name = f_name;
+        this.l_name = l_name;
+        this.email = email;
+        this.password = password;
+        this.mobile = mobile;
+        this.vehicle = vehicle;
+    }
+
     public Integer getUserId() {
         return userId;
     }
