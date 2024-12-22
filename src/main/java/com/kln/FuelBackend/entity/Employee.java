@@ -25,16 +25,36 @@ public class Employee {
     @Email
     private String employeeEmail;
 
+    @Column(nullable = false)
+    private Boolean employeeStatus;  // active -> true deactivate -> false
+
     @ManyToOne
     @JoinColumn(name = "fuel_station_id", referencedColumnName = "fuelStationId")
     private FuelStation fuelStation;
 
     public Employee(){}
 
-    public Employee(String employeeUsername, String password, String employeeEmail, FuelStation fuelStation) {
+    public Employee(String employeeUsername, String password, String employeeEmail, FuelStation fuelStation, Boolean employeeStatus) {
         this.employeeUsername = employeeUsername;
         this.password = password;
         this.employeeEmail = employeeEmail;
+        this.fuelStation = fuelStation;
+        this.employeeStatus = employeeStatus;
+    }
+
+    public Boolean getEmployeeStatus() {
+        return employeeStatus;
+    }
+
+    public void setEmployeeStatus(Boolean employeeStatus) {
+        this.employeeStatus = employeeStatus;
+    }
+
+    public FuelStation getFuelStation() {
+        return fuelStation;
+    }
+
+    public void setFuelStation(FuelStation fuelStation) {
         this.fuelStation = fuelStation;
     }
 

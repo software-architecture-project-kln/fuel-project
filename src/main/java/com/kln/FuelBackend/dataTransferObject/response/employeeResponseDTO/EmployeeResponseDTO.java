@@ -10,19 +10,20 @@ public class EmployeeResponseDTO {
     private UUID employeeId;
     private String employeeUsername;
 
-    private String password;
 
     private String employeeEmail;
 
 
     private UUID fuelStationId;
 
-    public EmployeeResponseDTO(UUID employeeId, String employeeUsername, String password, String employeeEmail, UUID fuelStationId) {
+    private Boolean employeeStatus;
+
+    public EmployeeResponseDTO(UUID employeeId, String employeeUsername, String employeeEmail, UUID fuelStationId,Boolean employeeStatus) {
         this.employeeId = employeeId;
         this.employeeUsername = employeeUsername;
-        this.password = password;
         this.employeeEmail = employeeEmail;
         this.fuelStationId = fuelStationId;
+        this.employeeStatus = employeeStatus;
     }
 
     public UUID getEmployeeId() {
@@ -41,13 +42,6 @@ public class EmployeeResponseDTO {
         this.employeeUsername = employeeUsername;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getEmployeeEmail() {
         return employeeEmail;
@@ -63,5 +57,13 @@ public class EmployeeResponseDTO {
 
     public void setFuelStationId(UUID fuelStationId) {
         this.fuelStationId = fuelStationId;
+    }
+
+    public Boolean getEmployeeStatus() {
+        return employeeStatus;
+    }
+
+    public void setEmployeeStatus(Boolean employeeStatus) {
+        this.employeeStatus = employeeStatus;
     }
 }
