@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService implements UserServiceRepository{
@@ -48,6 +49,7 @@ public class UserService implements UserServiceRepository{
     }
 
     @Override
+    @Transactional
     public ResponseEntity<?> updateUser(UserRequestDTO userRequestDTO, Integer userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new RuntimeException("user not found")

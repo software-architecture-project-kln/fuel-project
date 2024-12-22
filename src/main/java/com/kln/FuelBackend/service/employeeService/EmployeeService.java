@@ -11,9 +11,12 @@ import com.kln.FuelBackend.repositoryDAO.FuelStationRepository;
 import com.kln.FuelBackend.repositoryDAO.VehicleRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
+@Service
 public class EmployeeService implements EmployeeServiceRepository{
 
     private final EmployeeRepository employeeRepository;
@@ -61,6 +64,7 @@ public class EmployeeService implements EmployeeServiceRepository{
     }
 
     @Override
+    @Transactional
     public ResponseEntity<?> updateEmployee(UUID employeeId, EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = employeeRepository.findById(employeeId).orElseThrow(
                 () -> new NotFoundException("employee not found")
@@ -88,6 +92,7 @@ public class EmployeeService implements EmployeeServiceRepository{
     }
 
     @Override
+    @Transactional
     public ResponseEntity<?> changeEmployeeStatus(UUID employeeId) {
         Employee employee = employeeRepository.findById(employeeId).orElseThrow(
                 () -> new NotFoundException("employee not found")

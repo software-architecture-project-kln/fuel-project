@@ -9,6 +9,7 @@ import com.kln.FuelBackend.repositoryDAO.FuelStationRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,7 @@ public class FuelStationService implements FuelStationServiceRepository{
     }
 
     @Override
+    @Transactional
     public ResponseEntity<?> updateFuelStation(UUID fuelStationId,FuelStationRequestDTO fuelStationRequestDTO) {
         FuelStation fuelStation = fuelStationRepository.findById(fuelStationId).orElseThrow(
                 () -> new NotFoundException("fuel station not found")
