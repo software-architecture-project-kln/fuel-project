@@ -7,13 +7,12 @@ public class AdministratorResponseDTO {
     private Integer administratorId;
     private String administratorUsername;
 
-    private String password;
+
     private String administratorEmail;
 
-    public AdministratorResponseDTO(Integer administratorId, String administratorUsername, String password, String administratorEmail) {
+    public AdministratorResponseDTO(Integer administratorId, String administratorUsername, String administratorEmail) {
         this.administratorId = administratorId;
         this.administratorUsername = administratorUsername;
-        this.password = password;
         this.administratorEmail = administratorEmail;
     }
 
@@ -33,13 +32,6 @@ public class AdministratorResponseDTO {
         this.administratorUsername = administratorUsername;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getAdministratorEmail() {
         return administratorEmail;
