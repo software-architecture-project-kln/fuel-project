@@ -38,8 +38,12 @@ public class Vehicle {
     private Double currentFuelCapacity;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "userId")
+    @JoinColumn(name = "user_id", referencedColumnName = "userId", nullable = true)
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name= "business_government_id",referencedColumnName = "businessGovernmentId", nullable = true)
+    private BusinessGovernment businessGovernment;
 
     @ManyToOne
     @JoinColumn(name = "vehicle_class_id", referencedColumnName = "vehicleClassId", nullable = false)
@@ -53,6 +57,7 @@ public class Vehicle {
                    String model,
                    Date yearOfManufacture,
                    User user,
+                   BusinessGovernment businessGovernment,
                    VehicleClasses vehicleClasses
     ) {
         this.vehicleRegisterId = vehicleRegisterId;
@@ -61,6 +66,7 @@ public class Vehicle {
         this.yearOfManufacture = yearOfManufacture;
 
         this.user = user;
+        this.businessGovernment = businessGovernment;
         this.vehicleClasses = vehicleClasses;
     }
 
@@ -72,6 +78,7 @@ public class Vehicle {
             Date yearOfManufacture,
             Double currentFuelCapacity,
             User user,
+            BusinessGovernment businessGovernment,
             VehicleClasses vehicleClasses
     ) {
         this.vehicleId = vehicleId;
@@ -81,6 +88,7 @@ public class Vehicle {
         this.yearOfManufacture = yearOfManufacture;
         this.currentFuelCapacity = currentFuelCapacity;
         this.user = user;
+        this.businessGovernment = businessGovernment;
         this.vehicleClasses = vehicleClasses;
     }
 
@@ -146,5 +154,13 @@ public class Vehicle {
 
     public void setVehicleClasses(VehicleClasses vehicleClasses) {
         this.vehicleClasses = vehicleClasses;
+    }
+
+    public BusinessGovernment getBusinessGovernment() {
+        return businessGovernment;
+    }
+
+    public void setBusinessGovernment(BusinessGovernment businessGovernment) {
+        this.businessGovernment = businessGovernment;
     }
 }

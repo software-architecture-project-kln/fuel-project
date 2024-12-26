@@ -54,6 +54,7 @@ public class VehicleService implements VehicleServiceRepository{
                 vehicleRequestDTO.getModel(),
                 vehicleRequestDTO.getYearOfManufacture(),
                 user,
+                null,
                 vehicleClass
         );
 

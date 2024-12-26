@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+// business
+
 @Service
 public class AdministratorService implements AdministratorServiceRepository{
 
@@ -39,7 +41,7 @@ public class AdministratorService implements AdministratorServiceRepository{
         );
         return new ResponseEntity<>(
                 new CustomApiResponse(
-                        HttpStatus.CONTINUE.value(),
+                        HttpStatus.CREATED.value(),
                         "administrator created successfully",
                         responseDTO
                 ),
