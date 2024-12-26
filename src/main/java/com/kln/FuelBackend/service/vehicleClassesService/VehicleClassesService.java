@@ -33,13 +33,10 @@ public class VehicleClassesService implements VehicleClassesServiceRepository{
 
     @Override
     public ResponseEntity<?> createVehicleClass(VehicleClassesRequestDTO vehicleClassesRequestDTO) {
-        Fuel fuel = fuelRepository.findById(vehicleClassesRequestDTO.getFuelId()).orElseThrow(
-                () -> new NotFoundException("fuelId is not found in fuel table")
-        );
+
         VehicleClasses vehicleClass = new VehicleClasses(
                 vehicleClassesRequestDTO.getVehicleClassName(),
-                vehicleClassesRequestDTO.getMaxFuelCapacityPerWeek(),
-                fuel
+                vehicleClassesRequestDTO.getMaxFuelCapacityPerWeek()
         );
 
         VehicleClasses savedVehicleClass = vehicleClassesRepository.save(vehicleClass);
@@ -47,8 +44,7 @@ public class VehicleClassesService implements VehicleClassesServiceRepository{
         VehicleClassesResponseDTO responseDTO = new VehicleClassesResponseDTO(
                 savedVehicleClass.getVehicleClassId(),
                 savedVehicleClass.getVehicleClassName(),
-                savedVehicleClass.getMaxFuelCapacityPerWeek(),
-                savedVehicleClass.getFuel().getFuelId()
+                savedVehicleClass.getMaxFuelCapacityPerWeek()
         );
 
         return new ResponseEntity<>(
@@ -75,8 +71,7 @@ public class VehicleClassesService implements VehicleClassesServiceRepository{
         VehicleClassesResponseDTO responseDTO = new VehicleClassesResponseDTO(
                 vehicleClass.getVehicleClassId(),
                 vehicleClass.getVehicleClassName(),
-                vehicleClass.getMaxFuelCapacityPerWeek(),
-                vehicleClass.getFuel().getFuelId()
+                vehicleClass.getMaxFuelCapacityPerWeek()
         );
 
         return new ResponseEntity<>(
@@ -99,8 +94,8 @@ public class VehicleClassesService implements VehicleClassesServiceRepository{
         VehicleClassesResponseDTO responseDTO = new VehicleClassesResponseDTO(
                 vehicleClass.getVehicleClassId(),
                 vehicleClass.getVehicleClassName(),
-                vehicleClass.getMaxFuelCapacityPerWeek(),
-                vehicleClass.getFuel().getFuelId()
+                vehicleClass.getMaxFuelCapacityPerWeek()
+
         );
 
         return new ResponseEntity<>(
@@ -124,8 +119,7 @@ public class VehicleClassesService implements VehicleClassesServiceRepository{
                             new VehicleClassesResponseDTO(
                                     vehicleClass.getVehicleClassId(),
                                     vehicleClass.getVehicleClassName(),
-                                    vehicleClass.getMaxFuelCapacityPerWeek(),
-                                    vehicleClass.getFuel().getFuelId()
+                                    vehicleClass.getMaxFuelCapacityPerWeek()
                             )
                     );
                 }

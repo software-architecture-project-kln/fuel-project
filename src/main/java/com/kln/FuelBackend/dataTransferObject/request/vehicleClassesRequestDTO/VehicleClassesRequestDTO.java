@@ -13,8 +13,8 @@ public class VehicleClassesRequestDTO {
     @NotBlank(message = "maxFuelCapacityPerWeek is required")
     private Double maxFuelCapacityPerWeek;
 
-    @NotBlank(message = "fuelId is required")
-    private Integer fuelId;
+//    @NotBlank(message = "fuelId is required")
+//    private Integer fuelId;
 
     public VehicleClassesRequestDTO() {
     }
@@ -22,7 +22,7 @@ public class VehicleClassesRequestDTO {
     public VehicleClassesRequestDTO(VehicleClassName vehicleClassName, Double maxFuelCapacityPerWeek, Integer fuelId) {
         this.vehicleClassName = vehicleClassName;
         this.maxFuelCapacityPerWeek = maxFuelCapacityPerWeek;
-        this.fuelId = fuelId;
+//        this.fuelId = fuelId;
     }
 
     public VehicleClassName getVehicleClassName() {
@@ -41,11 +41,11 @@ public class VehicleClassesRequestDTO {
         this.maxFuelCapacityPerWeek = maxFuelCapacityPerWeek;
     }
 
-    public Integer getFuelId() {
-        return fuelId;
-    }
-
-    public void setFuelId(Integer fuelId) {
-        this.fuelId = fuelId;
-    }
+//    public Integer getFuelId() {
+//        return fuelId;
+//    }
+//
+//    public void setFuelId(Integer fuelId) {
+//        this.fuelId = fuelId;
+//    }
 }

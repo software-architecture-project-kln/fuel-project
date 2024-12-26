@@ -49,6 +49,10 @@ public class Vehicle {
     @JoinColumn(name = "vehicle_class_id", referencedColumnName = "vehicleClassId", nullable = false)
     private VehicleClasses vehicleClasses;
 
+    @ManyToOne
+    @JoinColumn(name = "fuel_id", referencedColumnName = "fuelId", nullable = false)
+    private Fuel fuel;
+
     public Vehicle(){}
 
     public Vehicle(
@@ -58,7 +62,8 @@ public class Vehicle {
                    Date yearOfManufacture,
                    User user,
                    BusinessGovernment businessGovernment,
-                   VehicleClasses vehicleClasses
+                   VehicleClasses vehicleClasses,
+                   Fuel fuel
     ) {
         this.vehicleRegisterId = vehicleRegisterId;
         this.vehicleEngineNo = vehicleEngineNo;
@@ -68,6 +73,7 @@ public class Vehicle {
         this.user = user;
         this.businessGovernment = businessGovernment;
         this.vehicleClasses = vehicleClasses;
+        this.fuel = fuel;
     }
 
     public Vehicle(
@@ -79,7 +85,8 @@ public class Vehicle {
             Double currentFuelCapacity,
             User user,
             BusinessGovernment businessGovernment,
-            VehicleClasses vehicleClasses
+            VehicleClasses vehicleClasses,
+            Fuel fuel
     ) {
         this.vehicleId = vehicleId;
         this.vehicleRegisterId = vehicleRegisterId;
@@ -90,6 +97,7 @@ public class Vehicle {
         this.user = user;
         this.businessGovernment = businessGovernment;
         this.vehicleClasses = vehicleClasses;
+        this.fuel = fuel;
     }
 
     public UUID getVehicleId() {
@@ -162,5 +170,13 @@ public class Vehicle {
 
     public void setBusinessGovernment(BusinessGovernment businessGovernment) {
         this.businessGovernment = businessGovernment;
+    }
+
+    public Fuel getFuel() {
+        return fuel;
+    }
+
+    public void setFuel(Fuel fuel) {
+        this.fuel = fuel;
     }
 }

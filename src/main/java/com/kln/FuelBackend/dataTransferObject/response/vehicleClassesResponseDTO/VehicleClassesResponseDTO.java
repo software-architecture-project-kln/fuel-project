@@ -9,17 +9,17 @@ public class VehicleClassesResponseDTO {
 
     private Double maxFuelCapacityPerWeek;
 
-    private Integer fuelId;
+//    private Integer fuelId;
 
 
     public VehicleClassesResponseDTO() {
     }
 
-    public VehicleClassesResponseDTO(Integer vehicleClassId, VehicleClassName vehicleClassName, Double maxFuelCapacityPerWeek, Integer fuelId) {
+    public VehicleClassesResponseDTO(Integer vehicleClassId, VehicleClassName vehicleClassName, Double maxFuelCapacityPerWeek) {
         this.vehicleClassId = vehicleClassId;
         this.vehicleClassName = vehicleClassName;
         this.maxFuelCapacityPerWeek = maxFuelCapacityPerWeek;
-        this.fuelId = fuelId;
+//        this.fuelId = fuelId;
     }
 
     public Integer getVehicleClassId() {
@@ -46,11 +46,11 @@ public class VehicleClassesResponseDTO {
         this.maxFuelCapacityPerWeek = maxFuelCapacityPerWeek;
     }
 
-    public Integer getFuelId() {
-        return fuelId;
-    }
-
-    public void setFuelId(Integer fuelId) {
-        this.fuelId = fuelId;
-    }
+//    public Integer getFuelId() {
+//        return fuelId;
+//    }
+//
+//    public void setFuelId(Integer fuelId) {
+//        this.fuelId = fuelId;
+//    }
 }

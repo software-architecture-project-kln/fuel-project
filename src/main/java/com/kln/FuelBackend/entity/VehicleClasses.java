@@ -23,28 +23,27 @@ public class VehicleClasses {
     @Min(0)
     private Double maxFuelCapacityPerWeek;
 
-    @ManyToOne
-    @JoinColumn(name = "fuel_id", referencedColumnName = "fuelId")
-    private Fuel fuel;
+//    @ManyToOne
+//    @JoinColumn(name = "fuel_id", referencedColumnName = "fuelId")
+//    private Fuel fuel;
 
     public VehicleClasses() {}
 
-    public VehicleClasses(VehicleClassName vehicleClassName, Double maxFuelCapacityPerWeek, Fuel fuel) {
+    public VehicleClasses(VehicleClassName vehicleClassName, Double maxFuelCapacityPerWeek) {
         this.vehicleClassName = vehicleClassName;
         this.maxFuelCapacityPerWeek = maxFuelCapacityPerWeek;
-        this.fuel = fuel;
+//        this.fuel = fuel;
     }
 
     public VehicleClasses(
             Integer vehicleClassId,
             VehicleClassName vehicleClassName,
-            Double maxFuelCapacityPerWeek,
-            Fuel fuel
+            Double maxFuelCapacityPerWeek
     ) {
         this.vehicleClassId = vehicleClassId;
         this.vehicleClassName = vehicleClassName;
         this.maxFuelCapacityPerWeek = maxFuelCapacityPerWeek;
-        this.fuel = fuel;
+//        this.fuel = fuel;
     }
 
     public Integer getVehicleClassId() {
@@ -72,11 +71,11 @@ public class VehicleClasses {
         this.maxFuelCapacityPerWeek = maxFuelCapacityPerWeek;
     }
 
-    public Fuel getFuel() {
-        return fuel;
-    }
-
-    public void setFuel(Fuel fuel) {
-        this.fuel = fuel;
-    }
+//    public Fuel getFuel() {
+//        return fuel;
+//    }
+//
+//    public void setFuel(Fuel fuel) {
+//        this.fuel = fuel;
+//    }
 }
