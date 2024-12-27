@@ -2,14 +2,14 @@ package com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class BusinessGovRequestDTO {
+public class BusinessGovLoginRequestDTO {
     @NotBlank(message = "businessGovernmentRegNo is required")
     private String businessGovernmentRegNo;
 
     @NotBlank(message = "password is required")
     private String password;
 
-    public BusinessGovRequestDTO(String businessGovernmentRegNo, String password) {
+    public BusinessGovLoginRequestDTO(String businessGovernmentRegNo, String password) {
         this.businessGovernmentRegNo = businessGovernmentRegNo;
         this.password = password;
     }

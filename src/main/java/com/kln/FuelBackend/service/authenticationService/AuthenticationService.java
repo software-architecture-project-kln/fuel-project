@@ -1,11 +1,13 @@
 package com.kln.FuelBackend.service.authenticationService;
 
-import com.kln.FuelBackend.dataTransferObject.request.LoginRequest;
+import com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO.BusinessGovLoginRequestDTO;
+import com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO.EmployeeLoginRequestDTO;
+import com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO.FuelStationLoginRequestDTO;
+import com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO.UserLoginRequestDTO;
 import com.kln.FuelBackend.repositoryDAO.BusinessGovernmentRepository;
 import com.kln.FuelBackend.repositoryDAO.EmployeeRepository;
 import com.kln.FuelBackend.repositoryDAO.FuelStationRepository;
 import com.kln.FuelBackend.repositoryDAO.UserRepository;
-import org.springframework.core.SpringVersion;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -29,22 +31,22 @@ public class AuthenticationService implements AuthenticationServiceRepository{
     }
 
     @Override
-    public ResponseEntity<?> userLogin(LoginRequest loginRequest) {
+    public ResponseEntity<?> userLogin(UserLoginRequestDTO userLoginRequestDTO) {
         return null;
     }
 
     @Override
-    public ResponseEntity<?> employeeLogin(LoginRequest loginRequest) {
+    public ResponseEntity<?> employeeLogin(EmployeeLoginRequestDTO employeeLoginRequestDTO) {
         return null;
     }
 
     @Override
-    public ResponseEntity<?> fuelStationLogin(LoginRequest loginRequest) {
+    public ResponseEntity<?> fuelStationLogin(FuelStationLoginRequestDTO fuelStationLoginRequestDTO) {
         return null;
     }
 
     @Override
-    public ResponseEntity<?> businessLogin(LoginRequest loginRequest) {
+    public ResponseEntity<?> businessLogin(BusinessGovLoginRequestDTO businessGovLoginRequestDTO) {
         return null;
     }
 }
