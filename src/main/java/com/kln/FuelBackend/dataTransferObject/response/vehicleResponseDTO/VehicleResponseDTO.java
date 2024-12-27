@@ -1,5 +1,6 @@
 package com.kln.FuelBackend.dataTransferObject.response.vehicleResponseDTO;
 
+import com.kln.FuelBackend.entity.BusinessGovernment;
 import com.kln.FuelBackend.entity.User;
 import com.kln.FuelBackend.entity.VehicleClasses;
 import java.util.Date;
@@ -21,7 +22,10 @@ public class VehicleResponseDTO {
 
     private Integer userId;
 
+
     private Integer vehicleClassId;
+
+    private Integer fuelId;
 
     public VehicleResponseDTO(){}
 
@@ -33,7 +37,8 @@ public class VehicleResponseDTO {
             Date yearOfManufacture,
             Double currentFuelCapacity,
             Integer userId,
-            Integer vehicleClassId
+            Integer vehicleClassId,
+            Integer fuelId
     ) {
         this.vehicleId = vehicleId;
         this.vehicleRegisterId = vehicleRegisterId;
@@ -43,6 +48,7 @@ public class VehicleResponseDTO {
         this.currentFuelCapacity = currentFuelCapacity;
         this.userId = userId;
         this.vehicleClassId = vehicleClassId;
+        this.fuelId = fuelId;
     }
 
     public UUID getVehicleId() {
@@ -107,5 +113,13 @@ public class VehicleResponseDTO {
 
     public void setVehicleClassId(Integer vehicleClassId) {
         this.vehicleClassId = vehicleClassId;
+    }
+
+    public Integer getFuelId() {
+        return fuelId;
+    }
+
+    public void setFuelId(Integer fuelId) {
+        this.fuelId = fuelId;
     }
 }

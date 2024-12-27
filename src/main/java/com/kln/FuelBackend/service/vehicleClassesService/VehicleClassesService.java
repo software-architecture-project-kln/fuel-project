@@ -36,7 +36,8 @@ public class VehicleClassesService implements VehicleClassesServiceRepository{
 
         VehicleClasses vehicleClass = new VehicleClasses(
                 vehicleClassesRequestDTO.getVehicleClassName(),
-                vehicleClassesRequestDTO.getMaxFuelCapacityPerWeek()
+                vehicleClassesRequestDTO.getMaxFuelCapacityPerWeek(),
+                vehicleClassesRequestDTO.getMaxFuelCapacityPerWeekForBusinessGov()
         );
 
         VehicleClasses savedVehicleClass = vehicleClassesRepository.save(vehicleClass);
@@ -44,7 +45,8 @@ public class VehicleClassesService implements VehicleClassesServiceRepository{
         VehicleClassesResponseDTO responseDTO = new VehicleClassesResponseDTO(
                 savedVehicleClass.getVehicleClassId(),
                 savedVehicleClass.getVehicleClassName(),
-                savedVehicleClass.getMaxFuelCapacityPerWeek()
+                savedVehicleClass.getMaxFuelCapacityPerWeek(),
+                savedVehicleClass.getMaxFuelCapacityPerWeekForBusinessGov()
         );
 
         return new ResponseEntity<>(
@@ -66,18 +68,50 @@ public class VehicleClassesService implements VehicleClassesServiceRepository{
         );
         vehicleClass.setMaxFuelCapacityPerWeek(maxFuelCapacityPerWeek);
 
+
         vehicleClassesRepository.save(vehicleClass);
 
         VehicleClassesResponseDTO responseDTO = new VehicleClassesResponseDTO(
                 vehicleClass.getVehicleClassId(),
                 vehicleClass.getVehicleClassName(),
-                vehicleClass.getMaxFuelCapacityPerWeek()
+                vehicleClass.getMaxFuelCapacityPerWeek(),
+                vehicleClass.getMaxFuelCapacityPerWeekForBusinessGov()
         );
 
         return new ResponseEntity<>(
                 new CustomApiResponse(
                         HttpStatus.OK.value(),
                         "maxFuelCapacityPerWeek updated successfully",
+                        responseDTO
+                ),
+                HttpStatus.OK
+        );
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<?> updateVehicleClassMaxFuelCapacityPerWeekForBusinessGov(
+            Integer vehicleClassId,
+            Double maxFuelCapacityPerWeekForBusinessGov
+    ) {
+        VehicleClasses vehicleClass = vehicleClassesRepository.findById(vehicleClassId).orElseThrow(
+                () -> new NotFoundException("vehicle id not found")
+        );
+
+        vehicleClass.setMaxFuelCapacityPerWeekForBusinessGov(maxFuelCapacityPerWeekForBusinessGov);
+        vehicleClassesRepository.save(vehicleClass);
+
+        VehicleClassesResponseDTO responseDTO = new VehicleClassesResponseDTO(
+                vehicleClass.getVehicleClassId(),
+                vehicleClass.getVehicleClassName(),
+                vehicleClass.getMaxFuelCapacityPerWeek(),
+                vehicleClass.getMaxFuelCapacityPerWeekForBusinessGov()
+        );
+
+        return new ResponseEntity<>(
+                new CustomApiResponse(
+                        HttpStatus.OK.value(),
+                        "maxFuelCapacityPerWeekForBusinessGov updated successfully",
                         responseDTO
                 ),
                 HttpStatus.OK
@@ -94,7 +128,8 @@ public class VehicleClassesService implements VehicleClassesServiceRepository{
         VehicleClassesResponseDTO responseDTO = new VehicleClassesResponseDTO(
                 vehicleClass.getVehicleClassId(),
                 vehicleClass.getVehicleClassName(),
-                vehicleClass.getMaxFuelCapacityPerWeek()
+                vehicleClass.getMaxFuelCapacityPerWeek(),
+                vehicleClass.getMaxFuelCapacityPerWeekForBusinessGov()
 
         );
 
@@ -119,7 +154,8 @@ public class VehicleClassesService implements VehicleClassesServiceRepository{
                             new VehicleClassesResponseDTO(
                                     vehicleClass.getVehicleClassId(),
                                     vehicleClass.getVehicleClassName(),
-                                    vehicleClass.getMaxFuelCapacityPerWeek()
+                                    vehicleClass.getMaxFuelCapacityPerWeek(),
+                                    vehicleClass.getMaxFuelCapacityPerWeekForBusinessGov()
                             )
                     );
                 }

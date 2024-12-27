@@ -12,6 +12,10 @@ public interface VehicleClassesServiceRepository {
             Integer vehicleClassId, Double maxFuelCapacityPerWeek
     );
 
+    public ResponseEntity<?> updateVehicleClassMaxFuelCapacityPerWeekForBusinessGov(
+            Integer vehicleClassId,Double maxFuelCapacityPerWeekForBusinessGov
+    );
+
     public ResponseEntity<?> vehicleClassFindById(Integer vehicleClassId);
 
     public ResponseEntity<?> getAllVehicleClasses();

@@ -37,6 +37,10 @@ public class User {
     @Column(nullable = false,unique = true)
     private String mobile;
 
+    // add verify the mobile number
+    @Column(columnDefinition = "DEFAULT false")
+    private Boolean verifyMobile;
+
     @OneToMany(mappedBy = "user", orphanRemoval = false, cascade = CascadeType.PERSIST)
     private List<Vehicle> vehicle = new ArrayList<>();
 
@@ -109,5 +113,13 @@ public class User {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public Boolean getVerifyMobile() {
+        return verifyMobile;
+    }
+
+    public void setVerifyMobile(Boolean verifyMobile) {
+        this.verifyMobile = verifyMobile;
     }
 }

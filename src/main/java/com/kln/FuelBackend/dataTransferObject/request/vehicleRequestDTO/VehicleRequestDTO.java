@@ -24,6 +24,9 @@ public class VehicleRequestDTO {
     @NotBlank(message = "vehicleClassId is required")
     private Integer vehicleClassId;
 
+    @NotBlank(message = "vehicleClassId is required")
+    private Integer fuelId;
+
     public VehicleRequestDTO(){}
 
     public VehicleRequestDTO(
@@ -32,7 +35,8 @@ public class VehicleRequestDTO {
             String model,
             Date yearOfManufacture,
             Integer userId,
-            Integer vehicleClassId
+            Integer vehicleClassId,
+            Integer fuelId
     ) {
         this.vehicleRegisterId = vehicleRegisterId;
         this.vehicleEngineNo = vehicleEngineNo;
@@ -40,6 +44,7 @@ public class VehicleRequestDTO {
         this.yearOfManufacture = yearOfManufacture;
         this.userId = userId;
         this.vehicleClassId = vehicleClassId;
+        this.fuelId = fuelId;
     }
 
     public String getVehicleRegisterId() {
@@ -88,5 +93,13 @@ public class VehicleRequestDTO {
 
     public void setVehicleClassId(Integer vehicleClassId) {
         this.vehicleClassId = vehicleClassId;
+    }
+
+    public Integer getFuelId() {
+        return fuelId;
+    }
+
+    public void setFuelId(Integer fuelId) {
+        this.fuelId = fuelId;
     }
 }

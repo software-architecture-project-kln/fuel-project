@@ -3,10 +3,12 @@ package com.kln.FuelBackend.service.vehicalService;
 import com.kln.FuelBackend.dataTransferObject.request.vehicleRequestDTO.VehicleRequestDTO;
 import com.kln.FuelBackend.dataTransferObject.response.CustomApiResponse;
 import com.kln.FuelBackend.dataTransferObject.response.vehicleResponseDTO.VehicleResponseDTO;
+import com.kln.FuelBackend.entity.Fuel;
 import com.kln.FuelBackend.entity.User;
 import com.kln.FuelBackend.entity.Vehicle;
 import com.kln.FuelBackend.entity.VehicleClasses;
 import com.kln.FuelBackend.exception.NotFoundException;
+import com.kln.FuelBackend.repositoryDAO.FuelRepository;
 import com.kln.FuelBackend.repositoryDAO.UserRepository;
 import com.kln.FuelBackend.repositoryDAO.VehicleClassesRepository;
 import com.kln.FuelBackend.repositoryDAO.VehicleRepository;
@@ -28,15 +30,18 @@ public class VehicleService implements VehicleServiceRepository{
 
     private final UserRepository userRepository;
 
+    private final FuelRepository fuelRepository;
+
     @Autowired
     public VehicleService(
             VehicleRepository vehicleRepository,
             VehicleClassesRepository vehicleClassesRepository,
-            UserRepository userRepository
+            UserRepository userRepository, FuelRepository fuelRepository
     ) {
         this.vehicleRepository = vehicleRepository;
         this.vehicleClassesRepository = vehicleClassesRepository;
         this.userRepository = userRepository;
+        this.fuelRepository = fuelRepository;
     }
 
     @Override
@@ -48,6 +53,9 @@ public class VehicleService implements VehicleServiceRepository{
                 .orElseThrow(
                         () -> new NotFoundException("vehicleClassId not found")
                 );
+        Fuel fuel = fuelRepository.findById(vehicleRequestDTO.getFuelId()).orElseThrow(
+                () -> new NotFoundException("fuel id is not found")
+        );
         Vehicle vehicle = new Vehicle(
                 vehicleRequestDTO.getVehicleRegisterId(),
                 vehicleRequestDTO.getVehicleEngineNo(),
@@ -55,7 +63,8 @@ public class VehicleService implements VehicleServiceRepository{
                 vehicleRequestDTO.getYearOfManufacture(),
                 user,
                 null,
-                vehicleClass
+                vehicleClass,
+                fuel
         );
 
         Vehicle savedVehicle = vehicleRepository.save(vehicle);
@@ -68,7 +77,8 @@ public class VehicleService implements VehicleServiceRepository{
                 savedVehicle.getYearOfManufacture(),
                 savedVehicle.getCurrentFuelCapacity(),
                 savedVehicle.getUser().getUserId(),
-                savedVehicle.getVehicleClasses().getVehicleClassId()
+                savedVehicle.getVehicleClasses().getVehicleClassId(),
+                savedVehicle.getFuel().getFuelId()
         );
         return new ResponseEntity<>(
                 new CustomApiResponse(
@@ -93,7 +103,8 @@ public class VehicleService implements VehicleServiceRepository{
                 vehicle.getYearOfManufacture(),
                 vehicle.getCurrentFuelCapacity(),
                 vehicle.getUser().getUserId(),
-                vehicle.getVehicleClasses().getVehicleClassId()
+                vehicle.getVehicleClasses().getVehicleClassId(),
+                vehicle.getFuel().getFuelId()
         );
         return new ResponseEntity<>(
                 new CustomApiResponse(
@@ -126,7 +137,8 @@ public class VehicleService implements VehicleServiceRepository{
                                     vehicle.getYearOfManufacture(),
                                     vehicle.getCurrentFuelCapacity(),
                                     vehicle.getUser().getUserId(),
-                                    vehicle.getVehicleClasses().getVehicleClassId()
+                                    vehicle.getVehicleClasses().getVehicleClassId(),
+                                    vehicle.getFuel().getFuelId()
                             )
                     );
                 }

@@ -9,16 +9,24 @@ public class VehicleClassesResponseDTO {
 
     private Double maxFuelCapacityPerWeek;
 
+    private Double maxFuelCapacityPerWeekForBusinessGov;
+
 //    private Integer fuelId;
 
 
     public VehicleClassesResponseDTO() {
     }
 
-    public VehicleClassesResponseDTO(Integer vehicleClassId, VehicleClassName vehicleClassName, Double maxFuelCapacityPerWeek) {
+    public VehicleClassesResponseDTO(
+            Integer vehicleClassId,
+            VehicleClassName vehicleClassName,
+            Double maxFuelCapacityPerWeek,
+            Double maxFuelCapacityPerWeekForBusinessGov
+    ) {
         this.vehicleClassId = vehicleClassId;
         this.vehicleClassName = vehicleClassName;
         this.maxFuelCapacityPerWeek = maxFuelCapacityPerWeek;
+        this.maxFuelCapacityPerWeekForBusinessGov = maxFuelCapacityPerWeekForBusinessGov;
 //        this.fuelId = fuelId;
     }
 
@@ -46,7 +54,15 @@ public class VehicleClassesResponseDTO {
         this.maxFuelCapacityPerWeek = maxFuelCapacityPerWeek;
     }
 
-//    public Integer getFuelId() {
+    public Double getMaxFuelCapacityPerWeekForBusinessGov() {
+        return maxFuelCapacityPerWeekForBusinessGov;
+    }
+
+    public void setMaxFuelCapacityPerWeekForBusinessGov(Double maxFuelCapacityPerWeekForBusinessGov) {
+        this.maxFuelCapacityPerWeekForBusinessGov = maxFuelCapacityPerWeekForBusinessGov;
+    }
+
+    //    public Integer getFuelId() {
 //        return fuelId;
 //    }
 //

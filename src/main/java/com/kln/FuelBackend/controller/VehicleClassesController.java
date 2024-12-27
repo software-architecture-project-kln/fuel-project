@@ -36,6 +36,18 @@ public class VehicleClassesController {
         );
     }
 
+    @PutMapping("/updateBusinessGovMaxFuel/{vehicleClassId}")
+    public ResponseEntity<?> updateVehicleClassMaxFuelCapacityPerWeekForBusinessGov(
+            @PathVariable Integer vehicleClassId,
+            @RequestBody Map<String,Double> requestBody
+    ){
+        Double maxFuelCapacityPerWeekForBusinessGov = requestBody.get("maxFuelCapacityPerWeekForBusinessGov");
+        return vehicleClassesServiceRepository.updateVehicleClassMaxFuelCapacityPerWeekForBusinessGov(
+                vehicleClassId,
+                maxFuelCapacityPerWeekForBusinessGov
+        );
+    }
+
     @GetMapping
     public ResponseEntity<?> getAllVehicleClasses(){
         return vehicleClassesServiceRepository.getAllVehicleClasses();
