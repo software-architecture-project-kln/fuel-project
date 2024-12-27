@@ -14,4 +14,6 @@ public interface UserServiceRepository {
     public ResponseEntity<?> findUserByID(Integer userId);
 
     public ResponseEntity<?> deleteUser(Integer userId);
+
+    public ResponseEntity<?> verifyUserMobile(Integer userId, Integer otp);
 }

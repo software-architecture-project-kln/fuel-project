@@ -11,16 +11,19 @@ public class UserResponseDTO {
 
     private String mobile;
 
+    private Boolean verifyMobile;
+
     public UserResponseDTO() {
 
     }
 
-    public UserResponseDTO(Integer userId, String f_name, String l_name, String email, String mobile) {
+    public UserResponseDTO(Integer userId, String f_name, String l_name, String email, String mobile, Boolean verifyMobile) {
         this.userId = userId;
         this.f_name = f_name;
         this.l_name = l_name;
         this.email = email;
         this.mobile = mobile;
+        this.verifyMobile = verifyMobile;
     }
 
     public Integer getUserId() {
@@ -61,5 +64,13 @@ public class UserResponseDTO {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public Boolean getVerifyMobile() {
+        return verifyMobile;
+    }
+
+    public void setVerifyMobile(Boolean verifyMobile) {
+        this.verifyMobile = verifyMobile;
     }
 }

@@ -6,6 +6,7 @@ import java.util.UUID;
 
 @Entity
 @Table(
+        name = "business_government",
         indexes = {
                 @Index(name = "idx_business_gov_reg_no",columnList = "businessGovernmentRegNo")
         }
@@ -28,7 +29,7 @@ public class BusinessGovernment {
     @Column(nullable = false,unique = true)
     private String mobile;
 
-    @Column(columnDefinition = "DEFAULT false")
+    @Column(columnDefinition = "boolean DEFAULT false")
     private Boolean mobileIsVerify;
 
     public BusinessGovernment() {

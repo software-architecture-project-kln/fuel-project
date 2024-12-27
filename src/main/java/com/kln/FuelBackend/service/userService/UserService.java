@@ -28,7 +28,8 @@ public class UserService implements UserServiceRepository{
                 userRequestDTO.getL_name(),
                 userRequestDTO.getEmail(),
                 userRequestDTO.getPassword(),
-                userRequestDTO.getMobile()
+                userRequestDTO.getMobile(),
+                false
         );
 
         User savedUser = userRepository.save(user);
@@ -37,7 +38,8 @@ public class UserService implements UserServiceRepository{
                 savedUser.getF_name(),
                 savedUser.getL_name(),
                 savedUser.getEmail(),
-                savedUser.getMobile()
+                savedUser.getMobile(),
+                savedUser.getVerifyMobile()
         );
         CustomApiResponse response =new CustomApiResponse(
                 HttpStatus.CREATED.value(),
@@ -65,7 +67,8 @@ public class UserService implements UserServiceRepository{
                 updatedUser.getF_name(),
                 updatedUser.getL_name(),
                 updatedUser.getEmail(),
-                updatedUser.getMobile()
+                updatedUser.getMobile(),
+                updatedUser.getVerifyMobile()
         );
         return new ResponseEntity<>(
                 new CustomApiResponse(
@@ -102,7 +105,8 @@ public class UserService implements UserServiceRepository{
                 user.getF_name(),
                 user.getL_name(),
                 user.getEmail(),
-                user.getMobile()
+                user.getMobile(),
+                user.getVerifyMobile()
         );
         return new ResponseEntity<>(
                 new CustomApiResponse(
@@ -112,5 +116,10 @@ public class UserService implements UserServiceRepository{
                 ),
                 HttpStatus.OK
         );
+    }
+
+    @Override
+    public ResponseEntity<?> verifyUserMobile(Integer userId, Integer otp) {
+        return null;
     }
 }
