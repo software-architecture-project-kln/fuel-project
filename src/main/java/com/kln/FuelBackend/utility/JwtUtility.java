@@ -2,9 +2,11 @@ package com.kln.FuelBackend.utility;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+@Component
 public class JwtUtility {
     private final String SECRET_KEY = "your_secret_key";
     private final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
