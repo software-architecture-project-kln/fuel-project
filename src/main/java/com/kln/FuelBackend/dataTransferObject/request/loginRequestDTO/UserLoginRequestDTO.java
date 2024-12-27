@@ -1,8 +1,8 @@
-package com.kln.FuelBackend.dataTransferObject.request;
+package com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class LoginRequest {
+public class UserLoginRequestDTO {
 
     @NotBlank(message = "mobile number is required")
     private String mobile;
@@ -10,7 +10,7 @@ public class LoginRequest {
     @NotBlank(message = "password is required")
     private String password;
 
-    public LoginRequest(String mobile, String password) {
+    public UserLoginRequestDTO(String mobile, String password) {
         this.mobile = mobile;
         this.password = password;
     }
