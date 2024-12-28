@@ -15,11 +15,11 @@ public class UserLoginRequestDTO {
         this.password = password;
     }
 
-    public String getUsername() {
+    public String getMobile() {
         return mobile;
     }
 
-    public void setUsername(String mobile) {
+    public void setMobile(String mobile) {
         this.mobile = mobile;
     }
 

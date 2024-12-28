@@ -4,11 +4,26 @@ import com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO.BusinessGo
 import com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO.EmployeeLoginRequestDTO;
 import com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO.FuelStationLoginRequestDTO;
 import com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO.UserLoginRequestDTO;
+import com.kln.FuelBackend.dataTransferObject.response.LoginResponseDTO;
+import com.kln.FuelBackend.dataTransferObject.response.businessGovernmentResponseDTO.BusinessGovernmentResponseDTO;
+import com.kln.FuelBackend.dataTransferObject.response.employeeResponseDTO.EmployeeResponseDTO;
+import com.kln.FuelBackend.dataTransferObject.response.fuelStationResponseDTO.FuelStationResponseDTO;
+import com.kln.FuelBackend.dataTransferObject.response.userResponseDTO.UserResponseDTO;
+import com.kln.FuelBackend.entity.BusinessGovernment;
+import com.kln.FuelBackend.entity.Employee;
+import com.kln.FuelBackend.entity.FuelStation;
+import com.kln.FuelBackend.entity.User;
+import com.kln.FuelBackend.exception.NotFoundException;
+import com.kln.FuelBackend.exception.UnauthorizedAccessException;
 import com.kln.FuelBackend.repositoryDAO.BusinessGovernmentRepository;
 import com.kln.FuelBackend.repositoryDAO.EmployeeRepository;
 import com.kln.FuelBackend.repositoryDAO.FuelStationRepository;
 import com.kln.FuelBackend.repositoryDAO.UserRepository;
+import com.kln.FuelBackend.utility.JwtUtility;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,31 +37,178 @@ public class AuthenticationService implements AuthenticationServiceRepository{
 
     private final FuelStationRepository fuelStationRepository;
 
+    private final JwtUtility jwtUtility;
 
-    public AuthenticationService(UserRepository userRepository, EmployeeRepository employeeRepository, BusinessGovernmentRepository businessGovernmentRepository, FuelStationRepository fuelStationRepository) {
+    private final AuthenticationManager authenticationManager;
+
+
+    public AuthenticationService(UserRepository userRepository, EmployeeRepository employeeRepository, BusinessGovernmentRepository businessGovernmentRepository, FuelStationRepository fuelStationRepository, JwtUtility jwtUtility, AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.employeeRepository = employeeRepository;
         this.businessGovernmentRepository = businessGovernmentRepository;
         this.fuelStationRepository = fuelStationRepository;
+        this.jwtUtility = jwtUtility;
+        this.authenticationManager = authenticationManager;
     }
 
     @Override
     public ResponseEntity<?> userLogin(UserLoginRequestDTO userLoginRequestDTO) {
-        return null;
+        User user = userRepository.findByMobile(userLoginRequestDTO.getMobile()).orElseThrow(
+                () -> new NotFoundException("user not found")
+        );
+
+        String token;
+        if (
+                user != null &&
+                    user.getVerifyMobile() &&
+                        user.getPassword().equals(userLoginRequestDTO.getPassword())
+        ) {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            userLoginRequestDTO.getMobile(),
+                            userLoginRequestDTO.getPassword()
+                    )
+            );
+            // create a jwt token
+            token = jwtUtility.generateToken(user.getMobile());
+        } else {
+            throw new UnauthorizedAccessException("username or password incorrect");
+        }
+
+
+        return new ResponseEntity<>(
+                new LoginResponseDTO(
+                        HttpStatus.OK.value(),
+                        "login successfully",
+                        token,
+                        new UserResponseDTO(
+                                user.getUserId(),
+                                user.getF_name(),
+                                user.getL_name(),
+                                user.getEmail(),
+                                user.getMobile(),
+                                user.getVerifyMobile()
+                        )
+                ),
+                HttpStatus.OK
+        );
     }
 
     @Override
     public ResponseEntity<?> employeeLogin(EmployeeLoginRequestDTO employeeLoginRequestDTO) {
-        return null;
+        Employee employee = employeeRepository.findByEmployeeUsername(employeeLoginRequestDTO.getUsername())
+                .orElseThrow(
+                        () -> new NotFoundException("employee not found")
+                );
+        String token;
+        if (
+                employee != null &&
+                        employee.getEmployeeStatus() &&
+                            employee.getPassword().equals(employeeLoginRequestDTO.getPassword())
+        ){
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            employeeLoginRequestDTO.getUsername(),
+                            employeeLoginRequestDTO.getPassword()
+                    )
+            );
+            token = jwtUtility.generateToken(employee.getEmployeeUsername());
+
+        }else{
+            throw new UnauthorizedAccessException("username or password incorrect");
+        }
+        return new ResponseEntity<>(
+                new LoginResponseDTO(
+                        HttpStatus.OK.value(),
+                        "login successfully",
+                        token,
+                        new EmployeeResponseDTO(
+                                employee.getEmployeeId(),
+                                employee.getEmployeeUsername(),
+                                employee.getEmployeeEmail(),
+                                employee.getFuelStation().getFuelStationId(),
+                                employee.getEmployeeStatus()
+                        )
+                ),
+                HttpStatus.OK
+        );
     }
 
     @Override
     public ResponseEntity<?> fuelStationLogin(FuelStationLoginRequestDTO fuelStationLoginRequestDTO) {
-        return null;
+        FuelStation fuelStation = fuelStationRepository.findByFuelStationRegisterId(
+                fuelStationLoginRequestDTO.getFuelStationRegisterId()
+        ).orElseThrow(
+                () -> new NotFoundException("fuel station not found")
+        );
+        String token;
+        if (
+                fuelStation != null &&
+                        fuelStation.getPassword().equals(fuelStationLoginRequestDTO.getPassword())
+        ){
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            fuelStationLoginRequestDTO.getFuelStationRegisterId(),
+                            fuelStationLoginRequestDTO.getPassword()
+                    )
+            );
+            token = jwtUtility.generateToken(fuelStation.getFuelStationRegisterId());
+        }else{
+            throw new UnauthorizedAccessException("username or password incorrect");
+        }
+        return new ResponseEntity<>(
+                new LoginResponseDTO(
+                        HttpStatus.OK.value(),
+                        "login successfully",
+                        token,
+                        new FuelStationResponseDTO(
+                                fuelStation.getFuelStationId(),
+                                fuelStation.getFuelStationRegisterId(),
+                                fuelStation.getFuelStationOwnerName(),
+                                fuelStation.getFuelStationEmail()
+                        )
+                ),
+                HttpStatus.OK
+        );
     }
 
     @Override
     public ResponseEntity<?> businessLogin(BusinessGovLoginRequestDTO businessGovLoginRequestDTO) {
-        return null;
+        BusinessGovernment businessGovernment = businessGovernmentRepository.findByBusinessGovernmentRegNo(
+                businessGovLoginRequestDTO.getBusinessGovernmentRegNo()
+        ).orElseThrow(
+                () -> new NotFoundException("business gov not found")
+        );
+        String token;
+        if(
+                businessGovernment != null &&
+                        businessGovernment.getMobileIsVerify() &&
+                            businessGovernment.getPassword().equals(businessGovLoginRequestDTO.getPassword())
+        ){
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            businessGovLoginRequestDTO.getBusinessGovernmentRegNo(),
+                            businessGovLoginRequestDTO.getPassword()
+                    )
+            );
+            token = jwtUtility.generateToken(businessGovernment.getBusinessGovernmentRegNo());
+        }else{
+            throw new UnauthorizedAccessException("username or password incorrect");
+        }
+        return new ResponseEntity<>(
+                new LoginResponseDTO(
+                        HttpStatus.OK.value(),
+                        "login successfully",
+                        token,
+                        new BusinessGovernmentResponseDTO(
+                                businessGovernment.getBusinessGovernmentId(),
+                                businessGovernment.getBusinessGovernmentRegNo(),
+                                businessGovernment.getEmail(),
+                                businessGovernment.getMobile(),
+                                businessGovernment.getMobileIsVerify()
+                        )
+                ),
+                HttpStatus.OK
+        );
     }
 }

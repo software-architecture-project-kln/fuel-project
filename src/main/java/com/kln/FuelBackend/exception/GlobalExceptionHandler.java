@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.naming.AuthenticationException;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -30,6 +32,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UnauthorizedAccessException.class)
     public ResponseEntity<?> handleUnauthorizedAccessException(UnauthorizedAccessException unauthorizedAccessException){
         ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(false, unauthorizedAccessException.getMessage());
+        return new ResponseEntity<>(exceptionResponseDTO,HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<?> handleAuthException( AuthenticationException authenticationException){
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(false,authenticationException.getMessage());
         return new ResponseEntity<>(exceptionResponseDTO,HttpStatus.UNAUTHORIZED);
     }
 
