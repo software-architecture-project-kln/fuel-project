@@ -48,14 +48,16 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                             new WebAuthenticationDetailsSource().buildDetails(request)
                     );
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                } else {
-                    throw new UnauthorizedAccessException("Unauthorized access");
                 }
-            } else {
-                throw new ForbiddenException("Can't access this endpoint without token");
+//                else {
+//                    throw new UnauthorizedAccessException("Unauthorized access");
+//                }
             }
+//            else {
+//                throw new ForbiddenException("Can't access this endpoint without token");
+//            }
 
-            filterChain.doFilter(request, response);
+
 
         } catch (UnauthorizedAccessException unauthorizedAccessException) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
@@ -91,6 +93,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             response.getWriter().flush();
             return;
         }
+
+        filterChain.doFilter(request, response);
     }
 
 }
