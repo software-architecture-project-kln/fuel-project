@@ -1,5 +1,6 @@
 package com.kln.FuelBackend.utility;
 
+import com.kln.FuelBackend.exception.ForbiddenException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,6 +48,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 }
 
+            }else{
+                throw new ForbiddenException("can't access without token");
             }
             filterChain.doFilter(request,response);
     }

@@ -21,6 +21,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(exceptionResponseDTO,HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleForbiddenException(ForbiddenException forbiddenException){
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(false, forbiddenException.getMessage());
+        return new ResponseEntity<>(exceptionResponseDTO,HttpStatus.FORBIDDEN);
+    }
+
     @ExceptionHandler(Exception.class)
     public  ResponseEntity<ExceptionResponseDTO> handleAnyException(Exception exception){
         ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(false,exception.getMessage());
