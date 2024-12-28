@@ -8,14 +8,14 @@ import java.time.LocalDateTime;
 public class ExceptionResponseDTO {
     private boolean status;
 
-    private LocalDateTime date;
+//    private LocalDateTime date;
 
     private String message;
 
     public ExceptionResponseDTO(boolean status, String message) {
         this.status = status;
         this.message = message;
-        this.date = LocalDateTime.now();
+//        this.date = LocalDateTime.now();
     }
 
     public boolean isStatus() {
@@ -26,13 +26,13 @@ public class ExceptionResponseDTO {
         this.status = status;
     }
 
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
+//    public LocalDateTime getDate() {
+//        return date;
+//    }
+//
+//    public void setDate(LocalDateTime date) {
+//        this.date = date;
+//    }
 
     public String getMessage() {
         return message;

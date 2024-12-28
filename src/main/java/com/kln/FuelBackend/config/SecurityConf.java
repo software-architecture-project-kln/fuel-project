@@ -39,8 +39,7 @@ public class SecurityConf {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/v1/user/**").permitAll()
-                         // .requestMatchers(HttpMethod.POST,"/api/v1/employee/**").permitAll()
+                        .requestMatchers("/api/v1/user/**").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/v1/fuelStation/**").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/v1/businessGov/**").permitAll()
                         .anyRequest().authenticated()
