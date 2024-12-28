@@ -20,8 +20,11 @@ public class SecurityConf {
 
     private final JwtAuthFilter jwtAuthFilter;
 
-    public SecurityConf(JwtAuthFilter jwtAuthFilter) {
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+
+    public SecurityConf(JwtAuthFilter jwtAuthFilter, CustomAuthenticationEntryPoint customAuthenticationEntryPoint) {
         this.jwtAuthFilter = jwtAuthFilter;
+        this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
     }
 
     @Bean
@@ -54,7 +57,7 @@ public class SecurityConf {
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(
                         exception -> {
-                            exception.authenticationEntryPoint()
+                            exception.authenticationEntryPoint(customAuthenticationEntryPoint);
                         }
                 );
 
