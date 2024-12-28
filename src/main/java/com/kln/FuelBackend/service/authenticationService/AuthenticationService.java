@@ -1,24 +1,16 @@
 package com.kln.FuelBackend.service.authenticationService;
 
-import com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO.BusinessGovLoginRequestDTO;
-import com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO.EmployeeLoginRequestDTO;
-import com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO.FuelStationLoginRequestDTO;
-import com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO.UserLoginRequestDTO;
+import com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO.*;
 import com.kln.FuelBackend.dataTransferObject.response.LoginResponseDTO;
+import com.kln.FuelBackend.dataTransferObject.response.administratorResponseDTO.AdministratorResponseDTO;
 import com.kln.FuelBackend.dataTransferObject.response.businessGovernmentResponseDTO.BusinessGovernmentResponseDTO;
 import com.kln.FuelBackend.dataTransferObject.response.employeeResponseDTO.EmployeeResponseDTO;
 import com.kln.FuelBackend.dataTransferObject.response.fuelStationResponseDTO.FuelStationResponseDTO;
 import com.kln.FuelBackend.dataTransferObject.response.userResponseDTO.UserResponseDTO;
-import com.kln.FuelBackend.entity.BusinessGovernment;
-import com.kln.FuelBackend.entity.Employee;
-import com.kln.FuelBackend.entity.FuelStation;
-import com.kln.FuelBackend.entity.User;
+import com.kln.FuelBackend.entity.*;
 import com.kln.FuelBackend.exception.NotFoundException;
 import com.kln.FuelBackend.exception.UnauthorizedAccessException;
-import com.kln.FuelBackend.repositoryDAO.BusinessGovernmentRepository;
-import com.kln.FuelBackend.repositoryDAO.EmployeeRepository;
-import com.kln.FuelBackend.repositoryDAO.FuelStationRepository;
-import com.kln.FuelBackend.repositoryDAO.UserRepository;
+import com.kln.FuelBackend.repositoryDAO.*;
 import com.kln.FuelBackend.utility.JwtUtility;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,14 +33,17 @@ public class AuthenticationService implements AuthenticationServiceRepository{
 
     private final AuthenticationManager authenticationManager;
 
+    private final AdministratorRepository administratorRepository;
 
-    public AuthenticationService(UserRepository userRepository, EmployeeRepository employeeRepository, BusinessGovernmentRepository businessGovernmentRepository, FuelStationRepository fuelStationRepository, JwtUtility jwtUtility, AuthenticationManager authenticationManager) {
+
+    public AuthenticationService(UserRepository userRepository, EmployeeRepository employeeRepository, BusinessGovernmentRepository businessGovernmentRepository, FuelStationRepository fuelStationRepository, JwtUtility jwtUtility, AuthenticationManager authenticationManager, AdministratorRepository administratorRepository) {
         this.userRepository = userRepository;
         this.employeeRepository = employeeRepository;
         this.businessGovernmentRepository = businessGovernmentRepository;
         this.fuelStationRepository = fuelStationRepository;
         this.jwtUtility = jwtUtility;
         this.authenticationManager = authenticationManager;
+        this.administratorRepository = administratorRepository;
     }
 
     @Override
@@ -79,7 +74,7 @@ public class AuthenticationService implements AuthenticationServiceRepository{
         return new ResponseEntity<>(
                 new LoginResponseDTO(
                         HttpStatus.OK.value(),
-                        "login successfully",
+                        "user login successfully",
                         token,
                         new UserResponseDTO(
                                 user.getUserId(),
@@ -120,7 +115,7 @@ public class AuthenticationService implements AuthenticationServiceRepository{
         return new ResponseEntity<>(
                 new LoginResponseDTO(
                         HttpStatus.OK.value(),
-                        "login successfully",
+                        "employee login successfully",
                         token,
                         new EmployeeResponseDTO(
                                 employee.getEmployeeId(),
@@ -159,7 +154,7 @@ public class AuthenticationService implements AuthenticationServiceRepository{
         return new ResponseEntity<>(
                 new LoginResponseDTO(
                         HttpStatus.OK.value(),
-                        "login successfully",
+                        "fuel station login successfully",
                         token,
                         new FuelStationResponseDTO(
                                 fuelStation.getFuelStationId(),
@@ -198,7 +193,7 @@ public class AuthenticationService implements AuthenticationServiceRepository{
         return new ResponseEntity<>(
                 new LoginResponseDTO(
                         HttpStatus.OK.value(),
-                        "login successfully",
+                        "businessGov login successfully",
                         token,
                         new BusinessGovernmentResponseDTO(
                                 businessGovernment.getBusinessGovernmentId(),
@@ -206,6 +201,43 @@ public class AuthenticationService implements AuthenticationServiceRepository{
                                 businessGovernment.getEmail(),
                                 businessGovernment.getMobile(),
                                 businessGovernment.getMobileIsVerify()
+                        )
+                ),
+                HttpStatus.OK
+        );
+    }
+
+    @Override
+    public ResponseEntity<?> administratorLogin(AdministratorLoginRequestDTO administratorLoginRequestDTO) {
+        Administrator administrator = administratorRepository.findByAdministratorUsername(
+                administratorLoginRequestDTO.getAdministratorUsername()
+        ).orElseThrow(
+                () -> new NotFoundException("administrator not found")
+        );
+        String token;
+        if (
+                administrator != null &&
+                        administrator.getPassword().equals(administratorLoginRequestDTO.getPassword())
+        ){
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            administratorLoginRequestDTO.getAdministratorUsername(),
+                            administratorLoginRequestDTO.getPassword()
+                    )
+            );
+            token = jwtUtility.generateToken(administrator.getAdministratorUsername());
+        }else{
+            throw new UnauthorizedAccessException("username or password incorrect");
+        }
+        return new ResponseEntity<>(
+                new LoginResponseDTO(
+                        HttpStatus.OK.value(),
+                        "administrator login successfully",
+                        token,
+                        new AdministratorResponseDTO(
+                                administrator.getAdministratorId(),
+                                administrator.getAdministratorUsername(),
+                                administrator.getAdministratorEmail()
                         )
                 ),
                 HttpStatus.OK
