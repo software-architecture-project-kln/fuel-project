@@ -1,6 +1,7 @@
 package com.kln.FuelBackend.utility;
 
 import com.kln.FuelBackend.exception.ForbiddenException;
+import com.kln.FuelBackend.exception.UnauthorizedAccessException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -46,6 +47,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                             new WebAuthenticationDetailsSource().buildDetails(request)
                     );
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                }else{
+                    throw new UnauthorizedAccessException("token is not valid");
                 }
 
             }else{

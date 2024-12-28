@@ -10,25 +10,31 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ExceptionResponseDTO> handleRunTimeException(RuntimeException runtimeException){
+    public ResponseEntity<?> handleRunTimeException(RuntimeException runtimeException){
         ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(false,runtimeException.getMessage());
         return new ResponseEntity<>(exceptionResponseDTO, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ExceptionResponseDTO> handleNotFoundException(NotFoundException notFoundException){
+    public ResponseEntity<?> handleNotFoundException(NotFoundException notFoundException){
         ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(false, notFoundException.getMessage());
         return new ResponseEntity<>(exceptionResponseDTO,HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ForbiddenException.class)
-    public ResponseEntity<ExceptionResponseDTO> handleForbiddenException(ForbiddenException forbiddenException){
+    public ResponseEntity<?> handleForbiddenException(ForbiddenException forbiddenException){
         ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(false, forbiddenException.getMessage());
         return new ResponseEntity<>(exceptionResponseDTO,HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler(UnauthorizedAccessException.class)
+    public ResponseEntity<?> handleUnauthorizedAccessException(UnauthorizedAccessException unauthorizedAccessException){
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(false, unauthorizedAccessException.getMessage());
+        return new ResponseEntity<>(exceptionResponseDTO,HttpStatus.UNAUTHORIZED);
+    }
+
     @ExceptionHandler(Exception.class)
-    public  ResponseEntity<ExceptionResponseDTO> handleAnyException(Exception exception){
+    public  ResponseEntity<?> handleAnyException(Exception exception){
         ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(false,exception.getMessage());
         return new ResponseEntity<>(exceptionResponseDTO,HttpStatus.INTERNAL_SERVER_ERROR);
     }
