@@ -41,6 +41,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(exceptionResponseDTO,HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(JwtValidationException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleJwtValidationException(JwtValidationException jwtValidationException){
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(false, jwtValidationException.getMessage());
+        return new ResponseEntity<>(exceptionResponseDTO,HttpStatus.UNAUTHORIZED);
+    }
+
     @ExceptionHandler(Exception.class)
     public  ResponseEntity<ExceptionResponseDTO> handleAnyException(Exception exception){
         ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(false,exception.getMessage());

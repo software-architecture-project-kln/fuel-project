@@ -3,6 +3,7 @@ package com.kln.FuelBackend.utility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kln.FuelBackend.dataTransferObject.response.ExceptionResponseDTO;
 import com.kln.FuelBackend.exception.ForbiddenException;
+import com.kln.FuelBackend.exception.UnauthorizedAccessException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,6 +34,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
+        try {
             String authenticationHeader = request.getHeader("Authorization");
 
             if (authenticationHeader != null && authenticationHeader.startsWith("Bearer ")) {
@@ -40,35 +42,55 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 String username = jwtUtility.extractUsername(token);
 
                 if (jwtUtility.validateToken(token, username)) {
-                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                            username, null, null
-                    );
+                    UsernamePasswordAuthenticationToken authenticationToken =
+                            new UsernamePasswordAuthenticationToken(username, null, null);
                     authenticationToken.setDetails(
                             new WebAuthenticationDetailsSource().buildDetails(request)
                     );
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 } else {
-                    response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                    response.setContentType("application/json");
-                    response.getWriter().write(
-                            new ObjectMapper().writeValueAsString(
-                                    new ExceptionResponseDTO(false, "unauthorized access")
-                            )
-                    );
+                    throw new UnauthorizedAccessException("Unauthorized access");
                 }
-            }else{
-
-                response.setStatus(HttpStatus.FORBIDDEN.value());
-                response.setContentType("application/json");
-                response.getWriter().write(
-                        new ObjectMapper().writeValueAsString(
-                                new ExceptionResponseDTO(false, "can't access endpoint without token")
-                        )
-                );
-                response.getWriter().flush();
-                return;
-
+            } else {
+                throw new ForbiddenException("Can't access this endpoint without token");
             }
-            filterChain.doFilter(request,response);
+
+            filterChain.doFilter(request, response);
+
+        } catch (UnauthorizedAccessException unauthorizedAccessException) {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.setContentType("application/json");
+            response.getWriter().write(
+                    new ObjectMapper().writeValueAsString(
+                            new ExceptionResponseDTO(false, unauthorizedAccessException.getMessage())
+                    )
+            );
+            response.getWriter().flush();
+            return;
+
+        } catch (ForbiddenException forbiddenException) {
+
+            response.setStatus(HttpStatus.FORBIDDEN.value());
+            response.setContentType("application/json");
+            response.getWriter().write(
+                    new ObjectMapper().writeValueAsString(
+                            new ExceptionResponseDTO(false, forbiddenException.getMessage())
+                    )
+            );
+            response.getWriter().flush();
+            return;
+
+        } catch (Exception exception){
+            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            response.setContentType("application/json");
+            response.getWriter().write(
+                    new ObjectMapper().writeValueAsString(
+                            new ExceptionResponseDTO(false, exception.getMessage())
+                    )
+            );
+            response.getWriter().flush();
+            return;
+        }
     }
+
 }

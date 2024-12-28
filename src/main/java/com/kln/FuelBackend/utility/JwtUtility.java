@@ -1,7 +1,7 @@
 package com.kln.FuelBackend.utility;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.kln.FuelBackend.exception.JwtValidationException;
+import io.jsonwebtoken.*;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -21,15 +21,29 @@ public class JwtUtility {
     }
 
     public String extractUsername(String token) {
-        return Jwts.parser()
-                .setSigningKey(SECRET_KEY)
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+        try {
+            return Jwts.parser()
+                    .setSigningKey(SECRET_KEY)
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .getSubject();
+        } catch (MalformedJwtException e) {
+            throw new JwtValidationException("Malformed JWT token");
+        } catch (ExpiredJwtException e) {
+            throw new JwtValidationException("JWT token has expired");
+        } catch (UnsupportedJwtException e) {
+            throw new JwtValidationException("Unsupported JWT token");
+        } catch (IllegalArgumentException e) {
+            throw new JwtValidationException("JWT claims string is empty");
+        }
     }
 
     public boolean validateToken(String token, String username) {
-        return username.equals(extractUsername(token)) && !isTokenExpired(token);
+        try {
+            return username.equals(extractUsername(token)) && !isTokenExpired(token);
+        } catch (JwtValidationException e) {
+            throw e;
+        }
     }
 
     private boolean isTokenExpired(String token) {
