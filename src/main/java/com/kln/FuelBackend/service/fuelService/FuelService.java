@@ -26,6 +26,8 @@ public class FuelService implements FuelServiceRepository{
         this.fuelRepository = fuelRepository;
     }
 
+
+
     @Override
     public ResponseEntity<?> createFuel(FuelRequestDTO fuelRequestDTO) {
         Fuel fuel = new Fuel(fuelRequestDTO.getFuelName(),fuelRequestDTO.getPrice());
