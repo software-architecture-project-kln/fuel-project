@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class BusinessGovernmentResponseDTO {
 
-    private UUID businessGovernmentId;
+    private Integer businessGovernmentId;
 
     private String businessGovernmentRegNo;
 
@@ -14,7 +14,7 @@ public class BusinessGovernmentResponseDTO {
 
     private Boolean mobileIsVerify;
 
-    public BusinessGovernmentResponseDTO(UUID businessGovernmentId, String businessGovernmentRegNo, String email, String mobile, Boolean mobileIsVerify) {
+    public BusinessGovernmentResponseDTO(Integer businessGovernmentId, String businessGovernmentRegNo, String email, String mobile, Boolean mobileIsVerify) {
         this.businessGovernmentId = businessGovernmentId;
         this.businessGovernmentRegNo = businessGovernmentRegNo;
         this.email = email;
@@ -22,11 +22,11 @@ public class BusinessGovernmentResponseDTO {
         this.mobileIsVerify = mobileIsVerify;
     }
 
-    public UUID getBusinessGovernmentId() {
+    public Integer getBusinessGovernmentId() {
         return businessGovernmentId;
     }
 
-    public void setBusinessGovernmentId(UUID businessGovernmentId) {
+    public void setBusinessGovernmentId(Integer businessGovernmentId) {
         this.businessGovernmentId = businessGovernmentId;
     }
 

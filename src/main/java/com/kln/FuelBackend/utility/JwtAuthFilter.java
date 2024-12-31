@@ -49,13 +49,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     );
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 }
-//                else {
-//                    throw new UnauthorizedAccessException("Unauthorized access");
-//                }
             }
-//            else {
-//                throw new ForbiddenException("Can't access this endpoint without token");
-//            }
 
 
 

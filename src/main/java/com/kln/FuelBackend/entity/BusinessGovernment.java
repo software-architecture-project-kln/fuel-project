@@ -15,7 +15,7 @@ public class BusinessGovernment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID businessGovernmentId;
+    private Integer businessGovernmentId;
 
     @Column(nullable = false,unique = true)
     private String businessGovernmentRegNo;
@@ -43,7 +43,7 @@ public class BusinessGovernment {
         this.mobileIsVerify = mobileIsVerify;
     }
 
-    public BusinessGovernment(UUID businessGovernmentId, String businessGovernmentRegNo, String email, String password, String mobile, Boolean mobileIsVerify) {
+    public BusinessGovernment(Integer businessGovernmentId, String businessGovernmentRegNo, String email, String password, String mobile, Boolean mobileIsVerify) {
         this.businessGovernmentId = businessGovernmentId;
         this.businessGovernmentRegNo = businessGovernmentRegNo;
         this.email = email;
@@ -52,11 +52,11 @@ public class BusinessGovernment {
         this.mobileIsVerify = mobileIsVerify;
     }
 
-    public UUID getBusinessGovernmentId() {
+    public Integer getBusinessGovernmentId() {
         return businessGovernmentId;
     }
 
-    public void setBusinessGovernmentId(UUID businessGovernmentId) {
+    public void setBusinessGovernmentId(Integer businessGovernmentId) {
         this.businessGovernmentId = businessGovernmentId;
     }
 

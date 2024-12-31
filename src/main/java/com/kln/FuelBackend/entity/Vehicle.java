@@ -1,5 +1,6 @@
 package com.kln.FuelBackend.entity;
 
+import com.kln.FuelBackend.enums.OwnerType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 
@@ -37,13 +38,22 @@ public class Vehicle {
     @Min(0)
     private Double currentFuelCapacity;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "userId", nullable = true)
-    private User user;
 
-    @ManyToOne
-    @JoinColumn(name= "business_government_id",referencedColumnName = "businessGovernmentId", nullable = true)
-    private BusinessGovernment businessGovernment;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private OwnerType ownerType;
+
+    @Column(nullable = false)
+    private Integer ownerId;
+
+//    @ManyToOne
+//    @JoinColumn(name = "user_id", referencedColumnName = "userId", nullable = true)
+//    private User user;
+
+//    @ManyToOne
+//    @JoinColumn(name= "business_government_id",referencedColumnName = "businessGovernmentId", nullable = true)
+//    private BusinessGovernment businessGovernment;
+
 
     @ManyToOne
     @JoinColumn(name = "vehicle_class_id", referencedColumnName = "vehicleClassId", nullable = false)
@@ -56,22 +66,20 @@ public class Vehicle {
     public Vehicle(){}
 
     public Vehicle(
-                   String vehicleRegisterId,
-                   String vehicleEngineNo,
-                   String model,
-                   Date yearOfManufacture,
-                   User user,
-                   BusinessGovernment businessGovernment,
-                   VehicleClasses vehicleClasses,
-                   Fuel fuel
-    ) {
+            String vehicleRegisterId,
+            String vehicleEngineNo,
+            String model,
+            Date yearOfManufacture,
+            OwnerType ownerType,
+            Integer ownerId,
+            VehicleClasses vehicleClasses,
+            Fuel fuel) {
         this.vehicleRegisterId = vehicleRegisterId;
         this.vehicleEngineNo = vehicleEngineNo;
         this.model = model;
         this.yearOfManufacture = yearOfManufacture;
-
-        this.user = user;
-        this.businessGovernment = businessGovernment;
+        this.ownerType = ownerType;
+        this.ownerId = ownerId;
         this.vehicleClasses = vehicleClasses;
         this.fuel = fuel;
     }
@@ -83,8 +91,6 @@ public class Vehicle {
             String model,
             Date yearOfManufacture,
             Double currentFuelCapacity,
-            User user,
-            BusinessGovernment businessGovernment,
             VehicleClasses vehicleClasses,
             Fuel fuel
     ) {
@@ -94,11 +100,11 @@ public class Vehicle {
         this.model = model;
         this.yearOfManufacture = yearOfManufacture;
         this.currentFuelCapacity = currentFuelCapacity;
-        this.user = user;
-        this.businessGovernment = businessGovernment;
         this.vehicleClasses = vehicleClasses;
         this.fuel = fuel;
     }
+
+
 
     public UUID getVehicleId() {
         return vehicleId;
@@ -148,13 +154,13 @@ public class Vehicle {
         this.currentFuelCapacity = currentFuelCapacity;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 
     public VehicleClasses getVehicleClasses() {
         return vehicleClasses;
@@ -164,12 +170,20 @@ public class Vehicle {
         this.vehicleClasses = vehicleClasses;
     }
 
-    public BusinessGovernment getBusinessGovernment() {
-        return businessGovernment;
+    public OwnerType getOwnerType() {
+        return ownerType;
     }
 
-    public void setBusinessGovernment(BusinessGovernment businessGovernment) {
-        this.businessGovernment = businessGovernment;
+    public void setOwnerType(OwnerType ownerType) {
+        this.ownerType = ownerType;
+    }
+
+    public Integer getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Integer ownerId) {
+        this.ownerId = ownerId;
     }
 
     public Fuel getFuel() {

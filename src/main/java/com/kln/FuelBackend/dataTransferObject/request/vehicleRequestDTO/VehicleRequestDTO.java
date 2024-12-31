@@ -18,8 +18,8 @@ public class VehicleRequestDTO {
     @NotBlank(message = "yearOfManufacture is required")
     private Date yearOfManufacture;
 
-    @NotBlank(message = "userId is required")
-    private Integer userId;
+    @NotBlank(message = "ownerId is required")
+    private Integer ownerId;
 
     @NotBlank(message = "vehicleClassId is required")
     private Integer vehicleClassId;
@@ -34,7 +34,7 @@ public class VehicleRequestDTO {
             String vehicleEngineNo,
             String model,
             Date yearOfManufacture,
-            Integer userId,
+            Integer ownerId,
             Integer vehicleClassId,
             Integer fuelId
     ) {
@@ -42,7 +42,7 @@ public class VehicleRequestDTO {
         this.vehicleEngineNo = vehicleEngineNo;
         this.model = model;
         this.yearOfManufacture = yearOfManufacture;
-        this.userId = userId;
+        this.ownerId = ownerId;
         this.vehicleClassId = vehicleClassId;
         this.fuelId = fuelId;
     }
@@ -79,12 +79,13 @@ public class VehicleRequestDTO {
         this.yearOfManufacture = yearOfManufacture;
     }
 
-    public Integer getUserId() {
-        return userId;
+
+    public Integer getOwnerId() {
+        return ownerId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setOwnerId(Integer ownerId) {
+        this.ownerId = ownerId;
     }
 
     public Integer getVehicleClassId() {

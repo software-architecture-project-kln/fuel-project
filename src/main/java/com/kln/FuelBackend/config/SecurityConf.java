@@ -47,7 +47,7 @@ public class SecurityConf {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/user/**").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/v1/fuelStation/**").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/v1/businessGov/**").permitAll()

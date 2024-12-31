@@ -1,6 +1,5 @@
 package com.kln.FuelBackend.service.authenticationService;
 
-import com.kln.FuelBackend.dataTransferObject.request.LoginRequest;
 import com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO.*;
 import org.springframework.http.ResponseEntity;
 

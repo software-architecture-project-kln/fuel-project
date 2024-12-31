@@ -7,6 +7,7 @@ import com.kln.FuelBackend.entity.Fuel;
 import com.kln.FuelBackend.entity.User;
 import com.kln.FuelBackend.entity.Vehicle;
 import com.kln.FuelBackend.entity.VehicleClasses;
+import com.kln.FuelBackend.enums.OwnerType;
 import com.kln.FuelBackend.exception.NotFoundException;
 import com.kln.FuelBackend.repositoryDAO.FuelRepository;
 import com.kln.FuelBackend.repositoryDAO.UserRepository;
@@ -46,7 +47,7 @@ public class VehicleService implements VehicleServiceRepository{
 
     @Override
     public ResponseEntity<?> createVehicle(VehicleRequestDTO vehicleRequestDTO) {
-        User user = userRepository.findById(vehicleRequestDTO.getUserId()).orElseThrow(
+        User user = userRepository.findById(vehicleRequestDTO.getOwnerId()).orElseThrow(
                 () -> new NotFoundException("userId not found")
         );
         VehicleClasses vehicleClass = vehicleClassesRepository.findById(vehicleRequestDTO.getVehicleClassId())
@@ -61,8 +62,8 @@ public class VehicleService implements VehicleServiceRepository{
                 vehicleRequestDTO.getVehicleEngineNo(),
                 vehicleRequestDTO.getModel(),
                 vehicleRequestDTO.getYearOfManufacture(),
-                user,
-                null,
+                OwnerType.User,
+                vehicleRequestDTO.getOwnerId(),
                 vehicleClass,
                 fuel
         );
@@ -76,7 +77,7 @@ public class VehicleService implements VehicleServiceRepository{
                 savedVehicle.getModel(),
                 savedVehicle.getYearOfManufacture(),
                 savedVehicle.getCurrentFuelCapacity(),
-                savedVehicle.getUser().getUserId(),
+                savedVehicle.getOwnerId(),
                 savedVehicle.getVehicleClasses().getVehicleClassId(),
                 savedVehicle.getFuel().getFuelId()
         );
@@ -102,7 +103,7 @@ public class VehicleService implements VehicleServiceRepository{
                 vehicle.getModel(),
                 vehicle.getYearOfManufacture(),
                 vehicle.getCurrentFuelCapacity(),
-                vehicle.getUser().getUserId(),
+                vehicle.getOwnerId(),
                 vehicle.getVehicleClasses().getVehicleClassId(),
                 vehicle.getFuel().getFuelId()
         );
@@ -136,7 +137,7 @@ public class VehicleService implements VehicleServiceRepository{
                                     vehicle.getModel(),
                                     vehicle.getYearOfManufacture(),
                                     vehicle.getCurrentFuelCapacity(),
-                                    vehicle.getUser().getUserId(),
+                                    vehicle.getOwnerId(),
                                     vehicle.getVehicleClasses().getVehicleClassId(),
                                     vehicle.getFuel().getFuelId()
                             )
