@@ -9,6 +9,8 @@ public interface VehicleServiceRepository {
 
     public ResponseEntity<?> createVehicle(VehicleRequestDTO vehicleRequestDTO);
 
+    public ResponseEntity<?> createBusinessGovVehicle(VehicleRequestDTO vehicleRequestDTO);
+
     public ResponseEntity<?> findVehicleById(UUID vehicleId);
 
     public ResponseEntity<?> updateVehicleCurrentFuelCapacity(UUID vehicleId, Double fuelCapacity);

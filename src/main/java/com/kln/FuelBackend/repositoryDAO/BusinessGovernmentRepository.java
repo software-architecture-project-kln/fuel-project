@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface BusinessGovernmentRepository extends JpaRepository<BusinessGovernment, UUID> {
+public interface BusinessGovernmentRepository extends JpaRepository<BusinessGovernment, Integer> {
 
     @Query
     Optional<BusinessGovernment> findByBusinessGovernmentRegNo (String businessGovernmentRegNo);

@@ -3,16 +3,10 @@ package com.kln.FuelBackend.service.vehicalService;
 import com.kln.FuelBackend.dataTransferObject.request.vehicleRequestDTO.VehicleRequestDTO;
 import com.kln.FuelBackend.dataTransferObject.response.CustomApiResponse;
 import com.kln.FuelBackend.dataTransferObject.response.vehicleResponseDTO.VehicleResponseDTO;
-import com.kln.FuelBackend.entity.Fuel;
-import com.kln.FuelBackend.entity.User;
-import com.kln.FuelBackend.entity.Vehicle;
-import com.kln.FuelBackend.entity.VehicleClasses;
+import com.kln.FuelBackend.entity.*;
 import com.kln.FuelBackend.enums.OwnerType;
 import com.kln.FuelBackend.exception.NotFoundException;
-import com.kln.FuelBackend.repositoryDAO.FuelRepository;
-import com.kln.FuelBackend.repositoryDAO.UserRepository;
-import com.kln.FuelBackend.repositoryDAO.VehicleClassesRepository;
-import com.kln.FuelBackend.repositoryDAO.VehicleRepository;
+import com.kln.FuelBackend.repositoryDAO.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,16 +27,19 @@ public class VehicleService implements VehicleServiceRepository{
 
     private final FuelRepository fuelRepository;
 
+    private final BusinessGovernmentRepository businessGovernmentRepository;
+
     @Autowired
     public VehicleService(
             VehicleRepository vehicleRepository,
             VehicleClassesRepository vehicleClassesRepository,
-            UserRepository userRepository, FuelRepository fuelRepository
+            UserRepository userRepository, FuelRepository fuelRepository, BusinessGovernmentRepository businessGovernmentRepository
     ) {
         this.vehicleRepository = vehicleRepository;
         this.vehicleClassesRepository = vehicleClassesRepository;
         this.userRepository = userRepository;
         this.fuelRepository = fuelRepository;
+        this.businessGovernmentRepository = businessGovernmentRepository;
     }
 
     @Override
@@ -88,6 +85,54 @@ public class VehicleService implements VehicleServiceRepository{
                         responseDTO
                 ),
                 HttpStatus.CREATED
+        );
+    }
+
+    @Override
+    public ResponseEntity<?> createBusinessGovVehicle(VehicleRequestDTO vehicleRequestDTO) {
+        // check the business is already exists
+        BusinessGovernment gov = businessGovernmentRepository.findById(vehicleRequestDTO.getOwnerId())
+                .orElseThrow(
+                        () -> new NotFoundException("businessGov not registered")
+                );
+        VehicleClasses vehicleClass = vehicleClassesRepository.findById(vehicleRequestDTO.getVehicleClassId())
+                .orElseThrow(
+                        () -> new NotFoundException("vehicleClassId not found")
+                );
+        Fuel fuel = fuelRepository.findById(vehicleRequestDTO.getFuelId()).orElseThrow(
+                () -> new NotFoundException("fuel id is not found")
+        );
+
+        Vehicle vehicle = new Vehicle(
+                vehicleRequestDTO.getVehicleRegisterId(),
+                vehicleRequestDTO.getVehicleEngineNo(),
+                vehicleRequestDTO.getModel(),
+                vehicleRequestDTO.getYearOfManufacture(),
+                OwnerType.BusinessGovUser,
+                vehicleRequestDTO.getOwnerId(),
+                vehicleClass,
+                fuel
+        );
+
+        Vehicle savedVehicle = vehicleRepository.save(vehicle);
+
+        return new ResponseEntity<>(
+                new CustomApiResponse(
+                        HttpStatus.OK.value(),
+                        "businessGov vehicle created successfully",
+                        new VehicleResponseDTO(
+                                savedVehicle.getVehicleId(),
+                                savedVehicle.getVehicleRegisterId(),
+                                savedVehicle.getVehicleEngineNo(),
+                                savedVehicle.getModel(),
+                                savedVehicle.getYearOfManufacture(),
+                                savedVehicle.getCurrentFuelCapacity(),
+                                savedVehicle.getOwnerId(),
+                                savedVehicle.getVehicleClasses().getVehicleClassId(),
+                                savedVehicle.getFuel().getFuelId()
+                        )
+                ),
+                HttpStatus.OK
         );
     }
 

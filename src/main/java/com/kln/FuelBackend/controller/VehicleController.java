@@ -24,6 +24,10 @@ public class VehicleController {
     public ResponseEntity<?> createVehicle(@RequestBody VehicleRequestDTO vehicleRequestDTO){
         return vehicleServiceRepository.createVehicle(vehicleRequestDTO);
     }
+    @PostMapping("/businessGov")
+    public ResponseEntity<?> createBusinessGovVehicle(@RequestBody VehicleRequestDTO vehicleRequestDTO){
+        return vehicleServiceRepository.createBusinessGovVehicle(vehicleRequestDTO);
+    }
 
     @GetMapping
     public ResponseEntity<?> getAllVehicle(){
@@ -35,7 +39,7 @@ public class VehicleController {
         return vehicleServiceRepository.findVehicleById(vehicleId);
     }
 
-    @PutMapping("/{vehicleId}")   // this is are not implemented
+    @PutMapping("/{vehicleId}")   // this is not implemented
     public ResponseEntity<?> updateVehicleCurrentFuelCapacity(
             @PathVariable UUID vehicleId,
             @RequestBody Map<String,Double> requestBody
