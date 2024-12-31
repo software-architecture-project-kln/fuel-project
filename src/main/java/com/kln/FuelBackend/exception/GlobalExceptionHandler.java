@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public  ResponseEntity<ExceptionResponseDTO> handleAnyException(Exception exception){
-        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(false,exception.getMessage());
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(false, exception.getMessage());
         return new ResponseEntity<>(exceptionResponseDTO,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -49,21 +49,21 @@ public class AuthenticationService implements AuthenticationServiceRepository{
     @Override
     public ResponseEntity<?> userLogin(UserLoginRequestDTO userLoginRequestDTO) {
         User user = userRepository.findByMobile(userLoginRequestDTO.getMobile()).orElseThrow(
-                () -> new NotFoundException("user not found")
+                () -> new UnauthorizedAccessException("username or password incorrect")
         );
 
-        String token;
+        String token= "wefqwedqw";
         if (
                 user != null &&
                     user.getVerifyMobile() &&
                         user.getPassword().equals(userLoginRequestDTO.getPassword())
         ) {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            userLoginRequestDTO.getMobile(),
-                            userLoginRequestDTO.getPassword()
-                    )
-            );
+//            authenticationManager.authenticate(
+//                    new UsernamePasswordAuthenticationToken(
+//                            userLoginRequestDTO.getMobile(),
+//                            userLoginRequestDTO.getPassword()
+//                    )
+//            );
             // create a jwt token
             token = jwtUtility.generateToken(user.getMobile());
         } else {
@@ -93,7 +93,7 @@ public class AuthenticationService implements AuthenticationServiceRepository{
     public ResponseEntity<?> employeeLogin(EmployeeLoginRequestDTO employeeLoginRequestDTO) {
         Employee employee = employeeRepository.findByEmployeeUsername(employeeLoginRequestDTO.getUsername())
                 .orElseThrow(
-                        () -> new NotFoundException("employee not found")
+                        () -> new UnauthorizedAccessException("username or password incorrect")
                 );
         String token;
         if (
@@ -101,12 +101,7 @@ public class AuthenticationService implements AuthenticationServiceRepository{
                         employee.getEmployeeStatus() &&
                             employee.getPassword().equals(employeeLoginRequestDTO.getPassword())
         ){
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            employeeLoginRequestDTO.getUsername(),
-                            employeeLoginRequestDTO.getPassword()
-                    )
-            );
+
             token = jwtUtility.generateToken(employee.getEmployeeUsername());
 
         }else{
@@ -134,19 +129,14 @@ public class AuthenticationService implements AuthenticationServiceRepository{
         FuelStation fuelStation = fuelStationRepository.findByFuelStationRegisterId(
                 fuelStationLoginRequestDTO.getFuelStationRegisterId()
         ).orElseThrow(
-                () -> new NotFoundException("fuel station not found")
+                () -> new UnauthorizedAccessException("username or password incorrect")
         );
         String token;
         if (
                 fuelStation != null &&
                         fuelStation.getPassword().equals(fuelStationLoginRequestDTO.getPassword())
         ){
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            fuelStationLoginRequestDTO.getFuelStationRegisterId(),
-                            fuelStationLoginRequestDTO.getPassword()
-                    )
-            );
+
             token = jwtUtility.generateToken(fuelStation.getFuelStationRegisterId());
         }else{
             throw new UnauthorizedAccessException("username or password incorrect");
@@ -172,7 +162,7 @@ public class AuthenticationService implements AuthenticationServiceRepository{
         BusinessGovernment businessGovernment = businessGovernmentRepository.findByBusinessGovernmentRegNo(
                 businessGovLoginRequestDTO.getBusinessGovernmentRegNo()
         ).orElseThrow(
-                () -> new NotFoundException("business gov not found")
+                () -> new UnauthorizedAccessException("username or password incorrect")
         );
         String token;
         if(
@@ -180,12 +170,7 @@ public class AuthenticationService implements AuthenticationServiceRepository{
                         businessGovernment.getMobileIsVerify() &&
                             businessGovernment.getPassword().equals(businessGovLoginRequestDTO.getPassword())
         ){
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            businessGovLoginRequestDTO.getBusinessGovernmentRegNo(),
-                            businessGovLoginRequestDTO.getPassword()
-                    )
-            );
+
             token = jwtUtility.generateToken(businessGovernment.getBusinessGovernmentRegNo());
         }else{
             throw new UnauthorizedAccessException("username or password incorrect");
@@ -212,19 +197,14 @@ public class AuthenticationService implements AuthenticationServiceRepository{
         Administrator administrator = administratorRepository.findByAdministratorUsername(
                 administratorLoginRequestDTO.getAdministratorUsername()
         ).orElseThrow(
-                () -> new NotFoundException("administrator not found")
+                () -> new UnauthorizedAccessException("username or password incorrect")
         );
         String token;
         if (
                 administrator != null &&
                         administrator.getPassword().equals(administratorLoginRequestDTO.getPassword())
         ){
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            administratorLoginRequestDTO.getAdministratorUsername(),
-                            administratorLoginRequestDTO.getPassword()
-                    )
-            );
+
             token = jwtUtility.generateToken(administrator.getAdministratorUsername());
         }else{
             throw new UnauthorizedAccessException("username or password incorrect");
