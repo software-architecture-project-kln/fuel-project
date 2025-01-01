@@ -26,14 +26,14 @@ public class BusinessGovernmentController {
 
     @PutMapping("/{businessGovernmentId}")
     public ResponseEntity<?> verifyBusinessGovernmentMobile(
-            @PathVariable UUID businessGovernmentId,
+            @PathVariable Integer businessGovernmentId,
             @RequestBody Integer otp
     ){
         return businessGovernmentServiceRepository.verifyBusinessGovernmentMobile(businessGovernmentId,otp);
     }
 
     @GetMapping("/{businessGovernmentId}")
-    public ResponseEntity<?> businessGovernmentFindById(@PathVariable UUID businessGovernmentId){
+    public ResponseEntity<?> businessGovernmentFindById(@PathVariable Integer businessGovernmentId){
         return businessGovernmentServiceRepository.businessGovernmentFindById(businessGovernmentId);
     }
 

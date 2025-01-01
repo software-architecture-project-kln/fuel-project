@@ -59,7 +59,7 @@ public class BusinessGovernmentService implements BusinessGovernmentServiceRepos
 
     @Override
     @Transactional
-    public ResponseEntity<?> verifyBusinessGovernmentMobile(UUID businessGovernmentId, Integer otp) {
+    public ResponseEntity<?> verifyBusinessGovernmentMobile(Integer businessGovernmentId, Integer otp) {
         // find the object
         BusinessGovernment businessGovernment = businessGovernmentRepository.findById(businessGovernmentId)
                 .orElseThrow(
@@ -86,7 +86,7 @@ public class BusinessGovernmentService implements BusinessGovernmentServiceRepos
     }
 
     @Override
-    public ResponseEntity<?> businessGovernmentFindById(UUID businessGovernmentId) {
+    public ResponseEntity<?> businessGovernmentFindById(Integer businessGovernmentId) {
         BusinessGovernment businessGovernment = businessGovernmentRepository.findById(businessGovernmentId)
                 .orElseThrow(
                         () -> new NotFoundException("object not found")

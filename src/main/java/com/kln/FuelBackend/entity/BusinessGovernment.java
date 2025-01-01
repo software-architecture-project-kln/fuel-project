@@ -14,7 +14,7 @@ import java.util.UUID;
 public class BusinessGovernment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer businessGovernmentId;
 
     @Column(nullable = false,unique = true)

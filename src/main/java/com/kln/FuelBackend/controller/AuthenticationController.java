@@ -1,9 +1,6 @@
 package com.kln.FuelBackend.controller;
 
-import com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO.BusinessGovLoginRequestDTO;
-import com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO.EmployeeLoginRequestDTO;
-import com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO.FuelStationLoginRequestDTO;
-import com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO.UserLoginRequestDTO;
+import com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO.*;
 import com.kln.FuelBackend.service.authenticationService.AuthenticationServiceRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +19,10 @@ public class AuthenticationController {
     }
 
     @PostMapping("/administratorAuth")
-    public ResponseEntity<?> AdministratorLogin(){
-        return null;
+    public ResponseEntity<?> AdministratorLogin(
+            @RequestBody AdministratorLoginRequestDTO administratorLoginRequestDTO
+    ){
+        return authenticationServiceRepository.administratorLogin(administratorLoginRequestDTO);
     }
 
     @PostMapping("/userAuth")
@@ -41,7 +40,7 @@ public class AuthenticationController {
         return authenticationServiceRepository.fuelStationLogin(fuelStationLoginRequestDTO);
     }
 
-    @PostMapping("/BusinessGovAuth")
+    @PostMapping("/businessGovAuth")
     public ResponseEntity<?> businessLogin(@RequestBody BusinessGovLoginRequestDTO businessGovLoginRequestDTO){
         return authenticationServiceRepository.businessLogin(businessGovLoginRequestDTO);
     }

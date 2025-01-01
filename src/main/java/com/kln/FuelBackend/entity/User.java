@@ -40,8 +40,6 @@ public class User {
     @Column(columnDefinition = "boolean DEFAULT false")
     private Boolean verifyMobile = false;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = false, cascade = CascadeType.PERSIST)
-    private List<Vehicle> vehicle = new ArrayList<>();
 
 
     public User(){
@@ -57,14 +55,13 @@ public class User {
         this.verifyMobile = verifyMobile;
     }
 
-    public User(Integer userId, String f_name, String l_name, String email, String password, String mobile, List<Vehicle> vehicle,Boolean verifyMobile) {
+    public User(Integer userId, String f_name, String l_name, String email, String password, String mobile,Boolean verifyMobile) {
         this.userId = userId;
         this.f_name = f_name;
         this.l_name = l_name;
         this.email = email;
         this.password = password;
         this.mobile = mobile;
-        this.vehicle = vehicle;
         this.verifyMobile = verifyMobile;
     }
 
