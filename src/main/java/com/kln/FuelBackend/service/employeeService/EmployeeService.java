@@ -1,10 +1,13 @@
 package com.kln.FuelBackend.service.employeeService;
 
+import com.kln.FuelBackend.calculation.FuelCalculation;
 import com.kln.FuelBackend.dataTransferObject.request.employeeRequestDTO.EmployeeRequestDTO;
 import com.kln.FuelBackend.dataTransferObject.response.CustomApiResponse;
 import com.kln.FuelBackend.dataTransferObject.response.employeeResponseDTO.EmployeeResponseDTO;
 import com.kln.FuelBackend.entity.Employee;
 import com.kln.FuelBackend.entity.FuelStation;
+import com.kln.FuelBackend.entity.Vehicle;
+import com.kln.FuelBackend.enums.OwnerType;
 import com.kln.FuelBackend.exception.NotFoundException;
 import com.kln.FuelBackend.repositoryDAO.EmployeeRepository;
 import com.kln.FuelBackend.repositoryDAO.FuelStationRepository;
@@ -14,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -117,7 +122,87 @@ public class EmployeeService implements EmployeeServiceRepository{
     }
 
     @Override
+    public ResponseEntity<?> employeeFindById(UUID employeeId) {
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(
+                () -> new NotFoundException("employee id not found")
+        );
+        return new ResponseEntity<>(
+                new CustomApiResponse(
+                        HttpStatus.OK.value(),
+                        null,
+                        new EmployeeResponseDTO(
+                                employee.getEmployeeId(),
+                                employee.getEmployeeUsername(),
+                                employee.getEmployeeEmail(),
+                                employee.getFuelStation().getFuelStationId(),
+                                employee.getEmployeeStatus()
+                        )
+                ),
+                HttpStatus.OK
+        );
+    }
+
+    @Override
+    public ResponseEntity<?> getAllEmployee() {
+        List<Employee> employeeList = employeeRepository.findAll();
+        List<EmployeeResponseDTO> employeeResponseDTOList = new ArrayList<>();
+
+        employeeList.forEach(
+                employee -> {
+                    employeeResponseDTOList.add(
+                            new EmployeeResponseDTO(
+                                    employee.getEmployeeId(),
+                                    employee.getEmployeeUsername(),
+                                    employee.getEmployeeEmail(),
+                                    employee.getFuelStation().getFuelStationId(),
+                                    employee.getEmployeeStatus()
+                            )
+                    );
+                }
+        );
+        return new ResponseEntity<>(
+                new CustomApiResponse(
+                        HttpStatus.OK.value(),
+                        null,
+                        employeeResponseDTOList
+                ),
+                HttpStatus.OK
+        );
+    }
+
+    @Override
     public ResponseEntity<?> updateFuelPerVehicle(UUID employeeId, UUID vehicleId, Double fuelCapacity) {
-        return null;
+        // extract the vehicle details
+        Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(
+                () -> new NotFoundException("vehicle id not found")
+        );
+
+        Double maxFuelCapacityPerWeek;
+        // check the vehicle owner type and get max capacity
+        if(vehicle.getOwnerType() == OwnerType.User){
+             maxFuelCapacityPerWeek = vehicle.getVehicleClasses().getMaxFuelCapacityPerWeek();
+        }else{
+            maxFuelCapacityPerWeek = vehicle.getVehicleClasses().getMaxFuelCapacityPerWeekForBusinessGov();
+        }
+
+        Double currentFuelCapacity = vehicle.getCurrentFuelCapacity();
+
+        Double fuelCap = FuelCalculation.calculateFuel(
+                maxFuelCapacityPerWeek,
+                currentFuelCapacity,
+                fuelCapacity
+        );
+        // update currentFuelCapacity
+        vehicle.setCurrentFuelCapacity(fuelCap);
+
+        return new ResponseEntity<>(
+                new CustomApiResponse(
+                        HttpStatus.OK.value(),
+                        "vehicle fuel capacity updated sucessfully",
+                        null
+
+                ),
+                HttpStatus.OK
+        );
     }
 }
