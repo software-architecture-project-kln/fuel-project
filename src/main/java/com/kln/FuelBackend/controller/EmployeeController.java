@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -32,5 +33,25 @@ public class EmployeeController {
     @PatchMapping("/{employeeId}")
     public ResponseEntity<?> changeEmployeeStatus(@PathVariable UUID employeeId){
         return employeeServiceRepository.changeEmployeeStatus(employeeId);
+    }
+
+    @GetMapping("/{employeeId}")
+    public ResponseEntity<?> employeeFindById(@PathVariable UUID employeeId){
+        return employeeServiceRepository.employeeFindById(employeeId);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getAllEmployees(){
+        return employeeServiceRepository.getAllEmployee();
+    }
+
+    @PutMapping("/fuel/{employeeId}")
+    public ResponseEntity<?> updateFuelPerVehicle(
+            @PathVariable UUID employeeId,
+            @RequestBody Map<String,Object> requestBody
+            ){
+        UUID vehicleId = (UUID) requestBody.get("vehicleId");
+        Double fuelCapacity = (Double) requestBody.get("fuelCapacity");
+        return employeeServiceRepository.updateFuelPerVehicle(employeeId,vehicleId,fuelCapacity);
     }
 }
