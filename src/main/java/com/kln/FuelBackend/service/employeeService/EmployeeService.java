@@ -184,16 +184,20 @@ public class EmployeeService implements EmployeeServiceRepository{
         }else{
             maxFuelCapacityPerWeek = vehicle.getVehicleClasses().getMaxFuelCapacityPerWeekForBusinessGov();
         }
+        //System.out.println(maxFuelCapacityPerWeek);
 
         Double currentFuelCapacity = vehicle.getCurrentFuelCapacity();
+        //System.out.println(currentFuelCapacity);
 
-        Double fuelCap = FuelCalculation.calculateFuel(
+        Double newFuelCap = FuelCalculation.calculateFuel(
                 maxFuelCapacityPerWeek,
                 currentFuelCapacity,
                 fuelCapacity
         );
         // update currentFuelCapacity
-        vehicle.setCurrentFuelCapacity(fuelCap);
+        //System.out.println(newFuelCap);
+        vehicle.setCurrentFuelCapacity(newFuelCap);
+        vehicleRepository.save(vehicle);
 
         return new ResponseEntity<>(
                 new CustomApiResponse(

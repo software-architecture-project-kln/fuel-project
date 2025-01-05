@@ -50,7 +50,8 @@ public class EmployeeController {
             @PathVariable UUID employeeId,
             @RequestBody Map<String,Object> requestBody
             ){
-        UUID vehicleId = (UUID) requestBody.get("vehicleId");
+        String vehicleIdStr = (String) requestBody.get("vehicleId");
+        UUID vehicleId = UUID.fromString(vehicleIdStr);
         Double fuelCapacity = (Double) requestBody.get("fuelCapacity");
         return employeeServiceRepository.updateFuelPerVehicle(employeeId,vehicleId,fuelCapacity);
     }
