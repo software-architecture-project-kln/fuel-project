@@ -4,6 +4,7 @@ import com.kln.FuelBackend.calculation.FuelCalculation;
 import com.kln.FuelBackend.dataTransferObject.request.employeeRequestDTO.EmployeeRequestDTO;
 import com.kln.FuelBackend.dataTransferObject.response.CustomApiResponse;
 import com.kln.FuelBackend.dataTransferObject.response.employeeResponseDTO.EmployeeResponseDTO;
+import com.kln.FuelBackend.dataTransferObject.response.vehicleResponseDTO.VehicleResponseDTO;
 import com.kln.FuelBackend.entity.Employee;
 import com.kln.FuelBackend.entity.FuelStation;
 import com.kln.FuelBackend.entity.Vehicle;
@@ -203,7 +204,17 @@ public class EmployeeService implements EmployeeServiceRepository{
                 new CustomApiResponse(
                         HttpStatus.OK.value(),
                         "vehicle fuel capacity updated sucessfully",
-                        null
+                        new VehicleResponseDTO(
+                                vehicle.getVehicleId(),
+                                vehicle.getVehicleRegisterId(),
+                                vehicle.getVehicleEngineNo(),
+                                vehicle.getModel(),
+                                vehicle.getYearOfManufacture(),
+                                vehicle.getCurrentFuelCapacity(),
+                                vehicle.getOwnerId(),
+                                vehicle.getVehicleClasses().getVehicleClassId(),
+                                vehicle.getFuel().getFuelId()
+                        )
 
                 ),
                 HttpStatus.OK
