@@ -4,6 +4,7 @@ import com.kln.FuelBackend.dataTransferObject.request.userRequestDTO.UserRequest
 import com.kln.FuelBackend.dataTransferObject.response.CustomApiResponse;
 import com.kln.FuelBackend.dataTransferObject.response.userResponseDTO.UserResponseDTO;
 import com.kln.FuelBackend.entity.User;
+import com.kln.FuelBackend.exception.NotFoundException;
 import com.kln.FuelBackend.repositoryDAO.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -120,6 +121,31 @@ public class UserService implements UserServiceRepository{
 
     @Override
     public ResponseEntity<?> verifyUserMobile(Integer userId, Integer otp) {
-        return null;
+        // check user is existing
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new NotFoundException("user Not found")
+        );
+
+        // check otp is valid otp
+
+        // update db
+        user.setVerifyMobile(true);
+        userRepository.save(user);
+
+        return new ResponseEntity<>(
+                new CustomApiResponse(
+                        HttpStatus.OK.value(),
+                        "user is verified successfully",
+                        new UserResponseDTO(
+                                user.getUserId(),
+                                user.getF_name(),
+                                user.getL_name(),
+                                user.getEmail(),
+                                user.getMobile(),
+                                user.getVerifyMobile()
+                        )
+                ),
+                HttpStatus.OK
+        );
     }
 }
