@@ -67,7 +67,7 @@ public class BusinessGovernmentService implements BusinessGovernmentServiceRepos
                 );
         // check the otp is correct
 
-        businessGovernment.setMobileIsVerify(!businessGovernment.getMobileIsVerify());
+        businessGovernment.setMobileIsVerify(true);
         BusinessGovernmentResponseDTO responseDTO = new BusinessGovernmentResponseDTO(
                 businessGovernment.getBusinessGovernmentId(),
                 businessGovernment.getBusinessGovernmentRegNo(),

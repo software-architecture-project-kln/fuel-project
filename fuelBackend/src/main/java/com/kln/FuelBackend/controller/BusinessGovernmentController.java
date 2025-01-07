@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -24,11 +25,13 @@ public class BusinessGovernmentController {
         return businessGovernmentServiceRepository.createBusinessGovernment(businessGovernmentRequestDTO);
     }
 
-    @PutMapping("/{businessGovernmentId}")
+    @PostMapping("/otp/{businessGovernmentId}")
     public ResponseEntity<?> verifyBusinessGovernmentMobile(
             @PathVariable Integer businessGovernmentId,
-            @RequestBody Integer otp
-    ){
+            @RequestBody Map<String, Object> requestBody
+            ){
+        Object data = requestBody.get("otp");
+        Integer otp = (Integer) data;
         return businessGovernmentServiceRepository.verifyBusinessGovernmentMobile(businessGovernmentId,otp);
     }
 
