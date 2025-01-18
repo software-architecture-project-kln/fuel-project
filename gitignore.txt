@@ -1,3 +1,0 @@
-node_modules
-./web-interface
-./fuel-station-app-employee
