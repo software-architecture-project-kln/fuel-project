@@ -1,74 +1,79 @@
-import axios from 'axios'
-import { useState } from 'react'
-import './App.css'
+
+import {BrowserRouter,Routes, Route} from 'react-router-dom'
+import Home from './pages/UserRegister';
+import UserRegister from './pages/UserRegister';
+import VehicleRegister from './pages/VehicleRegister';
+import UserLogin from './pages/UserLogin';
+import RegVehicle from './pages/RegVehicle';
+import UserProfile from './pages/UserProfile';
+import Error from './pages/Error';
+import BusinessGovReg from './pages/businessGov/BusinessGovReg';
+import BusinessLogin from './pages/businessGov/businessLogin';
+import AdministratorLogin from './pages/administrator/AdministratorLogin';
+import AdministratorDashboard from './pages/administrator/AdministratorDashboard';
+import AdminProtectedPage from './components/AdminProtectPage';
+import VehicleProtectedPage from './components/VehicleProtectPage';
+import DashboardBusinessGov from './pages/businessGov/DashboardBusinessGov';
+import BusinessProtectedPage from './components/BusinessProtectPage';
+import FuelStationLogin from './pages/fuelStation/FuelStationLogin';
+import FuelStationDashboard from './pages/fuelStation/FuelStationDashboard';
+import FuelStationProtectPage from './components/FuelStationProtectPage';
 
 function App() {
-
-  const[values, setValues] = useState({
-    fuelStationName:'',
-    fuelStationRegisterId:'',
-    fuelStationOwnerName:'',
-    email:'',
-    password:'',
-  })
-
-  const handleChanges = (e) => {
-    setValues({...values, [e.target.name]:e.target.value})
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    axios.post('url',values)
-    .then((response) => {
-      console.log('Form submitted successfully:', response.data);
-      alert('Registration successful!');
-    })
-    .catch((error) => {
-      console.error('Error during form submission:', error);
-      alert('Failed to register. Please try again.');
-    });
-  };
-
-  const ResetFun = () => {
-   setValues({fuelStationName:'', fuelStationRegisterId:'',fuelStationOwnerName:'',email:'', password:''})
-  }
+  
 
   return (
-    <div className="container">
-      <h1>REGISTRATION</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="stationName">Station Name<span className="required">*</span></label>
-        <input type="text" id="stationName" name="fuelStationName" placeholder='Enter Station Name' 
-        onChange={(e) => handleChanges(e)} required value={values.fuelStationName}/>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home/>} />
+          <Route path="/userRegister" element={<UserRegister/>} />
+          <Route path="/vehicleRegister" element={<VehicleRegister/>} />
+          <Route path="/userLogin" element={<UserLogin/>} />
 
-        <label htmlFor="stationId">Station ID<span className="required">*</span></label>
-        <input type="text" id="stationId" name="fuelStationRegisterId" placeholder='Enter Station ID'
-        onChange={(e) => handleChanges(e)} required value={values.fuelStationRegisterId}/>
+          <Route path="/regVehicle/:vehicleId" element={
+            <VehicleProtectedPage>
+                <RegVehicle/>
+            </VehicleProtectedPage>   
+          } />
 
-        <label htmlFor="ownerName">Owner Name<span className="required">*</span></label>
-        <input type="text" id="ownerName" name="fuelStationOwnerName" placeholder='Enter Owner Name'
-        onChange={(e) => handleChanges(e)} required value={values.fuelStationOwnerName}/>
+          <Route path="/userProfile" element={
+            <VehicleProtectedPage>
+                <UserProfile/>
+            </VehicleProtectedPage>  
+          } />
 
-        <label htmlFor="email">Email<span className="required">*</span></label>
-        <input type="email" id="email" name="email" placeholder='Enter Email'
-        onChange={(e) => handleChanges(e)} required value={values.email}/>
+          <Route path="/error" element={<Error/>} />
 
-        <label htmlFor="password">Password<span className="required">*</span></label>
-        <input type="password" id="password" name="password" placeholder='Enter Password'
-        onChange={(e) => handleChanges(e)} required value={values.password}/>    
+          <Route path='/businessGovReg' element={<BusinessGovReg/>} />
+          <Route path='/businessLogin' element={<BusinessLogin/>} />
+          <Route path='/businessGov/dashboard' element={
+            <BusinessProtectedPage>
+              <DashboardBusinessGov/>
+            </BusinessProtectedPage>
+            
+          } />
 
-        <button type='button' onClick={ResetFun} disabled={
-              !values.fuelStationName &&
-              !values.fuelStationRegisterId &&
-              !values.fuelStationOwnerName &&
-              !values.email &&
-              !values.password}>Reset</button> 
-        <button type='submit'>Submit</button> 
 
-      
-      </form>
-    </div>
- 
+          <Route path='/administrator' element={<AdministratorLogin/>} />
+
+          <Route path='/administrator/dashboard' element={
+            <AdminProtectedPage>
+              <AdministratorDashboard/>
+            </AdminProtectedPage>
+          } />
+
+          <Route path='/fuelStation' element={<FuelStationLogin />} />
+          <Route path='/fuelStation/dashboard' element={
+            <FuelStationProtectPage>
+              <FuelStationDashboard/>
+            </FuelStationProtectPage>
+            
+          } />
+          
+        </Routes>
+      </BrowserRouter>
+    </>
   )
 }
 
