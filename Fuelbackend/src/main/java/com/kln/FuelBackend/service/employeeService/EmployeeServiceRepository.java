@@ -18,4 +18,6 @@ public interface EmployeeServiceRepository {
     public  ResponseEntity<?> employeeFindById(UUID employeeId);
 
     public ResponseEntity<?> getAllEmployee();
+
+    public ResponseEntity<?> findEmployeesByFuelStationId(UUID fuelStationId);
 }

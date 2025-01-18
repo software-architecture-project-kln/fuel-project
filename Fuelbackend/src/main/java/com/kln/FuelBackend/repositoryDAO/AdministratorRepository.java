@@ -9,6 +9,5 @@ import java.util.Optional;
 
 public interface AdministratorRepository extends JpaRepository<Administrator,Integer> {
 
-    @Query
     Optional<Administrator> findByAdministratorUsername(String administratorUsername);
 }
