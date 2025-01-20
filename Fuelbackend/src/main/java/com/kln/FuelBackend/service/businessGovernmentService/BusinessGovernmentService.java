@@ -6,6 +6,7 @@ import com.kln.FuelBackend.dataTransferObject.response.businessGovernmentRespons
 import com.kln.FuelBackend.entity.BusinessGovernment;
 import com.kln.FuelBackend.exception.NotFoundException;
 import com.kln.FuelBackend.repositoryDAO.BusinessGovernmentRepository;
+import com.kln.FuelBackend.service.otpService.OtpServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +22,12 @@ public class BusinessGovernmentService implements BusinessGovernmentServiceRepos
 
     private final BusinessGovernmentRepository businessGovernmentRepository;
 
+    private final OtpServiceRepository otpServiceRepository;
+
     @Autowired
-    public BusinessGovernmentService(BusinessGovernmentRepository businessGovernmentRepository) {
+    public BusinessGovernmentService(BusinessGovernmentRepository businessGovernmentRepository, OtpServiceRepository otpServiceRepository) {
         this.businessGovernmentRepository = businessGovernmentRepository;
+        this.otpServiceRepository = otpServiceRepository;
     }
 
 
@@ -38,6 +42,7 @@ public class BusinessGovernmentService implements BusinessGovernmentServiceRepos
         );
         BusinessGovernment savedBusinessGov = businessGovernmentRepository.save(businessGovernment);
         // send to the otp code
+        otpServiceRepository.sendOTP(savedBusinessGov.getMobile());
 
         BusinessGovernmentResponseDTO responseDTO = new BusinessGovernmentResponseDTO(
                 savedBusinessGov.getBusinessGovernmentId(),
@@ -66,6 +71,9 @@ public class BusinessGovernmentService implements BusinessGovernmentServiceRepos
                         () -> new NotFoundException("object not found")
                 );
         // check the otp is correct
+        if(!otpServiceRepository.verifyOTP(businessGovernment.getMobile(), otp)){
+            throw new RuntimeException("otp is not valid");
+        }
 
         businessGovernment.setMobileIsVerify(true);
         BusinessGovernmentResponseDTO responseDTO = new BusinessGovernmentResponseDTO(
