@@ -6,6 +6,7 @@ import com.kln.FuelBackend.dataTransferObject.response.userResponseDTO.UserRespo
 import com.kln.FuelBackend.entity.User;
 import com.kln.FuelBackend.exception.NotFoundException;
 import com.kln.FuelBackend.repositoryDAO.UserRepository;
+import com.kln.FuelBackend.service.otpService.OtpServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,12 @@ public class UserService implements UserServiceRepository{
 
     private final UserRepository userRepository;
 
+    private final OtpServiceRepository otpServiceRepository;
+
     @Autowired
-    public UserService (UserRepository userRepository){
+    public UserService (UserRepository userRepository, OtpServiceRepository otpServiceRepository){
         this.userRepository= userRepository;
+        this.otpServiceRepository = otpServiceRepository;
     }
 
     @Override
@@ -34,6 +38,7 @@ public class UserService implements UserServiceRepository{
         );
 
         User savedUser = userRepository.save(user);
+        otpServiceRepository.sendOTP(savedUser.getMobile());
         UserResponseDTO responseData = new UserResponseDTO(
                 savedUser.getUserId(),
                 savedUser.getF_name(),
@@ -127,7 +132,9 @@ public class UserService implements UserServiceRepository{
         );
 
         // check otp is valid otp
-
+        if(!otpServiceRepository.verifyOTP(user.getMobile(), otp)){
+            throw new RuntimeException("otp is not valid");
+        }
         // update db
         user.setVerifyMobile(true);
         userRepository.save(user);
