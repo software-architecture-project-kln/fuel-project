@@ -22,7 +22,8 @@ const BusinessGovReg = () => {
 
     // verification
 
-    //wfewef
+    
+    
 
     const [otp,setOtp] = useState();
 
