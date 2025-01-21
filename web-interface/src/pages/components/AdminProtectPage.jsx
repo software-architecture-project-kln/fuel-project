@@ -20,9 +20,11 @@ const AdminProtectedPage = ({ children }) => {
   }
 
   React.useEffect(() => {
+    
     const token = localStorage.getItem("accessToken");
     if (!token || !validateToken(token)) {
       navigate("/administrator");
+
     }
   }, [navigate]);
 
