@@ -1,0 +1,19 @@
+.register-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: auto;
+}
+
+.register-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.register-container .ant-input {
+    margin-bottom: 10px;
+}
+
+.register-container .ant-btn {
+    margin-top: 10px;
+}
