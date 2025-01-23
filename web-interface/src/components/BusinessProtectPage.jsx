@@ -14,7 +14,9 @@ const BusinessProtectedPage = ({ children }) => {
         const currentTime = Date.now() / 1000; 
         return decoded.exp > currentTime;
       }catch(e){
+
         return false;
+        
       }
     }
 
