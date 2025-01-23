@@ -208,4 +208,74 @@ public class VehicleService implements VehicleServiceRepository{
     public ResponseEntity<?> deleteVehicle(UUID vehicleId) {
         return new ResponseEntity<>("not implemented", HttpStatus.NOT_IMPLEMENTED);
     }
+
+    @Override
+    public ResponseEntity<?> findVehicleByBusinessID(Integer ownerId) {
+        List<Vehicle> vehicleList = vehicleRepository.findVehicleByOwnerId(ownerId,OwnerType.BusinessGovUser)
+                .orElseThrow(
+                        () -> new NotFoundException("not found vehicles given Business OwnerId")
+                );
+        List<VehicleResponseDTO> vehicleResponseDTOList = new ArrayList<>();
+
+        vehicleList.forEach(
+                vehicle -> {
+                    vehicleResponseDTOList.add(
+                            new VehicleResponseDTO(
+                                    vehicle.getVehicleId(),
+                                    vehicle.getVehicleRegisterId(),
+                                    vehicle.getVehicleEngineNo(),
+                                    vehicle.getModel(),
+                                    vehicle.getYearOfManufacture(),
+                                    vehicle.getCurrentFuelCapacity(),
+                                    vehicle.getOwnerId(),
+                                    vehicle.getVehicleClasses().getVehicleClassId(),
+                                    vehicle.getFuel().getFuelId()
+                            )
+                    );
+                }
+        );
+        return new ResponseEntity<>(
+                new CustomApiResponse(
+                        HttpStatus.OK.value(),
+                        null,
+                        vehicleResponseDTOList
+                ),
+                HttpStatus.OK
+        );
+    }
+
+    @Override
+    public ResponseEntity<?> findVehicleByUserId(Integer ownerId) {
+        List<Vehicle> vehicleList = vehicleRepository.findVehicleByOwnerId(ownerId,OwnerType.User)
+                .orElseThrow(
+                        () -> new NotFoundException("not found vehicles given Business OwnerId")
+                );
+        List<VehicleResponseDTO> vehicleResponseDTOList = new ArrayList<>();
+
+        vehicleList.forEach(
+                vehicle -> {
+                    vehicleResponseDTOList.add(
+                            new VehicleResponseDTO(
+                                    vehicle.getVehicleId(),
+                                    vehicle.getVehicleRegisterId(),
+                                    vehicle.getVehicleEngineNo(),
+                                    vehicle.getModel(),
+                                    vehicle.getYearOfManufacture(),
+                                    vehicle.getCurrentFuelCapacity(),
+                                    vehicle.getOwnerId(),
+                                    vehicle.getVehicleClasses().getVehicleClassId(),
+                                    vehicle.getFuel().getFuelId()
+                            )
+                    );
+                }
+        );
+        return new ResponseEntity<>(
+                new CustomApiResponse(
+                        HttpStatus.OK.value(),
+                        null,
+                        vehicleResponseDTOList
+                ),
+                HttpStatus.OK
+        );
+    }
 }
