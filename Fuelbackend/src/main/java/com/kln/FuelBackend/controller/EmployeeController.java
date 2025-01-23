@@ -45,6 +45,11 @@ public class EmployeeController {
         return employeeServiceRepository.getAllEmployee();
     }
 
+    @GetMapping("/fuelStation/{fuelStationId}")
+    public ResponseEntity<?> findEmployeesByFuelStationId(@PathVariable UUID fuelStationId){
+        return employeeServiceRepository.findEmployeesByFuelStationId(fuelStationId);
+    }
+
     @PutMapping("/fuel/{employeeId}")
     public ResponseEntity<?> updateFuelPerVehicle(
             @PathVariable UUID employeeId,
