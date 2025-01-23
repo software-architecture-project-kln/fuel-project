@@ -172,6 +172,38 @@ public class EmployeeService implements EmployeeServiceRepository{
     }
 
     @Override
+    public ResponseEntity<?> findEmployeesByFuelStationId(UUID fuelStationId) {
+        List<Employee> employeeList = employeeRepository.findByFuelStationId(fuelStationId).orElseThrow(
+                () -> new NotFoundException("employees not found")
+        );
+
+        List<EmployeeResponseDTO> employeeResponseDTOList = new ArrayList<>();
+
+        employeeList.forEach(
+                employee -> {
+                    employeeResponseDTOList.add(
+                            new EmployeeResponseDTO(
+                                    employee.getEmployeeId(),
+                                    employee.getEmployeeUsername(),
+                                    employee.getEmployeeEmail(),
+                                    employee.getFuelStation().getFuelStationId(),
+                                    employee.getEmployeeStatus()
+                            )
+                    );
+                }
+        );
+
+        return new ResponseEntity<>(
+                new CustomApiResponse(
+                        HttpStatus.OK.value(),
+                        null,
+                        employeeResponseDTOList
+                ),
+                HttpStatus.OK
+        );
+    }
+
+    @Override
     public ResponseEntity<?> updateFuelPerVehicle(UUID employeeId, UUID vehicleId, Double fuelCapacity) {
         // extract the vehicle details
         Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(
