@@ -4,6 +4,7 @@ import ShowFuel from '../../components/fuel/ShowFuel';
 import ShowVehicleClasses from '../../components/vehicleClasses/ShowVehicleClasses';
 import CreateVehicleClass from '../../components/vehicleClasses/CreateVehicleClass';
 import ShowFuelStation from '../../components/fuelStation/ShowFuelStation';
+import AdmnistratorLogOut from './AdministratorLogOut';
 
 const { Header } = Layout;
 
@@ -56,6 +57,7 @@ const AdministratorDashboard = () => {
             minWidth: 0,
           }}
         />
+        <AdmnistratorLogOut />
       </Header>
 
       
