@@ -18,7 +18,7 @@ public class CorsConfig implements WebMvcConfigurer {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
         corsConfiguration.addAllowedHeader("*");
-        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:8080","http://localhost:8081"));
+        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:8080","http://localhost:8081","http://localhost:5173"));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","PATCH"));
         corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization","Content-Type","*"));
         corsConfiguration.setAllowCredentials(true);

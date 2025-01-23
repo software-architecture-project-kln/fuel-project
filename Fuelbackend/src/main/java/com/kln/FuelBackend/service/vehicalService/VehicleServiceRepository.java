@@ -20,4 +20,8 @@ public interface VehicleServiceRepository {
     public ResponseEntity<?> deleteVehicle(UUID vehicleId);
 
     public ResponseEntity<?> getAllVehicle();
+
+    public ResponseEntity<?> findVehicleByBusinessID(Integer ownerId);
+
+    public ResponseEntity<?> findVehicleByUserId(Integer ownerId);
 }

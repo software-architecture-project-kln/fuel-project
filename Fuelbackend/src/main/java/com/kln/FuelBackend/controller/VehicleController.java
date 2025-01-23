@@ -2,6 +2,7 @@ package com.kln.FuelBackend.controller;
 
 import com.kln.FuelBackend.dataTransferObject.request.vehicleRequestDTO.VehicleRequestDTO;
 import com.kln.FuelBackend.service.vehicalService.VehicleServiceRepository;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +47,16 @@ public class VehicleController {
     ){
         Double fuelCapacity = requestBody.get("fuelCapacity");
         return vehicleServiceRepository.updateVehicleCurrentFuelCapacity(vehicleId,fuelCapacity);
+    }
+
+    @GetMapping("/businessGovVehicle/{ownerId}")
+    public ResponseEntity<?> findVehicleByBusinessId(@PathVariable Integer ownerId){
+        return vehicleServiceRepository.findVehicleByBusinessID(ownerId);
+    }
+
+    @GetMapping("/userVehicle/{ownerId}")
+    public ResponseEntity<?> findVehicleByUserId(@PathVariable Integer ownerId){
+        return vehicleServiceRepository.findVehicleByUserId(ownerId);
     }
 
 

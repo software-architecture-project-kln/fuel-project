@@ -2,6 +2,7 @@ package com.kln.FuelBackend.controller;
 
 import com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO.*;
 import com.kln.FuelBackend.service.authenticationService.AuthenticationServiceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +15,7 @@ public class AuthenticationController {
 
     private final AuthenticationServiceRepository authenticationServiceRepository;
 
+    @Autowired
     public AuthenticationController(AuthenticationServiceRepository authenticationServiceRepository) {
         this.authenticationServiceRepository = authenticationServiceRepository;
     }
