@@ -22,9 +22,6 @@ const BusinessGovReg = () => {
 
     // verification
 
-    
-    
-
     const [otp,setOtp] = useState();
 
     const [showForm, setShowForm] = useState(true);
