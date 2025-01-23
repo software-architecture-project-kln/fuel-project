@@ -29,6 +29,8 @@ const fuelStationAuthUri = `${url}/v1/auth/fuelStationAuth`
 
 const createvehicleUri = `${url}/v1/vehicle`
 const createVehicleBusinessUri = `${url}/v1/vehicle/businessGov`
+const findUserVehicleUri = `${url}/v1/vehicle/userVehicle`
+const findBusinessGovVehicleUri = `${url}/v1/vehicle/businessGovVehicle`
 
 // business government
 
@@ -63,5 +65,7 @@ export {
     fuelStationAuthUri,
     employeeUri,
     employeeFindFuelstationId,
-    createVehicleBusinessUri
+    createVehicleBusinessUri,
+    findUserVehicleUri,
+    findBusinessGovVehicleUri
 }
