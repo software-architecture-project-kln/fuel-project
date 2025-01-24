@@ -34,3 +34,22 @@ const employeeCreate = async(
     }
 }
 
+const employeeFindByFuelStation = async(fuelStationId,token) =>{
+    let uri = `${employeeFindFuelstationId}/${fuelStationId}`
+
+    let config = {
+        "method": "get",
+        "url": uri,
+        "headers": {
+            "Authorization": `Bearer ${token}`
+            }
+    }
+
+    try{
+        const res = await axios.request(config);
+        return res.data;
+    }catch(error){
+        console.log(error);
+        return null;
+    }
+}
