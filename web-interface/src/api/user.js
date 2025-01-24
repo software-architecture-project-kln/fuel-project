@@ -60,3 +60,9 @@ const userOtpVerification = async(userId,otp) => {
         return null;
     }
 }
+
+
+export {
+    createUserAPI,
+    userOtpVerification
+}
