@@ -53,3 +53,24 @@ const employeeFindByFuelStation = async(fuelStationId,token) =>{
         return null;
     }
 }
+
+const employeeChangeStatus = async(employeeId, token) => {
+
+    let url = `${employeeUri}/${employeeId}`
+
+    let config = {
+        "method": "patch",
+        "url": url,
+        "headers": {
+            "Authorization": `Bearer ${token}`
+            },      
+    }
+
+    try {
+        const res = await axios.request(config);
+       return res.data;
+    }catch(err){
+        console.log(err);
+        return null;
+    }
+}
