@@ -74,3 +74,9 @@ const employeeChangeStatus = async(employeeId, token) => {
         return null;
     }
 }
+
+export {
+    employeeCreate,
+    employeeFindByFuelStation,
+    employeeChangeStatus
+}
