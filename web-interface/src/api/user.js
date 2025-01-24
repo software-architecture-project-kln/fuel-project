@@ -35,3 +35,28 @@ const createUserAPI = async (
         return null
     }
 }
+
+const userOtpVerification = async(userId,otp) => {
+    let data = JSON.stringify({
+        "otp": otp
+    });
+
+    let uri = `${userOtpUri}/${userId}`;
+
+    let config = {
+        "method": "post",
+        "url": uri,
+        "headers": {
+            "Content-Type": "application/json"
+            },
+        "data": data
+    }
+
+    try {
+        let res = await axios.request(config);
+        return res.data;
+    }catch(err){
+        console.log(err);
+        return null;
+    }
+}
