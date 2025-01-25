@@ -40,3 +40,19 @@ const FuelStationDashboard = () => {
             return;
         }
     }
+
+    const handlecreation = async() => {
+        formValidation();
+
+        if(!error && token && fuelStation){
+            
+            const response = await employeeCreate(employeeUsername,password,employeeEmail,fuelStation.fuelStationId,token);
+            console.log(response);
+            if(response){
+                navigate(0);
+            }else{
+                toast.error("employee email already exits");
+                return;
+            }
+        }
+    }
