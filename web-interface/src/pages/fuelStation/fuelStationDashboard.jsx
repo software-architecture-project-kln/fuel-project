@@ -75,3 +75,48 @@ const FuelStationDashboard = () => {
             setFuelStation(JSON.parse(data));  
         }
     }, []);
+
+    return (
+        <>
+            <h1>FuelStation dashboard</h1>
+
+            <Button type="primary" onClick={showEmployeeForm} >Create Employee</Button>
+
+            {
+                showModel && (
+                    <Modal
+                        onCancel={cansel}
+                        onClose={cansel}
+                        title="Create Employee"
+                        open={showModel}
+                        onOk={handlecreation}
+                    >
+
+                        <div style={{ marginBottom: 16 }}>
+                            <Input 
+                                placeholder="Employee Username"
+                                value={employeeUsername}
+                                onChange={(e) => setEmployeeUsername(e.target.value)}
+                            />
+                        </div>
+
+                        <div style={{ marginBottom: 16 }}>
+                            <Input 
+                                placeholder="Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </div>
+
+                        <div style={{ marginBottom: 16 }}>
+                            <Input 
+                                type="email"
+                                placeholder="Employee email"
+                                value={employeeEmail}
+                                onChange={(e) => setEmployeeEmail(e.target.value)}
+                            />
+                        </div>
+
+                    </Modal>
+                )
+            }
