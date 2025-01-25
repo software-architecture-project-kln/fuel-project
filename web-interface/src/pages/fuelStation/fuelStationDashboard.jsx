@@ -56,3 +56,7 @@ const FuelStationDashboard = () => {
             }
         }
     }
+
+    const showEmployeeForm = () => {
+        setShowModel(true);
+    }
