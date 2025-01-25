@@ -67,3 +67,11 @@ const FuelStationDashboard = () => {
         setPassword("");
         setShowModel(false);
     }
+
+    useEffect(() => {
+        setToken(localStorage.getItem("fuelStationAccessToken"));
+        const data = localStorage.getItem("fuelStationData");
+        if (data) {
+            setFuelStation(JSON.parse(data));  
+        }
+    }, []);
