@@ -60,3 +60,10 @@ const FuelStationDashboard = () => {
     const showEmployeeForm = () => {
         setShowModel(true);
     }
+
+    const cansel = () => {
+        setEmployeeEmail("");
+        setEmployeeUsername("");
+        setPassword("");
+        setShowModel(false);
+    }
