@@ -1,5 +1,6 @@
 package com.kln.FuelBackend.service.authenticationService;
 
+import com.kln.FuelBackend.config.SecurityConf;
 import com.kln.FuelBackend.dataTransferObject.request.loginRequestDTO.*;
 import com.kln.FuelBackend.dataTransferObject.response.LoginResponseDTO;
 import com.kln.FuelBackend.dataTransferObject.response.administratorResponseDTO.AdministratorResponseDTO;
@@ -33,8 +34,10 @@ public class AuthenticationService implements AuthenticationServiceRepository{
 
     private final AdministratorRepository administratorRepository;
 
+    private final SecurityConf securityConf;
 
-    public AuthenticationService(UserRepository userRepository, EmployeeRepository employeeRepository, BusinessGovernmentRepository businessGovernmentRepository, FuelStationRepository fuelStationRepository, JwtUtility jwtUtility, AuthenticationManager authenticationManager, AdministratorRepository administratorRepository) {
+
+    public AuthenticationService(UserRepository userRepository, EmployeeRepository employeeRepository, BusinessGovernmentRepository businessGovernmentRepository, FuelStationRepository fuelStationRepository, JwtUtility jwtUtility, AuthenticationManager authenticationManager, AdministratorRepository administratorRepository, SecurityConf securityConf) {
         this.userRepository = userRepository;
         this.employeeRepository = employeeRepository;
         this.businessGovernmentRepository = businessGovernmentRepository;
@@ -42,6 +45,7 @@ public class AuthenticationService implements AuthenticationServiceRepository{
         this.jwtUtility = jwtUtility;
         this.authenticationManager = authenticationManager;
         this.administratorRepository = administratorRepository;
+        this.securityConf = securityConf;
     }
 
     @Override
@@ -54,7 +58,7 @@ public class AuthenticationService implements AuthenticationServiceRepository{
         if (
                 user != null &&
                     user.getVerifyMobile() &&
-                        user.getPassword().equals(userLoginRequestDTO.getPassword())
+                        securityConf.passwordEncoder().matches(userLoginRequestDTO.getPassword(), user.getPassword())
         ) {
 //            authenticationManager.authenticate(
 //                    new UsernamePasswordAuthenticationToken(
@@ -97,7 +101,8 @@ public class AuthenticationService implements AuthenticationServiceRepository{
         if (
                 employee != null &&
                         employee.getEmployeeStatus() &&
-                            employee.getPassword().equals(employeeLoginRequestDTO.getPassword())
+                        securityConf.passwordEncoder().matches(employeeLoginRequestDTO.getPassword(),employee.getPassword())
+
         ){
 
             token = jwtUtility.generateToken(employee.getEmployeeUsername());
@@ -132,7 +137,7 @@ public class AuthenticationService implements AuthenticationServiceRepository{
         String token;
         if (
                 fuelStation != null &&
-                        fuelStation.getPassword().equals(fuelStationLoginRequestDTO.getPassword())
+                        securityConf.passwordEncoder().matches(fuelStationLoginRequestDTO.getPassword(), fuelStation.getPassword())
         ){
 
             token = jwtUtility.generateToken(fuelStation.getFuelStationRegisterId());
@@ -166,7 +171,7 @@ public class AuthenticationService implements AuthenticationServiceRepository{
         if(
                 businessGovernment != null &&
                         businessGovernment.getMobileIsVerify() &&
-                            businessGovernment.getPassword().equals(businessGovLoginRequestDTO.getPassword())
+                        securityConf.passwordEncoder().matches(businessGovLoginRequestDTO.getPassword(), businessGovernment.getPassword())
         ){
 
             token = jwtUtility.generateToken(businessGovernment.getBusinessGovernmentRegNo());
@@ -200,7 +205,7 @@ public class AuthenticationService implements AuthenticationServiceRepository{
         String token;
         if (
                 administrator != null &&
-                        administrator.getPassword().equals(administratorLoginRequestDTO.getPassword())
+                        securityConf.passwordEncoder().matches(administratorLoginRequestDTO.getPassword(), administrator.getPassword())
         ){
 
             token = jwtUtility.generateToken(administrator.getAdministratorUsername());
