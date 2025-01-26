@@ -1,5 +1,6 @@
 package com.kln.FuelBackend.service.businessGovernmentService;
 
+import com.kln.FuelBackend.config.SecurityConf;
 import com.kln.FuelBackend.dataTransferObject.request.businessGovernmentRequestDTO.BusinessGovernmentRequestDTO;
 import com.kln.FuelBackend.dataTransferObject.response.CustomApiResponse;
 import com.kln.FuelBackend.dataTransferObject.response.businessGovernmentResponseDTO.BusinessGovernmentResponseDTO;
@@ -24,10 +25,13 @@ public class BusinessGovernmentService implements BusinessGovernmentServiceRepos
 
     private final OtpServiceRepository otpServiceRepository;
 
+    private final SecurityConf securityConf;
+
     @Autowired
-    public BusinessGovernmentService(BusinessGovernmentRepository businessGovernmentRepository, OtpServiceRepository otpServiceRepository) {
+    public BusinessGovernmentService(BusinessGovernmentRepository businessGovernmentRepository, OtpServiceRepository otpServiceRepository, SecurityConf securityConf) {
         this.businessGovernmentRepository = businessGovernmentRepository;
         this.otpServiceRepository = otpServiceRepository;
+        this.securityConf = securityConf;
     }
 
 
@@ -36,7 +40,7 @@ public class BusinessGovernmentService implements BusinessGovernmentServiceRepos
         BusinessGovernment businessGovernment = new BusinessGovernment(
                 businessGovernmentRequestDTO.getBusinessGovernmentRegNo(),
                 businessGovernmentRequestDTO.getEmail(),
-                businessGovernmentRequestDTO.getPassword(),
+                securityConf.passwordEncoder().encode(businessGovernmentRequestDTO.getPassword()),
                 businessGovernmentRequestDTO.getMobile(),
                 false
         );

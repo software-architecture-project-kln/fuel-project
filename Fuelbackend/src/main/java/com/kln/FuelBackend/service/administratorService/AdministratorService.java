@@ -1,5 +1,6 @@
 package com.kln.FuelBackend.service.administratorService;
 
+import com.kln.FuelBackend.config.SecurityConf;
 import com.kln.FuelBackend.dataTransferObject.request.administratorRequestDTO.AdministratorRequestDTO;
 import com.kln.FuelBackend.dataTransferObject.response.CustomApiResponse;
 import com.kln.FuelBackend.dataTransferObject.response.administratorResponseDTO.AdministratorResponseDTO;
@@ -21,15 +22,18 @@ public class AdministratorService implements AdministratorServiceRepository{
 
     private final AdministratorRepository administratorRepository;
 
-    public AdministratorService(AdministratorRepository administratorRepository) {
+    private final SecurityConf securityConf;
+
+    public AdministratorService(AdministratorRepository administratorRepository, SecurityConf securityConf) {
         this.administratorRepository = administratorRepository;
+        this.securityConf = securityConf;
     }
 
     @Override
     public ResponseEntity<?> createAdministrator(AdministratorRequestDTO administratorRequestDTO) {
         Administrator administrator = new Administrator(
                 administratorRequestDTO.getAdministratorUsername(),
-                administratorRequestDTO.getPassword(),
+                securityConf.passwordEncoder().encode(administratorRequestDTO.getPassword()),
                 administratorRequestDTO.getAdministratorEmail()
         );
 
@@ -63,7 +67,7 @@ public class AdministratorService implements AdministratorServiceRepository{
         if (existsAdministrator == null){
             administrator.setAdministratorUsername(administratorRequestDTO.getAdministratorUsername());
             administrator.setAdministratorEmail(administratorRequestDTO.getAdministratorEmail());
-            administrator.setPassword(administratorRequestDTO.getPassword());
+            administrator.setPassword(securityConf.passwordEncoder().encode(administratorRequestDTO.getPassword()));
 
         }else{
             throw new RuntimeException("administrator username already taken");

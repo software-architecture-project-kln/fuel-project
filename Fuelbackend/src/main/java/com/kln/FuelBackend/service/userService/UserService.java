@@ -1,5 +1,6 @@
 package com.kln.FuelBackend.service.userService;
 
+import com.kln.FuelBackend.config.SecurityConf;
 import com.kln.FuelBackend.dataTransferObject.request.userRequestDTO.UserRequestDTO;
 import com.kln.FuelBackend.dataTransferObject.response.CustomApiResponse;
 import com.kln.FuelBackend.dataTransferObject.response.userResponseDTO.UserResponseDTO;
@@ -20,10 +21,13 @@ public class UserService implements UserServiceRepository{
 
     private final OtpServiceRepository otpServiceRepository;
 
+    private final SecurityConf securityConf;
+
     @Autowired
-    public UserService (UserRepository userRepository, OtpServiceRepository otpServiceRepository){
+    public UserService (UserRepository userRepository, OtpServiceRepository otpServiceRepository, SecurityConf securityConf){
         this.userRepository= userRepository;
         this.otpServiceRepository = otpServiceRepository;
+        this.securityConf = securityConf;
     }
 
     @Override
@@ -32,7 +36,7 @@ public class UserService implements UserServiceRepository{
                 userRequestDTO.getF_name(),
                 userRequestDTO.getL_name(),
                 userRequestDTO.getEmail(),
-                userRequestDTO.getPassword(),
+                securityConf.passwordEncoder().encode(userRequestDTO.getPassword()),
                 userRequestDTO.getMobile(),
                 false
         );

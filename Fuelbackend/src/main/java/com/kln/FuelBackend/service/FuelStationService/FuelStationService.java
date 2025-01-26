@@ -1,5 +1,6 @@
 package com.kln.FuelBackend.service.FuelStationService;
 
+import com.kln.FuelBackend.config.SecurityConf;
 import com.kln.FuelBackend.dataTransferObject.request.fuelStationRequestDTO.FuelStationRequestDTO;
 import com.kln.FuelBackend.dataTransferObject.response.CustomApiResponse;
 import com.kln.FuelBackend.dataTransferObject.response.fuelStationResponseDTO.FuelStationResponseDTO;
@@ -20,8 +21,11 @@ public class FuelStationService implements FuelStationServiceRepository{
 
     private final FuelStationRepository fuelStationRepository;
 
-    public FuelStationService(FuelStationRepository fuelStationRepository) {
+    private final SecurityConf securityConf;
+
+    public FuelStationService(FuelStationRepository fuelStationRepository, SecurityConf securityConf) {
         this.fuelStationRepository = fuelStationRepository;
+        this.securityConf = securityConf;
     }
 
     @Override
@@ -30,7 +34,7 @@ public class FuelStationService implements FuelStationServiceRepository{
                 fuelStationRequestDTO.getFuelStationRegisterId(),
                 fuelStationRequestDTO.getFuelStationOwnerName(),
                 fuelStationRequestDTO.getFuelStationEmail(),
-                fuelStationRequestDTO.getPassword()
+                securityConf.passwordEncoder().encode(fuelStationRequestDTO.getPassword())
         );
 
         FuelStation savedFuelStation = fuelStationRepository.save(fuelStation);
@@ -59,7 +63,7 @@ public class FuelStationService implements FuelStationServiceRepository{
         );
         fuelStation.setFuelStationOwnerName(fuelStationRequestDTO.getFuelStationOwnerName());
         fuelStation.setFuelStationEmail(fuelStationRequestDTO.getFuelStationEmail());
-        fuelStation.setPassword(fuelStationRequestDTO.getPassword());
+        fuelStation.setPassword(securityConf.passwordEncoder().encode(fuelStationRequestDTO.getPassword()));
         fuelStationRepository.save(fuelStation);
 
         FuelStationResponseDTO responseDTO = new FuelStationResponseDTO(

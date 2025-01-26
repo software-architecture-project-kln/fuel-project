@@ -1,6 +1,7 @@
 package com.kln.FuelBackend.service.employeeService;
 
 import com.kln.FuelBackend.calculation.FuelCalculation;
+import com.kln.FuelBackend.config.SecurityConf;
 import com.kln.FuelBackend.dataTransferObject.request.employeeRequestDTO.EmployeeRequestDTO;
 import com.kln.FuelBackend.dataTransferObject.response.CustomApiResponse;
 import com.kln.FuelBackend.dataTransferObject.response.employeeResponseDTO.EmployeeResponseDTO;
@@ -34,12 +35,14 @@ public class EmployeeService implements EmployeeServiceRepository{
 
     private final NotificationServiceRepository notificationServiceRepository;
 
+    private final SecurityConf securityConf;
+
 
     public EmployeeService(EmployeeRepository employeeRepository,
                            VehicleRepository vehicleRepository,
                            FuelStationRepository fuelStationRepository, UserRepository userRepository,
                            BusinessGovernmentRepository businessGovernmentRepository,
-                           NotificationServiceRepository notificationServiceRepository
+                           NotificationServiceRepository notificationServiceRepository, SecurityConf securityConf
     ) {
         this.employeeRepository = employeeRepository;
         this.vehicleRepository = vehicleRepository;
@@ -47,6 +50,7 @@ public class EmployeeService implements EmployeeServiceRepository{
         this.userRepository = userRepository;
         this.businessGovernmentRepository = businessGovernmentRepository;
         this.notificationServiceRepository = notificationServiceRepository;
+        this.securityConf = securityConf;
     }
 
     @Override
@@ -56,7 +60,7 @@ public class EmployeeService implements EmployeeServiceRepository{
         );
         Employee employee = new Employee(
                 employeeRequestDTO.getEmployeeUsername(),
-                employeeRequestDTO.getPassword(),
+                securityConf.passwordEncoder().encode(employeeRequestDTO.getPassword()),
                 employeeRequestDTO.getEmployeeEmail(),
                 fuelStation,
                 true
@@ -82,13 +86,39 @@ public class EmployeeService implements EmployeeServiceRepository{
 
     @Override
     @Transactional
-    public ResponseEntity<?> updateEmployee(UUID employeeId, EmployeeRequestDTO employeeRequestDTO) {
+    public ResponseEntity<?> updateEmployeePassword(UUID employeeId, String password) {
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(
+                () ->new NotFoundException("employee Not found")
+        );
+        employee.setPassword(securityConf.passwordEncoder().encode(password));
+        employeeRepository.save(employee);
+        return new ResponseEntity<>(
+                new CustomApiResponse(
+                        HttpStatus.OK.value(),
+                        "password update successfully",
+                        new EmployeeResponseDTO(
+                                employee.getEmployeeId(),
+                                employee.getEmployeeUsername(),
+                                employee.getEmployeeEmail(),
+                                employee.getFuelStation().getFuelStationId(),
+                                employee.getEmployeeStatus()
+                        )
+                ),
+                HttpStatus.OK
+        );
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<?> updateEmployee(UUID employeeId,
+                                            String employeeUsername,
+                                            String employeeEmail) {
         Employee employee = employeeRepository.findById(employeeId).orElseThrow(
                 () -> new NotFoundException("employee not found")
         );
-        employee.setEmployeeUsername(employeeRequestDTO.getEmployeeUsername());
-        employee.setEmployeeEmail(employeeRequestDTO.getEmployeeEmail());
-        employee.setPassword(employeeRequestDTO.getPassword());
+        employee.setEmployeeUsername(employeeUsername);
+        employee.setEmployeeEmail(employeeEmail);
+        //employee.setPassword(employeeRequestDTO.getPassword());
         employeeRepository.save(employee);
 
         EmployeeResponseDTO responseDTO = new EmployeeResponseDTO(
