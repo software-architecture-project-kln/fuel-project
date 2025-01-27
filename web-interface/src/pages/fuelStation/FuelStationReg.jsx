@@ -1,3 +1,16 @@
+<<<<<<< HEAD
+import React from "react";
+import { Button, Input } from 'antd';
+
+const FuelStationReg = () => {
+    return (
+        <>
+        </>
+    )
+}
+
+export default FuelStationReg;
+=======
 import React, { useState } from "react";
 import { Button, Input } from 'antd';
 import { useNavigate } from "react-router-dom";
@@ -94,3 +107,4 @@ const FuelStationReg = () => {
 };
 
 export default FuelStationReg;
+>>>>>>> 987e58b103fd17e11d60df8a7f81cc15c7203335

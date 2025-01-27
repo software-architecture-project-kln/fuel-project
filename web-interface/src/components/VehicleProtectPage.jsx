@@ -4,6 +4,11 @@ import { useNavigate } from "react-router-dom";
 const VehicleProtectedPage = ({ children }) => {
   const navigate = useNavigate();
 
+<<<<<<< HEAD
+  React.useEffect(() => {
+    const token = localStorage.getItem("userAccessToken");
+    if (!token) {
+=======
   const validateToken = (token) => {
       if(!token){
         return false;
@@ -21,6 +26,7 @@ const VehicleProtectedPage = ({ children }) => {
   React.useEffect(() => {
     const token = localStorage.getItem("userAccessToken");
     if (!token && !validateToken(token)) {
+>>>>>>> 987e58b103fd17e11d60df8a7f81cc15c7203335
       navigate("/userLogin");
     }
   }, [navigate]);

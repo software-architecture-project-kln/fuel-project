@@ -14,7 +14,10 @@ const AdminProtectedPage = ({ children }) => {
       const decoded = jwtDecode(token);
       const currentTime = Date.now() / 1000; 
       return decoded.exp > currentTime;
+<<<<<<< HEAD
+=======
       
+>>>>>>> 987e58b103fd17e11d60df8a7f81cc15c7203335
     }catch(e){
       return false;
     }
