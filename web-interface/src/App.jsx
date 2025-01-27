@@ -18,6 +18,8 @@ import BusinessProtectedPage from './components/BusinessProtectPage';
 import FuelStationLogin from './pages/fuelStation/FuelStationLogin';
 import FuelStationDashboard from './pages/fuelStation/FuelStationDashboard';
 import FuelStationProtectPage from './components/FuelStationProtectPage';
+import VehicleDetails from './pages/vehicle/VehicleDetails';
+import FuelStationReg from './pages/fuelStation/FuelStationReg';
 
 function App() {
   
@@ -64,13 +66,15 @@ function App() {
           } />
 
           <Route path='/fuelStation' element={<FuelStationLogin />} />
+          <Route path='fuelStationReg' element={<FuelStationReg />} />
           <Route path='/fuelStation/dashboard' element={
             <FuelStationProtectPage>
               <FuelStationDashboard/>
             </FuelStationProtectPage>
             
           } />
-          
+          <Route path='/vehicleDetail/:vehicleId' element={<VehicleDetails />} />
+           
         </Routes>
       </BrowserRouter>
     </>

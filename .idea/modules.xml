@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/archi_grp_project.iml" filepath="$PROJECT_DIR$/.idea/archi_grp_project.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/grp-proj.iml" filepath="$PROJECT_DIR$/.idea/grp-proj.iml" />
+>>>>>>> 987e58b103fd17e11d60df8a7f81cc15c7203335
     </modules>
   </component>
 </project>

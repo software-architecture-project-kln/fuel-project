@@ -48,5 +48,12 @@ const updateFuelPrice = async(administratorId,price,token) => {
         return null
     }
 }
+<<<<<<< HEAD
 
 export {getAllFuel, updateFuelPrice}
+=======
+export {
+    getAllFuel, 
+    updateFuelPrice
+}
+>>>>>>> 987e58b103fd17e11d60df8a7f81cc15c7203335
