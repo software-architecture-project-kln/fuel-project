@@ -5,6 +5,9 @@ import { employeeCreate } from "../../api/Employee";
 import { useNavigate } from "react-router-dom";
 import ShowEmployeeFuelStation from "../../components/employee/showEmployeeFuelStation";
 import FuelStationLogOutBtn from "./FuelStationLogOutBtn";
+import "../../style/FuelStationDashboard.css";
+import FuelStationDetail from "./fuelStationDatail";
+
 
 const FuelStationDashboard = () => {
 
@@ -80,10 +83,23 @@ const FuelStationDashboard = () => {
 
     return (
         <>
-        <Flex >
+        <Flex className="Flex">
             <h1>FuelStation dashboard</h1>  
-            <FuelStationLogOutBtn />
+            
+            <div className="logout-btn">
+            <div className="detail">
+            {
+                    token && fuelStation && (
+                        <FuelStationDetail token={token} fuelStationData={fuelStation} />
+                    )
+                }
+            </div>
+                
+                <FuelStationLogOutBtn />
+            </div>
         </Flex>
+
+
             
        
             
