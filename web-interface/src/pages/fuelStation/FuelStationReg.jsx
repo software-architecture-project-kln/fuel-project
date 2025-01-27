@@ -1,21 +1,9 @@
-<<<<<<< HEAD
-import React from "react";
-import { Button, Input } from 'antd';
-
-const FuelStationReg = () => {
-    return (
-        <>
-        </>
-    )
-}
-
-export default FuelStationReg;
-=======
 import React, { useState } from "react";
-import { Button, Input } from 'antd';
+import { Button, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { createFuelStation } from "../../api/fuelStation";
+import "../../style/FuelStationReg.css";  // Import the CSS file
 
 const FuelStationReg = () => {
     const navigate = useNavigate();
@@ -24,8 +12,6 @@ const FuelStationReg = () => {
     const [fuelStationOwnerName, setFuelStationOwnerName] = useState("");
     const [fuelStationEmail, setFuelStationEmail] = useState("");
     const [password, setPassword] = useState("");
-
-    const [error, setError] = useState(false);
 
     const validation = () => {
         let hasError = false;
@@ -41,13 +27,12 @@ const FuelStationReg = () => {
             hasError = true;
         }
 
-        setError(hasError);
-        return hasError; 
+        return hasError;
     };
 
     const handleCreation = async () => {
         const hasError = validation();
-        if (hasError) return; 
+        if (hasError) return;
 
         try {
             const response = await createFuelStation(fuelStationRegisterId, fuelStationOwnerName, fuelStationEmail, password);
@@ -63,13 +48,9 @@ const FuelStationReg = () => {
     };
 
     return (
-        <>
-            <div>
-                <h1>Registration of Fuel Station</h1>
-            </div>
-
-            <div>
-                <h2>Registration Form</h2>
+        <div className="registration-container">
+            <div className="registration-box">
+                <h1>Fuel Station Registration</h1>
 
                 <Input
                     type="text"
@@ -102,9 +83,8 @@ const FuelStationReg = () => {
                 <Button type="primary" onClick={handleCreation}>Register</Button>
             </div>
             <ToastContainer />
-        </>
+        </div>
     );
 };
 
 export default FuelStationReg;
->>>>>>> 987e58b103fd17e11d60df8a7f81cc15c7203335

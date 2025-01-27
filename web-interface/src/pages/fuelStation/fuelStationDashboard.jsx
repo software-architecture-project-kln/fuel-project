@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, Input, Flex } from "antd";
+import { Button, Modal, Input } from "antd";
 import { toast, ToastContainer } from "react-toastify";
 import { employeeCreate } from "../../api/Employee";
 import { useNavigate } from "react-router-dom";
 import ShowEmployeeFuelStation from "../../components/employee/showEmployeeFuelStation";
-import FuelStationLogOutBtn from "./FuelStationLogOutBtn";
 
 const FuelStationDashboard = () => {
 
@@ -80,13 +79,7 @@ const FuelStationDashboard = () => {
 
     return (
         <>
-        <Flex >
-            <h1>FuelStation dashboard</h1>  
-            <FuelStationLogOutBtn />
-        </Flex>
-            
-       
-            
+            <h1>FuelStation dashboard</h1>
 
             <Button type="primary" onClick={showEmployeeForm} >Create Employee</Button>
 
