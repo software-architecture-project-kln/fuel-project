@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, Input } from "antd";
+import { Button, Modal, Input, Flex } from "antd";
 import { toast, ToastContainer } from "react-toastify";
 import { employeeCreate } from "../../api/Employee";
 import { useNavigate } from "react-router-dom";
 import ShowEmployeeFuelStation from "../../components/employee/showEmployeeFuelStation";
+import FuelStationLogOutBtn from "./FuelStationLogOutBtn";
 
 const FuelStationDashboard = () => {
 
@@ -68,6 +69,7 @@ const FuelStationDashboard = () => {
         setShowModel(false);
     }
 
+
     useEffect(() => {
         setToken(localStorage.getItem("fuelStationAccessToken"));
         const data = localStorage.getItem("fuelStationData");
@@ -78,7 +80,13 @@ const FuelStationDashboard = () => {
 
     return (
         <>
-            <h1>FuelStation dashboard</h1>
+        <Flex >
+            <h1>FuelStation dashboard</h1>  
+            <FuelStationLogOutBtn />
+        </Flex>
+            
+       
+            
 
             <Button type="primary" onClick={showEmployeeForm} >Create Employee</Button>
 
@@ -120,7 +128,8 @@ const FuelStationDashboard = () => {
                     </Modal>
                 )
             }
-    {
+
+            {
                 token && fuelStation && (
                     <ShowEmployeeFuelStation token={token} fuelstationId={fuelStation.fuelStationId} />
                 )
