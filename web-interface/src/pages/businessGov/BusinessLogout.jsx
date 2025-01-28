@@ -9,7 +9,7 @@ const BusinessLogout = () => {
     const handleLogout = () =>{
         localStorage.removeItem("businessGovData");
         localStorage.removeItem("businessAccessToken");
-        navigate("/businessLogin");
+        navigate("/");
     }
     return (
         <>

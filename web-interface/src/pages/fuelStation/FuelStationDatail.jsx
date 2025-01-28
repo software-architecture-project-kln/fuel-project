@@ -54,7 +54,7 @@ const FuelStationDetail = ({fuelStationData :prefFuelStationData , token: prefTo
         <a onClick={handleModel}>
             {
                 fuelStationData && (
-                    fuelStationRegisterId
+                    fuelStationOwnerName
                 )
             }
         </a>

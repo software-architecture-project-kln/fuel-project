@@ -1,0 +1,109 @@
+/* Home.css */
+
+/* Reset */
+body {
+    margin: 0;
+}
+
+/* Navbar (Header) */
+.navbar {
+    background-color: #150037; /* Dark purple background */
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Left Side: Logo + Title */
+/* Left side: Logo + Title */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between logo and title */
+}
+
+/* Logo Styling */
+.logo-icon {
+    width: 40px; /* Adjust the size */
+    height: 40px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.logo-icon:hover {
+    transform: scale(1.1); /* Slight zoom effect */
+}
+
+/* Title Styling */
+.logo {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Right Side: Buttons */
+.nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Buttons */
+.nav-buttons button {
+    background-color: #ffffff; /* Light gray background */
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.nav-buttons button:hover {
+    background-color: #bfbfbf; /* Darker gray on hover */
+}
+
+/* Dropdown Login Button */
+.nav-btn {
+    background-color: #d9d9d9;
+    color: black;
+    font-weight: bold;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.nav-btn:hover {
+    background-color: #bfbfbf;
+}
+
+/* Main Content Styling */
+.welcome-section {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 90px;
+}
+
+/* Logo Image */
+.logo-img {
+    width: 200px;
+    height: auto;
+}
+
+/* Welcome Text */
+.welcome-section h2 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #150037;
+}
+
+/* Tagline */
+.welcome-section p {
+    font-size: 18px;
+    color: #150037;
+    font-weight: 600;
+}

@@ -8,7 +8,7 @@ const FuelStationLogOutBtn = () => {
     const handleLogout = () => {
         localStorage.removeItem("fuelStationAccessToken");
         localStorage.removeItem("fuelStationData");
-        navigate("/fuelStation");
+        navigate("/");
     }
     return (
         <>

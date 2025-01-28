@@ -27,7 +27,7 @@ const UserLogin = () => {
                 localStorage.setItem("userAccessToken", res.accessToken);
                 localStorage.setItem("userData", JSON.stringify(res.data));
 
-                navigate("/vehicleRegister");
+                navigate("/userProfile");
             } else {
                 toast.error("Invalid username or password");
             }

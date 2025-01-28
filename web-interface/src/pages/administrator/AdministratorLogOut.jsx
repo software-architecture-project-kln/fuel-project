@@ -8,7 +8,7 @@ const AdmnistratorLogOut = () => {
     const handleLogOut = () => {
         localStorage.removeItem('administratorData');
         localStorage.removeItem("accessToken");
-        navigate("/administrator");
+        navigate("/");
     }
     return (
         <>

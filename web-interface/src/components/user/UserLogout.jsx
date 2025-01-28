@@ -9,7 +9,7 @@ const UserLogout = () => {
     const logout = () => {
         localStorage.removeItem("userAccessToken");
         localStorage.removeItem("userData");
-        navigate("/userLogin");
+        navigate("/");
     }
     return(
         <div>
