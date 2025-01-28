@@ -93,6 +93,13 @@ const fuelStationAuthentication = async(fuelStationRegisterId,password) => {
             'data': data
     }
 
+    try{
+        const res = await axios.request(config);
+        return res.data;
+    }catch(err){
+        console.log(err);
+        return null;
+    }
    
 }
 
