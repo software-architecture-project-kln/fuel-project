@@ -1,35 +1,59 @@
+/* FuelStationDashboard.css */
 
-.Flex {
-    display: flex;
-    flex-direction: row; 
-    align-items: center; 
-    justify-content: space-between; 
-    padding: 20px; 
-    width: 100%; 
-    background-color: #f8f9fa; 
-    height: 70px;
-}
-
-
-
-.logout-btn{
-    display: flex;
-    padding-right: 30px;
-}
-
-h1 {
-    font-family:Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    color: #333;
+/* Reset default margin */
+body {
     margin: 0;
 }
 
-.detail{
-    font-size: 14px;
-    font-family: Arial, Helvetica, sans-serif;
-    padding-right: 10px;
-    padding-top: 10px;
+/* Header Styles */
+.header {
+    background-color: #150037; /* Dark purple background */
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
+/* Left side: Logo + Title */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between logo and title */
+}
 
+/* Logo Styling */
+.logo-icon {
+    width: 40px; /* Adjust the size */
+    height: 40px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
 
+.logo-icon:hover {
+    transform: scale(1.1); /* Slight zoom effect */
+}
+
+/* Title Styling */
+.header h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Right side: Fuel Station Info + Logout */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 25px; /* Space between details and logout button */
+}
+
+.createButton{
+    margin-bottom: 20px;
+}
+/* Page Container */
+.container {
+    padding: 20px;
+    background-color: #d9d9d9; /* Light gray background */
+}
