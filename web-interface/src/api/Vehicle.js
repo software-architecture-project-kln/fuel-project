@@ -47,8 +47,7 @@ const createVehicle = async(
 
 
 export {
-    createVehicle
-const createBusinessGovVehicle = async(
+   const createBusinessGovVehicle = async(
     vehicleRegisterId,
     vehicleEngineNo,
     model,
