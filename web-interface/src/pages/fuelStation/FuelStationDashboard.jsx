@@ -7,155 +7,111 @@ import ShowEmployeeFuelStation from "../../components/employee/showEmployeeFuelS
 import FuelStationLogOutBtn from "./FuelStationLogOutBtn";
 import "../../style/FuelStationDashboard.css";
 import FuelStationDetail from "./fuelStationDatail";
+import { Header } from "antd/es/layout/layout";
+import logo from "../../assets/FuelIQ.png";
 
 
 const FuelStationDashboard = () => {
-
     const navigate = useNavigate();
-
     const [token, setToken] = useState("");
     const [fuelStation, setFuelStation] = useState({});
-
     const [employeeUsername, setEmployeeUsername] = useState("");
     const [password, setPassword] = useState("");
     const [employeeEmail, setEmployeeEmail] = useState("");
-
     const [error, setError] = useState("");
     const [showModel, setShowModel] = useState(false);
-
-    const formValidation = () => {
-        setError(false);
-
-        if(employeeUsername === ""){
-            setError(true);
-            toast.error("employee username is required");
-            return;
-        }
-
-        if(password === ""){
-            setError(true);
-            toast.error("password is required");
-            return;
-        }
-
-        if(employeeEmail === ""){
-            setError(true);
-            toast.error("email is required");
-            return;
-        }
-    }
-
-    const handlecreation = async() => {
-        formValidation();
-
-        if(!error && token && fuelStation){
-            
-            const response = await employeeCreate(employeeUsername,password,employeeEmail,fuelStation.fuelStationId,token);
-            console.log(response);
-            if(response){
-                navigate(0);
-            }else{
-                toast.error("employee email already exits");
-                return;
-            }
-        }
-    }
-
-    const showEmployeeForm = () => {
-        setShowModel(true);
-    }
-
-    const cansel = () => {
-        setEmployeeEmail("");
-        setEmployeeUsername("");
-        setPassword("");
-        setShowModel(false);
-    }
-
 
     useEffect(() => {
         setToken(localStorage.getItem("fuelStationAccessToken"));
         const data = localStorage.getItem("fuelStationData");
         if (data) {
-            setFuelStation(JSON.parse(data));  
+            setFuelStation(JSON.parse(data));
         }
     }, []);
 
+    const formValidation = () => {
+        setError(false);
+        if (employeeUsername === "") {
+            setError(true);
+            toast.error("Employee username is required");
+            return;
+        }
+        if (password === "") {
+            setError(true);
+            toast.error("Password is required");
+            return;
+        }
+        if (employeeEmail === "") {
+            setError(true);
+            toast.error("Email is required");
+            return;
+        }
+    };
+
+    const handleCreation = async () => {
+        formValidation();
+        if (!error && token && fuelStation) {
+            const response = await employeeCreate(employeeUsername, password, employeeEmail, fuelStation.fuelStationId, token);
+            if (response) {
+                navigate(0);
+            } else {
+                toast.error("Employee email already exists");
+            }
+        }
+    };
+
+    const showEmployeeForm = () => setShowModel(true);
+    const cancel = () => {
+        setEmployeeEmail("");
+        setEmployeeUsername("");
+        setPassword("");
+        setShowModel(false);
+    };
+
     return (
         <>
-        <Flex className="Flex">
-            <h1>FuelStation dashboard</h1>  
-            
-            <div className="logout-btn">
-            <div className="detail">
-            {
-                    token && fuelStation && (
+            <Header className="header">
+                <div className="header-left">
+                <img 
+                    src={logo} 
+                    alt="Home" 
+                    className="logo-icon"
+                    onClick={() => navigate('/')} 
+                />
+                    <h1>Fuel Station Dashboard</h1>
+                </div>
+                <div className="header-right">
+                    {token && fuelStation && (
                         <FuelStationDetail token={token} fuelStationData={fuelStation} />
-                    )
-                }
-            </div>
-                
-                <FuelStationLogOutBtn />
-            </div>
-        </Flex>
+                    )}
+                    <FuelStationLogOutBtn />
+                </div>
+            </Header>
 
+            <div >
+                <Button className="createButton" type="primary" onClick={showEmployeeForm}>Create Employee</Button>
 
-            
-       
-            
-
-            <Button type="primary" onClick={showEmployeeForm} >Create Employee</Button>
-
-            {
-                showModel && (
+                {showModel && (
                     <Modal
-                        onCancel={cansel}
-                        onClose={cansel}
+                        onCancel={cancel}
                         title="Create Employee"
                         open={showModel}
-                        onOk={handlecreation}
+                        onOk={handleCreation}
                     >
-
-                        <div style={{ marginBottom: 16 }}>
-                            <Input 
-                                placeholder="Employee Username"
-                                value={employeeUsername}
-                                onChange={(e) => setEmployeeUsername(e.target.value)}
-                            />
-                        </div>
-
-                        <div style={{ marginBottom: 16 }}>
-                            <Input 
-                                placeholder="Password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </div>
-
-                        <div style={{ marginBottom: 16 }}>
-                            <Input 
-                                type="email"
-                                placeholder="Employee email"
-                                value={employeeEmail}
-                                onChange={(e) => setEmployeeEmail(e.target.value)}
-                            />
-                        </div>
-
+                        <Input placeholder="Employee Username" value={employeeUsername} onChange={(e) => setEmployeeUsername(e.target.value)} />
+                        <Input placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <Input type="email" placeholder="Employee Email" value={employeeEmail} onChange={(e) => setEmployeeEmail(e.target.value)} />
                     </Modal>
-                )
-            }
+                )}
 
-            {
-                token && fuelStation && (
+                {token && fuelStation && (
                     <ShowEmployeeFuelStation token={token} fuelstationId={fuelStation.fuelStationId} />
-                )
-            }
-
-            
+                )}
+            </div>
 
             <ToastContainer />
         </>
-    )
-}
+    );
+};
 
 export default FuelStationDashboard;
