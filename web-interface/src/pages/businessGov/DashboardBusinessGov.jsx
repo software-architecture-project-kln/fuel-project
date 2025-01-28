@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+import React from "react";
+=======
 import React, { useEffect, useState } from "react";
 import { Button, Modal, Input, Flex, Radio } from "antd";
 import { getAllFuel } from "../../api/Fuel";
@@ -5,12 +8,21 @@ import { getAllVehicleClasses } from "../../api/VehicleClasses";
 import { toast, ToastContainer } from "react-toastify";
 import { createBusinessGovVehicle } from "../../api/Vehicle";
 import { useNavigate } from "react-router-dom";
+import BusinessGovVehicleRegShow from "./BusinessGovVehicleRegShow";
+import BusinessLogout from "./BusinessLogout";
+>>>>>>> 987e58b103fd17e11d60df8a7f81cc15c7203335
 
 
 
 const DashboardBusinessGov = () => {
+<<<<<<< HEAD
+    return (
+        <>
+        <h1>Business Government Dashboard</h1>
+=======
 
     const navigate = useNavigate();
+
     const [token, setToken] = useState("");
     const [businessGovData, setBusinessGovData] = useState({});
 
@@ -118,7 +130,13 @@ const DashboardBusinessGov = () => {
     
     return (
         <>
-        <h1>Business Government Dashboard</h1>
+        <div>
+            <Flex>
+                <h1>Business Government Dashboard</h1>
+                <BusinessLogout />
+            </Flex>
+        
+        </div>
 
         <Button type="primary" onClick={showing_reg_form}>Register Business and Gov Vehicles</Button>
 
@@ -191,7 +209,19 @@ const DashboardBusinessGov = () => {
                 </div>
             </Modal>
         </div>
+
+        <div>
+            {
+                token && businessGovData && (
+                    <BusinessGovVehicleRegShow
+                        token={token}
+                        businessId={businessGovData.businessGovernmentId}
+                    />
+                )
+            }
+        </div>
         <ToastContainer />
+>>>>>>> 987e58b103fd17e11d60df8a7f81cc15c7203335
         </>
     )
 }

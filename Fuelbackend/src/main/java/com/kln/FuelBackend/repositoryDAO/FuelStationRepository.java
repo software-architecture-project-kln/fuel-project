@@ -9,6 +9,5 @@ import java.util.UUID;
 
 public interface FuelStationRepository extends JpaRepository<FuelStation, UUID> {
 
-    @Query
     Optional<FuelStation> findByFuelStationRegisterId(String fuelStationRegisterId);
 }
