@@ -1,9 +1,7 @@
 import axios from "axios";
-<<<<<<< HEAD
 import { createvehicleUri } from "./Uri";
-=======
+
 import { createvehicleUri, createVehicleBusinessUri, findBusinessGovVehicleUri, findUserVehicleUri } from "./Uri";
->>>>>>> 987e58b103fd17e11d60df8a7f81cc15c7203335
 
 
 const createVehicle = async(
@@ -47,12 +45,9 @@ const createVehicle = async(
 
 }
 
-<<<<<<< HEAD
 
 export {
-    createVehicle
-=======
-const createBusinessGovVehicle = async(
+   const createBusinessGovVehicle = async(
     vehicleRegisterId,
     vehicleEngineNo,
     model,
@@ -147,5 +142,4 @@ export {
     createBusinessGovVehicle,
     findVehicleByBusinessId,
     findVehicleByUserId
->>>>>>> 987e58b103fd17e11d60df8a7f81cc15c7203335
 }
