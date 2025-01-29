@@ -1,8 +1,7 @@
 import axios from "axios";
 import { createvehicleUri, createVehicleBusinessUri, findBusinessGovVehicleUri, findUserVehicleUri } from "./Uri";
 
-
-const createVehicle = async(
+const createVehicle = async (
     vehicleRegisterId,
     vehicleEngineNo,
     model,
@@ -12,7 +11,6 @@ const createVehicle = async(
     fuelId,
     token
 ) => {
-
     let data = JSON.stringify({
         "vehicleRegisterId": vehicleRegisterId,
         "vehicleEngineNo": vehicleEngineNo,
@@ -21,7 +19,7 @@ const createVehicle = async(
         "ownerId": OwnerId,
         "vehicleClassId": vehicleClassId,
         "fuelId": fuelId
-    })
+    });
 
     let config = {
         "method": 'post',
@@ -31,19 +29,24 @@ const createVehicle = async(
             'Authorization': `Bearer ${token}`
         },
         "data": data
-    }
+    };
 
-    try{
+    try {
         const response = await axios.request(config);
         return response.data;
-    }catch (err){
+    } catch (err) {
         console.log(err);
         return null;
     }
+};
+
 
 }
 
-const createBusinessGovVehicle = async(
+
+
+const createBusinessGovVehicle = async (
+
     vehicleRegisterId,
     vehicleEngineNo,
     model,
@@ -53,7 +56,6 @@ const createBusinessGovVehicle = async(
     fuelId,
     token
 ) => {
-
     let data = JSON.stringify({
         "vehicleRegisterId": vehicleRegisterId,
         "vehicleEngineNo": vehicleEngineNo,
@@ -62,7 +64,7 @@ const createBusinessGovVehicle = async(
         "ownerId": OwnerId,
         "vehicleClassId": vehicleClassId,
         "fuelId": fuelId
-    })
+    });
 
     let config = {
         "method": 'post',
@@ -72,41 +74,39 @@ const createBusinessGovVehicle = async(
             'Authorization': `Bearer ${token}`
         },
         "data": data
-    }
+    };
 
-    try{
+    try {
         let response = await axios.request(config);
         return response.data;
-    }catch (err){
+    } catch (err) {
         console.log(err);
         return null;
     }
+};
 
-}
-
-const findVehicleByBusinessId = async(businessId,token) => {
-
+const findVehicleByBusinessId = async (businessId, token) => {
     let url = `${findBusinessGovVehicleUri}/${businessId}`;
 
-    let config =  {
+    let config = {
         "method": 'get',
         "url": url,
         "headers": {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
         }
-    }
+    };
 
-    try{
+    try {
         let response = await axios.request(config);
         return response.data;
-    }catch(e){
+    } catch (e) {
         console.log(e);
         return null;
     }
-}
+};
 
-const findVehicleByUserId = async(userId,token) => {
+const findVehicleByUserId = async (userId, token) => {
     let url = `${findUserVehicleUri}/${userId}`;
 
     let config = {
@@ -115,17 +115,17 @@ const findVehicleByUserId = async(userId,token) => {
         "headers": {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
-            }
+        }
+    };
 
-    }
-
-    try{
+    try {
         let response = await axios.request(config);
         return response.data;
-    }catch(err){
+    } catch (err) {
         console.log(err);
         return null;
     }
+
 }
 
 const findVehicleByVehicleId = async(vehicleId,token) => {
@@ -151,13 +151,15 @@ const findVehicleByVehicleId = async(vehicleId,token) => {
 
 
 
-
-
-
 export {
     createVehicle,
     createBusinessGovVehicle,
     findVehicleByBusinessId,
+
     findVehicleByUserId,
     findVehicleByVehicleId
 }
+
+    findVehicleByUserId
+};
+
