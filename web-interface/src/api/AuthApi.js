@@ -3,6 +3,8 @@ import { userAuthUri, administratorAuthUri, businessGovAuthUri, fuelStationAuthU
 
 const userAuthentication = async(mobile, password) => {
 
+    
+
     let data = JSON.stringify({
         "mobile": mobile,
         "password": password
@@ -98,6 +100,7 @@ const fuelStationAuthentication = async(fuelStationRegisterId,password) => {
         console.log(err);
         return null;
     }
+   
 }
 
 export {
