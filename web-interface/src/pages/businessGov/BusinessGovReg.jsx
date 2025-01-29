@@ -3,7 +3,7 @@ import {Button, Input, Flex, Typography} from "antd";
 import { toast, ToastContainer } from "react-toastify";
 import { createBusinessGov, businessGovOtpVerification } from "../../api/businessGov";
 import { useNavigate } from "react-router-dom";
-
+import '../../style/BusinessGovReg.css';
 
 const { Title } = Typography;
 
