@@ -1,9 +1,5 @@
 import axios from "axios";
-<<<<<<< HEAD
-import { createvehicleUri } from "./Uri";
-=======
 import { createvehicleUri, createVehicleBusinessUri, findBusinessGovVehicleUri, findUserVehicleUri } from "./Uri";
->>>>>>> 987e58b103fd17e11d60df8a7f81cc15c7203335
 
 
 const createVehicle = async(
@@ -47,11 +43,6 @@ const createVehicle = async(
 
 }
 
-<<<<<<< HEAD
-
-export {
-    createVehicle
-=======
 const createBusinessGovVehicle = async(
     vehicleRegisterId,
     vehicleEngineNo,
@@ -137,6 +128,27 @@ const findVehicleByUserId = async(userId,token) => {
     }
 }
 
+const findVehicleByVehicleId = async(vehicleId,token) => {
+    let url = `${createvehicleUri}/${vehicleId}`;
+
+    let config = {
+        "method": 'get',
+        "url": url,
+        "headers": {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+            }
+    }
+
+    try{
+        let response = await axios.request(config);
+        return response.data;
+    }catch(error){
+        console.log(error);
+        return null;
+    }
+}
+
 
 
 
@@ -146,6 +158,6 @@ export {
     createVehicle,
     createBusinessGovVehicle,
     findVehicleByBusinessId,
-    findVehicleByUserId
->>>>>>> 987e58b103fd17e11d60df8a7f81cc15c7203335
+    findVehicleByUserId,
+    findVehicleByVehicleId
 }
