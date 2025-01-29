@@ -1,10 +1,37 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { QRCode, Space, Button } from 'antd';
+import { findVehicleByVehicleId } from '../api/Vehicle';
+import "../style/RegVehicle.css"
 
 const RegVehicle = () => {
     const { vehicleId } = useParams();
     const qrCodeRef = useRef(null); 
+    const [vehicle, setVehicle] = useState({});
+    const [token, setToken] = useState("");
+
+    const fetchVehicle = async() => {
+        if(token && vehicleId){
+            const response = await findVehicleByVehicleId(vehicleId, token);
+            console.log(response);
+            if(response){
+                setVehicle(response.data);
+            }
+        }
+    }
+
+    useEffect(()=> {
+        const token = localStorage.getItem("userAccessToken");
+        setToken(token);
+        if(!token){
+           const token = localStorage.getItem("businessAccessToken");
+           setToken(token);
+        }  
+    },[])
+
+    useEffect(()=>{
+        fetchVehicle();
+    },[token,vehicleId]);
 
     const handleDownload = () => {
         const canvas = document.createElement('canvas');
@@ -40,20 +67,23 @@ const RegVehicle = () => {
     };
 
     return (
-        <>
-            <h1>National Fuel Pass</h1>
-            <Space direction="vertical" size="large">
-                <div ref={qrCodeRef}>
-                    <QRCode
-                        value={vehicleId}
-                        size={200}
-                        color="green"
-                    />
+        <>  
+            
+            <div className="reg-vehicle-container">
+                <h1 className="reg-vehicle-header">National Fuel Pass</h1>
+                <label className="reg-vehicle-label">Vehicle Register No: {vehicle.vehicleRegisterId}</label> <br />
+                <label className="reg-vehicle-label">Model: {vehicle.model}</label>
+
+                <div className="qr-code-container" ref={qrCodeRef}>
+                    <QRCode value={vehicleId} size={200} color="green" />
                 </div>
-                <Button type="primary" onClick={handleDownload}>
+
+                <button className="download-btn" onClick={handleDownload}>
                     Download QR Code
-                </Button>
-            </Space>
+                </button>
+            </div>
+
+            
         </>
     );
 };
