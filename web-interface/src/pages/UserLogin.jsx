@@ -1,88 +1,73 @@
 import { useState } from "react";
-import { Button, Input } from 'antd';
+import { Button, Input } from "antd";
 import { userAuthentication } from "../api/AuthApi";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-
+import "../style/UserLogin.css";  // Import the CSS file
 
 const UserLogin = () => {
-
     const navigate = useNavigate();
     const [mobile, setMobile] = useState("");
     const [password, setPassword] = useState("");
 
-    const [error, setError] = useState();
-
-    const userLogin = async() => {
-        setError(false);
-
-        if(mobile === "" || mobile === null){
-            setError(true);
-            return
-        }
-        if(password === "" || password === null){
-            setError(true);
-            return
+    const userLogin = async () => {
+        if (!mobile || !password) {
+            toast.error("Please enter both mobile number and password");
+            return;
         }
 
-        if(!error){
-            try {
-                // Send data to the API
-                const res = await userAuthentication(mobile,password)
-                console.log(res);
-                
-                
-                if (res.statusCode === 200) {
-                    toast.info("User created successfully");
-                    
+        try {
+            // Send data to the API
+            const res = await userAuthentication(mobile, password);
+            console.log(res);
 
-                    localStorage.setItem("userAccessToken", res.accessToken);
-                    localStorage.setItem("userData",JSON.stringify(res.data));
+            if (res.statusCode === 200) {
+                toast.success("User logged in successfully");
 
-                    navigate("/vehicleRegister");
+                localStorage.setItem("userAccessToken", res.accessToken);
+                localStorage.setItem("userData", JSON.stringify(res.data));
 
-                } else {
-                    toast.error("username or password is invalied");
-                    return
-                }
-            } catch (err) {
-                toast.error("API request failed");
-                console.error(err);
+                navigate("/vehicleRegister");
+            } else {
+                toast.error("Invalid username or password");
             }
-            
+        } catch (err) {
+            toast.error("API request failed");
+            console.error(err);
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> 987e58b103fd17e11d60df8a7f81cc15c7203335
-    }
-
+    };
 
     return (
-        <>
+        <div className="login-container">
+            <div className="login-box">
+                <h1>User Login</h1>
 
-        <h1>User Login</h1>
+                <Input
+                    placeholder="Mobile"
+                    value={mobile}
+                    onChange={(e) => setMobile(e.target.value)}
+                />
+                <Input
+                    placeholder="Password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
 
-            <Input
-                placeholder="Mobile"
-                value={mobile}
-                onChange={(e) => setMobile(e.target.value)}
-            />
-            <Input
-                placeholder="Password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
+                <Button type="primary" onClick={userLogin}>
+                    Login
+                </Button>
 
-            <Button type="primary" onClick={userLogin}>
-                Login
-            </Button>
-
+                <Button type="primary" className="register-btn" onClick={() => navigate("/userRegister")}>
+                    Register
+                </Button>
+            </div>
             <ToastContainer />
-        </>
-    )
-}
+        </div>
+    );
+};
+
+
 
 
 export default UserLogin;
