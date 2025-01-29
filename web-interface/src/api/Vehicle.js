@@ -40,7 +40,13 @@ const createVehicle = async (
     }
 };
 
+
+}
+
+
+
 const createBusinessGovVehicle = async (
+
     vehicleRegisterId,
     vehicleEngineNo,
     model,
@@ -119,11 +125,41 @@ const findVehicleByUserId = async (userId, token) => {
         console.log(err);
         return null;
     }
-};
+
+}
+
+const findVehicleByVehicleId = async(vehicleId,token) => {
+    let url = `${createvehicleUri}/${vehicleId}`;
+
+    let config = {
+        "method": 'get',
+        "url": url,
+        "headers": {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+            }
+    }
+
+    try{
+        let response = await axios.request(config);
+        return response.data;
+    }catch(error){
+        console.log(error);
+        return null;
+    }
+}
+
+
 
 export {
     createVehicle,
     createBusinessGovVehicle,
     findVehicleByBusinessId,
+
+    findVehicleByUserId,
+    findVehicleByVehicleId
+}
+
     findVehicleByUserId
 };
+
