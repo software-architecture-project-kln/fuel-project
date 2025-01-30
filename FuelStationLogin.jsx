@@ -11,5 +11,20 @@ const FuelStationLogin = () => {
     const [fuelStationRegisterId, setFuelStationRegisterId] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState();
-    
+
+    };
+
+    const validation = () => {
+        setError(false);
+
+        if (fuelStationRegisterId === "") {
+           
+            toast.error("Registration ID is required");
+            return;
+        }
+        if (password === "") {
+           
+            toast.error("Password is required");
+            return;
+        }
     };
