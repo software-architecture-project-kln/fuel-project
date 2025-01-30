@@ -18,12 +18,12 @@ const FuelStationLogin = () => {
         setError(false);
 
         if (fuelStationRegisterId === "") {
-           
+            setError(true);
             toast.error("Registration ID is required");
             return;
         }
         if (password === "") {
-           
+            setError(true);
             toast.error("Password is required");
             return;
         }
