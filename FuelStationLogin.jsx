@@ -7,5 +7,9 @@ import "../../style/FuelStationLogin.css";  // Import the CSS file
 
 
 const FuelStationLogin = () => {
-   
+    const navigate = useNavigate();
+    const [fuelStationRegisterId, setFuelStationRegisterId] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState();
+    
     };
