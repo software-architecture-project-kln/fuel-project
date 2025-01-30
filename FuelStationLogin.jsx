@@ -44,3 +44,33 @@ const FuelStationLogin = () => {
             }
         }
     };
+
+    return (
+        <div className="login-container">
+            <div className="login-box">
+                <h1>Fuel Station Login</h1>
+
+                <Input
+                    placeholder="Fuel Station Register ID"
+                    value={fuelStationRegisterId}
+                    onChange={(e) => setFuelStationRegisterId(e.target.value)}
+                />
+                <Input
+                    placeholder="Password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+
+                <Button type="primary" onClick={handleLogin}>Login</Button>
+                <Button type="primary" className="register-btn" onClick={() => navigate("/fuelStationReg")}>
+                    Register
+                </Button>
+
+                <ToastContainer />
+            </div>
+        </div>
+    );
+};
+
+export default FuelStationLogin;
