@@ -26,3 +26,30 @@ const AdministratorLogin = () => {
             }
         }
     }
+
+    return (
+        <>
+        <h1>Administrator Login</h1>
+        <div className="container">
+            <Input
+                placeholder="Username"
+                value={administratorUsername}
+                onChange={(e) => setAdministratorUsername(e.target.value)}
+            />
+            <Input
+                placeholder="Password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
+
+            <Button type="primary" onClick={administratorAuth}>
+                Login
+            </Button>
+        </div>
+        <ToastContainer />
+        </>
+    )
+}
+
+export default AdministratorLogin;
