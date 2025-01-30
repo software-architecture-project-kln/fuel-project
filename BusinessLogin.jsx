@@ -47,3 +47,41 @@ const BusinessLogin = () => {
 
     return (
         <>
+
+<div className="login-container">
+        <div className="login-box">
+            <h1>Business Login</h1>
+
+            <Input
+                className="ant-input"
+                placeholder="Business Gov Reg No"
+                value={businessGovernmentRegNo}
+                onChange={(e) => setBusinessGovernmentRegNo(e.target.value)}
+            />
+            <Input
+                className="ant-input"
+                placeholder="Password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
+
+            <Button className="ant-btn-primary" onClick={businessLogin}>
+                Login
+            </Button>
+
+            <br />
+
+            <Button className="register-btn" onClick={() => navigate("/businessGovReg")}>
+                Register Business
+            </Button>
+
+            <ToastContainer />
+        </div>
+    </div>
+</>
+        
+    )
+}
+
+export default BusinessLogin;
