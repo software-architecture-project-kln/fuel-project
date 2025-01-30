@@ -71,6 +71,6 @@ const FuelStationLogin = () => {
             </div>
         </div>
     );
-};
+}; //here error
 
 export default FuelStationLogin;
