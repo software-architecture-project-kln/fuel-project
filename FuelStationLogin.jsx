@@ -28,3 +28,19 @@ const FuelStationLogin = () => {
             return;
         }
     };
+
+    const handleLogin = async () => {
+        validation();
+
+        if (!error) {
+            const response = await fuelStationAuthentication(fuelStationRegisterId, password);
+            console.log(response);
+            if (response) {
+                localStorage.setItem("fuelStationAccessToken", response.accessToken);
+                localStorage.setItem("fuelStationData", JSON.stringify(response.data));
+                navigate("/fuelStation/dashboard");
+            } else {
+                toast.error("Invalid Registration ID or Password");
+            }
+        }
+    };
