@@ -1,24 +1,18 @@
-import React from 'react';
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import { getAllFuel } from "../api/Fuel";
 import { toast, ToastContainer } from "react-toastify";
 import { getAllVehicleClasses } from "../api/VehicleClasses";
 import { Button, Input, DatePicker, Radio, Flex } from 'antd';
-import '../style/VehicleRegister.css'
+import '../style/VehicleRegister.css';
 import { createVehicle } from "../api/Vehicle";
 import { useNavigate } from "react-router-dom";
 
-
 const VehicleRegister = () => {
-
     const navigate = useNavigate();
-
     const [fuel, setFuel] = useState([]);
     const [vehicleClasses, SetVehicleClasses] = useState([]);
-
     const [token, setToken] = useState("");
     const [user, setUser] = useState();
-
     const [vehicleRegisterId, setVehicleRegisterId] = useState("");
     const [vehicleEngineNo, setVehicleEngineNo] = useState("");
     const [model, setModel] = useState("");
@@ -26,88 +20,38 @@ const VehicleRegister = () => {
     const [ownerId, setOwnerId] = useState("");
     const [vehicleClassId, setVehicleClassId] = useState();
     const [fuelId, setFuelId] = useState();
-
     const [error, setError] = useState();
 
     const vehicleNames = {
         "A": "Bike",
-        "A1": "car"
-        
-    }
+        "A1": "Car"
+    };
 
-    // fetch the fuel data
-
-    const fuelDetails = async(token) => {
-
+    const fuelDetails = async (token) => {
         const response = await getAllFuel(token);
+        if (response) setFuel(response.data);
+    };
 
-        console.log(response.data);
-
-        if(response){
-            setFuel(response.data);
-            
-        }
-        
-    }
-
-    // fetch the vehicleClasses
-    const AllVehicleClasses = async(token) => {
+    const AllVehicleClasses = async (token) => {
         const response = await getAllVehicleClasses(token);
+        if (response) SetVehicleClasses(response.data);
+    };
 
-        console.log(response.data);
-
-        if(response){
-            SetVehicleClasses(response.data);
-        }
-    }
-
-    const registerVehicle = async() => {
+    const registerVehicle = async () => {
         setError(false);
 
-        if(vehicleRegisterId === ""){
+        if (!vehicleRegisterId || !vehicleEngineNo || !model || !fuelId || !vehicleClassId) {
             setError(true);
-            toast.error("vehicle register id is required");
+            toast.error("All fields are required");
             return;
         }
 
-        if(vehicleEngineNo === ""){
-            setError(true);
-            toast.error("vehicle engine No is required");
-            return;
-        }
-
-        if(model === ""){
-            setError(true);
-            toast.error("vehicle model is required");
-            return;
-        }
-
-        // if(yearOfManufacture === ""){
-        //     setError(true);
-        //     toast.error("vehicle manufacture date is required");
-        //     return;
-        // }
-
-        if(fuelId=== null){
-            setError(true);
-            toast.error("vehicle fuel is required");
-            return;
-        }
-
-        if(vehicleClassId === null){
-            setError(true);
-            toast.error("vehicle class required");
-            return;
-        }
-
-        // set the owner id
-        if(user){
+        if (user) {
             const data = JSON.parse(user);
-            setOwnerId(data.userId)
+            setOwnerId(data.userId);
         }
 
-        
-        if(ownerId && (!error) && token){
+        if (ownerId && !error && token) {
             try {
                 const response = await createVehicle(
                     vehicleRegisterId,
@@ -119,99 +63,81 @@ const VehicleRegister = () => {
                     fuelId,
                     token
                 );
-                
-                if (response){
-                    toast.success("Vehicle created successfully");
-                    
-                    navigate("/regVehicle/"+response.data.vehicleId);
+
+                if (response) {
+                    toast.success("Vehicle registered successfully");
+                    navigate("/regVehicle/" + response.data.vehicleId);
                 }
-            }catch (error){
-                console.log(error);
+            } catch (error) {
                 toast.error("Failed to create vehicle");
             }
         }
-    }
+    };
 
-
-    useEffect(()=>{
+    useEffect(() => {
         const token = localStorage.getItem("userAccessToken");
         setToken(token);
-        console.log(token);
+        setUser(localStorage.getItem("userData"));
 
-        const user = localStorage.getItem("userData");
-        console.log(user);
-        setUser(user);
-
-        if(token){
+        if (token) {
             fuelDetails(token);
             AllVehicleClasses(token);
         }
-    },[])
+    }, []);
 
-    
+    return (
+        <div className="vehicle-register-container">
+            <h1>Vehicle Register</h1>
 
-    return(
-        <>
-        <h1>Vehicle Register</h1>
-
-        <Input
+            <Input
                 placeholder="Vehicle Reg Id"
                 value={vehicleRegisterId}
                 onChange={(e) => setVehicleRegisterId(e.target.value)}
             />
 
-        <Input
+            <Input
                 placeholder="Vehicle Engine No"
                 value={vehicleEngineNo}
                 onChange={(e) => setVehicleEngineNo(e.target.value)}
             />
-        <Input
+
+            <Input
                 placeholder="Model"
                 value={model}
                 onChange={(e) => setModel(e.target.value)}
             />
 
-        <DatePicker placeholder="Year Of Manufacture"  onChange={(e) => setYearOfManufacture(e)}/>
+            {/* <DatePicker placeholder="Year Of Manufacture" onChange={(e) => setYearOfManufacture(e)} /> */}
 
-            <Flex>
-                <Radio.Group
-                    onChange={(e)=> {setVehicleClassId(e.target.value)}}
-                >
-                    {
-                        vehicleClasses.map((item,index)=> {
-                            return(
-                                <Radio key={index} value={item.vehicleClassId}>{vehicleNames[item.vehicleClassName]}</Radio>
-                                )
-                        })
-                    }
-
+            <div className="radio-group">
+                <h3>Select Vehicle Class:</h3>
+                <Radio.Group onChange={(e) => setVehicleClassId(e.target.value)}>
+                    {vehicleClasses.map((item, index) => (
+                        <Radio key={index} value={item.vehicleClassId}>
+                            {vehicleNames[item.vehicleClassName]}
+                        </Radio>
+                    ))}
                 </Radio.Group>
-            </Flex>
+            </div>
 
-            <Flex>
-                <Radio.Group 
-                    onChange={(e)=>{setFuelId(e.target.value)}}
-                >
-                    
-                    {
-                        fuel.map((item, index) => {
-                            return(
-                                <Radio key={index} value={item.fuelId}>{item.fuelName}</Radio>
-                                )
-                                })
-                    }
-
+            <div className="radio-group">
+                <h3>Select Fuel Type:</h3>
+                <Radio.Group onChange={(e) => setFuelId(e.target.value)}>
+                    {fuel.map((item, index) => (
+                        <Radio key={index} value={item.fuelId}>
+                            {item.fuelName}
+                        </Radio>
+                    ))}
                 </Radio.Group>
-            </Flex>
-        
-        <br></br>
-        <Button onClick={registerVehicle}>
-            Register Vehicle
-        </Button>
-        
-        <ToastContainer />
-        </>
-    )
-}
+            </div>
+
+            <Button className="register-btn" onClick={registerVehicle}>
+                Register Vehicle
+            </Button>
+
+            <ToastContainer />
+        </div>
+    );
+};
 
 export default VehicleRegister;

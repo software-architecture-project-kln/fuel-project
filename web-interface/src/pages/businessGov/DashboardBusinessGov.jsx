@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-import React from "react";
-=======
 import React, { useEffect, useState } from "react";
 import { Button, Modal, Input, Flex, Radio } from "antd";
 import { getAllFuel } from "../../api/Fuel";
@@ -10,16 +7,10 @@ import { createBusinessGovVehicle } from "../../api/Vehicle";
 import { useNavigate } from "react-router-dom";
 import BusinessGovVehicleRegShow from "./BusinessGovVehicleRegShow";
 import BusinessLogout from "./BusinessLogout";
->>>>>>> 987e58b103fd17e11d60df8a7f81cc15c7203335
 
 
 
 const DashboardBusinessGov = () => {
-<<<<<<< HEAD
-    return (
-        <>
-        <h1>Business Government Dashboard</h1>
-=======
 
     const navigate = useNavigate();
 
@@ -221,7 +212,6 @@ const DashboardBusinessGov = () => {
             }
         </div>
         <ToastContainer />
->>>>>>> 987e58b103fd17e11d60df8a7f81cc15c7203335
         </>
     )
 }
