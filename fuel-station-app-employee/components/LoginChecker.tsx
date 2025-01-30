@@ -18,12 +18,12 @@ const LoginChecker: React.FC<LoginCheckerProps> = ({ children }) => {
                 setIsLogin(true);
             } else {
                 setIsLogin(false);
-                router.navigate("/login");
+                router.navigate("/");
             }
         } catch (error) {
             console.error("Error checking login status:", error);
             setIsLogin(false);
-            router.navigate("/login");
+            router.navigate("/");
         }
     };
 
