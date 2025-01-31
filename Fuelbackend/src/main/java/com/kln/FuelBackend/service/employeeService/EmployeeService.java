@@ -5,14 +5,11 @@ import com.kln.FuelBackend.dataTransferObject.request.employeeRequestDTO.Employe
 import com.kln.FuelBackend.dataTransferObject.response.CustomApiResponse;
 import com.kln.FuelBackend.dataTransferObject.response.employeeResponseDTO.EmployeeResponseDTO;
 import com.kln.FuelBackend.dataTransferObject.response.vehicleResponseDTO.VehicleResponseDTO;
-import com.kln.FuelBackend.entity.Employee;
-import com.kln.FuelBackend.entity.FuelStation;
-import com.kln.FuelBackend.entity.Vehicle;
+import com.kln.FuelBackend.entity.*;
 import com.kln.FuelBackend.enums.OwnerType;
 import com.kln.FuelBackend.exception.NotFoundException;
-import com.kln.FuelBackend.repositoryDAO.EmployeeRepository;
-import com.kln.FuelBackend.repositoryDAO.FuelStationRepository;
-import com.kln.FuelBackend.repositoryDAO.VehicleRepository;
+import com.kln.FuelBackend.repositoryDAO.*;
+import com.kln.FuelBackend.service.notificationService.NotificationServiceRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -31,11 +28,25 @@ public class EmployeeService implements EmployeeServiceRepository{
 
     private final FuelStationRepository fuelStationRepository;
 
+    private final UserRepository userRepository;
 
-    public EmployeeService(EmployeeRepository employeeRepository, VehicleRepository vehicleRepository, FuelStationRepository fuelStationRepository) {
+    private final BusinessGovernmentRepository businessGovernmentRepository;
+
+    private final NotificationServiceRepository notificationServiceRepository;
+
+
+    public EmployeeService(EmployeeRepository employeeRepository,
+                           VehicleRepository vehicleRepository,
+                           FuelStationRepository fuelStationRepository, UserRepository userRepository,
+                           BusinessGovernmentRepository businessGovernmentRepository,
+                           NotificationServiceRepository notificationServiceRepository
+    ) {
         this.employeeRepository = employeeRepository;
         this.vehicleRepository = vehicleRepository;
         this.fuelStationRepository = fuelStationRepository;
+        this.userRepository = userRepository;
+        this.businessGovernmentRepository = businessGovernmentRepository;
+        this.notificationServiceRepository = notificationServiceRepository;
     }
 
     @Override
@@ -211,11 +222,20 @@ public class EmployeeService implements EmployeeServiceRepository{
         );
 
         Double maxFuelCapacityPerWeek;
+        String mobile;
         // check the vehicle owner type and get max capacity
         if(vehicle.getOwnerType() == OwnerType.User){
              maxFuelCapacityPerWeek = vehicle.getVehicleClasses().getMaxFuelCapacityPerWeek();
+             User user = userRepository.findById(vehicle.getOwnerId()).orElseThrow(
+                     ()-> new NotFoundException("user not found")
+             );
+             mobile = user.getMobile();
         }else{
             maxFuelCapacityPerWeek = vehicle.getVehicleClasses().getMaxFuelCapacityPerWeekForBusinessGov();
+            BusinessGovernment businessGovernment = businessGovernmentRepository.findById(vehicle.getOwnerId()).orElseThrow(
+                    () -> new NotFoundException("business not found")
+            );
+            mobile = businessGovernment.getMobile();
         }
         //System.out.println(maxFuelCapacityPerWeek);
 
@@ -227,15 +247,20 @@ public class EmployeeService implements EmployeeServiceRepository{
                 currentFuelCapacity,
                 fuelCapacity
         );
+        Double available = maxFuelCapacityPerWeek - newFuelCap;
         // update currentFuelCapacity
         //System.out.println(newFuelCap);
         vehicle.setCurrentFuelCapacity(newFuelCap);
         vehicleRepository.save(vehicle);
-
+        notificationServiceRepository.sendNotificationAvailableCapacityForOwner(
+                mobile,
+                fuelCapacity,
+                available
+        );
         return new ResponseEntity<>(
                 new CustomApiResponse(
                         HttpStatus.OK.value(),
-                        "vehicle fuel capacity updated sucessfully",
+                        "vehicle fuel capacity updated successfully",
                         new VehicleResponseDTO(
                                 vehicle.getVehicleId(),
                                 vehicle.getVehicleRegisterId(),
@@ -245,7 +270,8 @@ public class EmployeeService implements EmployeeServiceRepository{
                                 vehicle.getCurrentFuelCapacity(),
                                 vehicle.getOwnerId(),
                                 vehicle.getVehicleClasses().getVehicleClassId(),
-                                vehicle.getFuel().getFuelId()
+                                vehicle.getFuel().getFuelId(),
+                                vehicle.getOwnerType()
                         )
 
                 ),
