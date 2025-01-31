@@ -39,3 +39,18 @@ const UserLogin = () => {
         }
    
     };
+
+    return (
+        <div className="login-container">
+            <div className="login-box">
+               
+            </div>
+            <ToastContainer />
+        </div>
+    );
+};
+
+
+
+
+export default UserLogin;
