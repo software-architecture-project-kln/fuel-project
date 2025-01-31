@@ -40,8 +40,9 @@ const UserLogin = () => {
    
     };
 
+    // login interface
     return (
-        <div className="login-container">
+        <div className="login-container">     
             <div className="login-box">
                 <h1>User Login</h1>
 
@@ -69,8 +70,5 @@ const UserLogin = () => {
         </div>
     );
 };
-
-
-
 
 export default UserLogin;
