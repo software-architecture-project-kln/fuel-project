@@ -3,6 +3,8 @@ package com.kln.FuelBackend.dataTransferObject.response.vehicleResponseDTO;
 import com.kln.FuelBackend.entity.BusinessGovernment;
 import com.kln.FuelBackend.entity.User;
 import com.kln.FuelBackend.entity.VehicleClasses;
+import com.kln.FuelBackend.enums.OwnerType;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -18,6 +20,14 @@ public class VehicleResponseDTO {
 
     private Date yearOfManufacture;
 
+    public OwnerType getOwnerType() {
+        return ownerType;
+    }
+
+    public void setOwnerType(OwnerType ownerType) {
+        this.ownerType = ownerType;
+    }
+
     private Double currentFuelCapacity;
 
     private Integer ownerId;
@@ -26,6 +36,8 @@ public class VehicleResponseDTO {
     private Integer vehicleClassId;
 
     private Integer fuelId;
+
+    private OwnerType ownerType;
 
     public VehicleResponseDTO(){}
 
@@ -38,7 +50,8 @@ public class VehicleResponseDTO {
             Double currentFuelCapacity,
             Integer ownerId,
             Integer vehicleClassId,
-            Integer fuelId
+            Integer fuelId,
+            OwnerType ownerType
     ) {
         this.vehicleId = vehicleId;
         this.vehicleRegisterId = vehicleRegisterId;
@@ -49,6 +62,7 @@ public class VehicleResponseDTO {
         this.ownerId = ownerId;
         this.vehicleClassId = vehicleClassId;
         this.fuelId = fuelId;
+        this.ownerType = ownerType;
     }
 
     public UUID getVehicleId() {

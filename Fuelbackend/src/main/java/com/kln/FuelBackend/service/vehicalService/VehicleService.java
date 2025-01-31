@@ -7,6 +7,7 @@ import com.kln.FuelBackend.entity.*;
 import com.kln.FuelBackend.enums.OwnerType;
 import com.kln.FuelBackend.exception.NotFoundException;
 import com.kln.FuelBackend.repositoryDAO.*;
+import com.kln.FuelBackend.rmv.repositoryDAO.RegisterVehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,21 +30,30 @@ public class VehicleService implements VehicleServiceRepository{
 
     private final BusinessGovernmentRepository businessGovernmentRepository;
 
+    private final RegisterVehicleRepository registerVehicleRepository;
+
     @Autowired
     public VehicleService(
             VehicleRepository vehicleRepository,
             VehicleClassesRepository vehicleClassesRepository,
-            UserRepository userRepository, FuelRepository fuelRepository, BusinessGovernmentRepository businessGovernmentRepository
+            UserRepository userRepository, FuelRepository fuelRepository, BusinessGovernmentRepository businessGovernmentRepository, RegisterVehicleRepository registerVehicleRepository
     ) {
         this.vehicleRepository = vehicleRepository;
         this.vehicleClassesRepository = vehicleClassesRepository;
         this.userRepository = userRepository;
         this.fuelRepository = fuelRepository;
         this.businessGovernmentRepository = businessGovernmentRepository;
+        this.registerVehicleRepository = registerVehicleRepository;
     }
 
     @Override
     public ResponseEntity<?> createVehicle(VehicleRequestDTO vehicleRequestDTO) {
+        registerVehicleRepository.findByVehicleRegisterIdAndVehicleEngineNo(
+                vehicleRequestDTO.getVehicleRegisterId(),
+                vehicleRequestDTO.getVehicleEngineNo()
+        ).orElseThrow(
+                () -> new NotFoundException("registerId does not exits")
+        );
         User user = userRepository.findById(vehicleRequestDTO.getOwnerId()).orElseThrow(
                 () -> new NotFoundException("userId not found")
         );
@@ -76,7 +86,8 @@ public class VehicleService implements VehicleServiceRepository{
                 savedVehicle.getCurrentFuelCapacity(),
                 savedVehicle.getOwnerId(),
                 savedVehicle.getVehicleClasses().getVehicleClassId(),
-                savedVehicle.getFuel().getFuelId()
+                savedVehicle.getFuel().getFuelId(),
+                savedVehicle.getOwnerType()
         );
         return new ResponseEntity<>(
                 new CustomApiResponse(
@@ -129,7 +140,8 @@ public class VehicleService implements VehicleServiceRepository{
                                 savedVehicle.getCurrentFuelCapacity(),
                                 savedVehicle.getOwnerId(),
                                 savedVehicle.getVehicleClasses().getVehicleClassId(),
-                                savedVehicle.getFuel().getFuelId()
+                                savedVehicle.getFuel().getFuelId(),
+                                savedVehicle.getOwnerType()
                         )
                 ),
                 HttpStatus.OK
@@ -150,7 +162,8 @@ public class VehicleService implements VehicleServiceRepository{
                 vehicle.getCurrentFuelCapacity(),
                 vehicle.getOwnerId(),
                 vehicle.getVehicleClasses().getVehicleClassId(),
-                vehicle.getFuel().getFuelId()
+                vehicle.getFuel().getFuelId(),
+                vehicle.getOwnerType()
         );
         return new ResponseEntity<>(
                 new CustomApiResponse(
@@ -184,7 +197,8 @@ public class VehicleService implements VehicleServiceRepository{
                                     vehicle.getCurrentFuelCapacity(),
                                     vehicle.getOwnerId(),
                                     vehicle.getVehicleClasses().getVehicleClassId(),
-                                    vehicle.getFuel().getFuelId()
+                                    vehicle.getFuel().getFuelId(),
+                                    vehicle.getOwnerType()
                             )
                     );
                 }
@@ -229,7 +243,8 @@ public class VehicleService implements VehicleServiceRepository{
                                     vehicle.getCurrentFuelCapacity(),
                                     vehicle.getOwnerId(),
                                     vehicle.getVehicleClasses().getVehicleClassId(),
-                                    vehicle.getFuel().getFuelId()
+                                    vehicle.getFuel().getFuelId(),
+                                    vehicle.getOwnerType()
                             )
                     );
                 }
@@ -264,7 +279,8 @@ public class VehicleService implements VehicleServiceRepository{
                                     vehicle.getCurrentFuelCapacity(),
                                     vehicle.getOwnerId(),
                                     vehicle.getVehicleClasses().getVehicleClassId(),
-                                    vehicle.getFuel().getFuelId()
+                                    vehicle.getFuel().getFuelId(),
+                                    vehicle.getOwnerType()
                             )
                     );
                 }

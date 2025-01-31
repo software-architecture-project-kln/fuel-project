@@ -17,8 +17,6 @@ public class BusinessGovernment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer businessGovernmentId;
 
-    
-
     @Column(nullable = false,unique = true)
     private String businessGovernmentRegNo;
 
