@@ -41,7 +41,7 @@ const createVehicle = async (
 };
 
 
-}
+
 
 
 
@@ -155,11 +155,9 @@ export {
     createVehicle,
     createBusinessGovVehicle,
     findVehicleByBusinessId,
-
     findVehicleByUserId,
     findVehicleByVehicleId
 }
 
-    findVehicleByUserId
-};
+
 
