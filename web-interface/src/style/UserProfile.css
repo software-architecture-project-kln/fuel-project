@@ -1,26 +1,87 @@
-
 /* UserProfile.css */
+body {
+    margin: 0;
+}
 
+/* Header Styles */
 .header {
-    background-color:black;
-    padding: 20px;
+    background-color: #150037; /* Dark purple background */
+    padding: 15px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: white;
 }
 
+/* Left side: Logo + Title */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between logo and title */
+}
+
+/* Logo Styling */
+.logo-icon {
+    width: 40px; /* Adjust the size */
+    height: 40px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.logo-icon:hover {
+    transform: scale(1.1); /* Slight zoom effect */
+}
+
+/* Title Styling */
 .header h1 {
     margin: 0;
     font-size: 24px;
+    font-weight: bold;
+    color: white;
 }
 
+/* Right side: User Name + Logout */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 25px; /* Space between username and logout button */
+}
+
+/* Username Styling */
+.user-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Logout Button */
+.logout-btn {
+    background-color: #d9d9d9; /* Light gray background */
+    border-radius: 10px;
+    padding: 5px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.logout-btn:hover {
+    background-color: #bfbfbf; /* Darker gray on hover */
+}
+
+/* Page Container */
 .container {
     padding: 20px;
+    background-color: #d9d9d9; /* Light gray background */
 }
 
+/* QR Container */
 .qr-container {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+}
+
+.vehi-button{
+    margin: auto;
 }
