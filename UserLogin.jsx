@@ -43,7 +43,27 @@ const UserLogin = () => {
     return (
         <div className="login-container">
             <div className="login-box">
-               
+                <h1>User Login</h1>
+
+                <Input
+                    placeholder="Mobile"
+                    value={mobile}
+                    onChange={(e) => setMobile(e.target.value)}
+                />
+                <Input
+                    placeholder="Password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+
+                <Button type="primary" onClick={userLogin}>
+                    Login
+                </Button>
+
+                <Button type="primary" className="register-btn" onClick={() => navigate("/userRegister")}>
+                    Register
+                </Button>
             </div>
             <ToastContainer />
         </div>
