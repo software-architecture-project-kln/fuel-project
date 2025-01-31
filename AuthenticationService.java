@@ -43,3 +43,47 @@ public class AuthenticationService implements AuthenticationServiceRepository{
         this.authenticationManager = authenticationManager;
         this.administratorRepository = administratorRepository;
     }
+
+
+    @Override
+    public ResponseEntity<?> userLogin(UserLoginRequestDTO userLoginRequestDTO) {
+        User user = userRepository.findByMobile(userLoginRequestDTO.getMobile()).orElseThrow(
+                () -> new UnauthorizedAccessException("username or password incorrect")
+        );
+
+        String token= "";
+        if (
+                user != null &&
+                    user.getVerifyMobile() &&
+                        user.getPassword().equals(userLoginRequestDTO.getPassword())
+        ) {
+//            authenticationManager.authenticate(
+//                    new UsernamePasswordAuthenticationToken(
+//                            userLoginRequestDTO.getMobile(),
+//                            userLoginRequestDTO.getPassword()
+//                    )
+//            );
+            // create a jwt token
+            token = jwtUtility.generateToken(user.getMobile());
+        } else {
+            throw new UnauthorizedAccessException("username or password incorrect");
+        }
+
+
+        return new ResponseEntity<>(
+                new LoginResponseDTO(
+                        HttpStatus.OK.value(),
+                        "user login successfully",
+                        token,
+                        new UserResponseDTO(
+                                user.getUserId(),
+                                user.getF_name(),
+                                user.getL_name(),
+                                user.getEmail(),
+                                user.getMobile(),
+                                user.getVerifyMobile()
+                        )
+                ),
+                HttpStatus.OK
+        );
+    }
