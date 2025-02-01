@@ -1,7 +1,41 @@
 import React from "react";
-import { Button, Input } from 'antd';
+import axios from 'axios'
+import { useState } from 'react'
+import './App.css'
 
-const FuelStationReg = () => {
+function App() {
+
+  const[values, setValues] = useState({
+    //fuelStationName:'',
+    fuelStationRegisterId:'',
+    fuelStationOwnerName:'',
+    email:'',
+    password:'',
+  })
+
+  const handleChanges = (e) => {
+    setValues({...values, [e.target.name]:e.target.value})
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    axios.post('url',values)
+    .then((response) => {
+      console.log('Form submitted successfully:', response.data);
+      alert('Registration successful!');
+    })
+    .catch((error) => {
+      console.error('Error during form submission:', error);
+      alert('Failed to register. Please try again.');
+    });
+  };
+
+  const ResetFun = () => {
+   setValues({fuelStationName:'', fuelStationRegisterId:'',fuelStationOwnerName:'',email:'', password:''})
+  }
+
+
+//const FuelStationReg = () => {
     return (
                 
             <div className="container">
@@ -42,4 +76,4 @@ const FuelStationReg = () => {
     )
 }
 
-export default FuelStationReg;
+export default FuelStationReg
