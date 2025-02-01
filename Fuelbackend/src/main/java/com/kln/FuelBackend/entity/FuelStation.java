@@ -32,10 +32,12 @@ public class FuelStation {
     @Column(nullable = false)
     private String password;
 
+    //default constructor required by JPA
     public FuelStation(){
 
     }
 
+    //constructor for creating a new fuel station
     public FuelStation(
             String fuelStationRegisterId,
             String fuelStationOwnerName,
@@ -48,6 +50,7 @@ public class FuelStation {
         this.password = password;
     }
 
+    //constructor with id for existing fuel station
     public FuelStation(
             UUID fuelStationId,
             String fuelStationRegisterId,
@@ -62,6 +65,7 @@ public class FuelStation {
         this.password = password;
     }
 
+    //getter and setter methods
     public UUID getFuelStationId() {
         return fuelStationId;
     }
