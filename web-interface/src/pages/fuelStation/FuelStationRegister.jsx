@@ -1,7 +1,7 @@
 import React from "react";
 import axios from 'axios'
 import { useState } from 'react'
-import './App.css'
+import '../style/fuelStationRegister.css'; 
 
 function App() {
 
