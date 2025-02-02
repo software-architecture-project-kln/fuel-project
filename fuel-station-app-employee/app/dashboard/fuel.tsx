@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, StyleSheet, Modal, TextInput } from "react-native";
+import { View, Text, Button, StyleSheet, Modal, TextInput, TouchableOpacity } from "react-native";
 import { CameraView, useCameraPermissions, BarcodeScanningResult } from "expo-camera";
 import LoginChecker from "@/components/LoginChecker";
 import { fuelgetAll } from "@/api/fuel";
@@ -9,7 +9,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UUID } from "crypto";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { vehicleClassGetAll } from "@/api/vehicleClass";
-
 
 const Fuel: React.FC = () => {
     const [permission, requestPermission] = useCameraPermissions();
@@ -29,8 +28,6 @@ const Fuel: React.FC = () => {
     const [fuelCapacity, setFuelCapacity] = useState<number>(0);
     const [maxFuelCapacity, setMaxFuelCapacity] = useState<number>(0);
     const [error, setError] = useState<string>("");
-
-    
 
     const getMaxFuelCapacity = () => {
         if (vehicleClasses && vehicle) {
@@ -71,14 +68,12 @@ const Fuel: React.FC = () => {
         const storedToken = await AsyncStorage.getItem("employeeAccessToken");
         if (storedToken) setToken(storedToken);
         const empId = await AsyncStorage.getItem("employeeId");
-        console.log(empId);
         if (empId) setEmployeeId(empId);
     };
 
     const fetchFuel = async () => {
         if (token) {
             const response = await fuelgetAll(token);
-            console.log(response);
             if (response) setFuels(response.data);
         }
     };
@@ -86,7 +81,6 @@ const Fuel: React.FC = () => {
     const fetchVehicleClasses = async () => {
         if (token) {
             const response = await vehicleClassGetAll(token);
-            console.log(response);
             if (response) setVehicleClasses(response.data);
         }
     };
@@ -115,7 +109,6 @@ const Fuel: React.FC = () => {
                 setVehicleId(scannedValue as UUID);
                 if (token) {
                     const response = await vehicleFindById(scannedValue, token);
-                    console.log(response)
                     if (response) {
                         setVehicle(response.data);
                         setModalVisibal(true);
@@ -147,9 +140,7 @@ const Fuel: React.FC = () => {
 
     const handleUpdate = async() => {
         if(vehicleId && fuelCapacity && employeeId && token){
-            console.log(employeeId);
             const response = await update_fueling_vehicle(employeeId,vehicleId,fuelCapacity,token);
-            console.log(response);
             if(response){
                 setVehicle(null);
                 setVehicleId(null);
@@ -158,7 +149,6 @@ const Fuel: React.FC = () => {
                 setError("");
                 setMaxFuelCapacity(0);
                 setModalVisibal(false);
-                
             }
         }
     }
@@ -168,7 +158,7 @@ const Fuel: React.FC = () => {
             <SafeAreaView style={styles.container}>
                 <LoginChecker>
                     <Text style={styles.title}>Fueling Service</Text>
-
+                    
                     {!scannedData ? (
                         <View style={styles.cameraContainer}>
                             <CameraView
@@ -223,8 +213,12 @@ const Fuel: React.FC = () => {
                                         onChangeText={setPrice}
                                     />
                                     {!error ? <Text>Total Fueling Liters: {fuelCapacity}</Text> : <Text style={styles.error}>{error}</Text>}
-                                    <Button title="Update" onPress={handleUpdate} />
-                                    <Button title="Close" onPress={handleClose} />
+                                    <TouchableOpacity style={styles.button} onPress={handleUpdate}>
+                                        <Text style={styles.buttonText}>Update</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={[styles.button, styles.secondaryButton]} onPress={handleClose}>
+                                        <Text style={styles.buttonText}>Close</Text>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
                         </Modal>
@@ -257,6 +251,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#ccc",
         justifyContent: "center",
         alignItems: "center",
+        marginBottom: 20,
     },
     scannedDataContainer: {
         alignItems: "center",
@@ -267,6 +262,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 5,
         elevation: 3,
+        marginBottom: 20,
     },
     scannedText: {
         fontSize: 18,
@@ -343,6 +339,44 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: "bold",
     },
+    button: {
+        backgroundColor: "#0388A6", // Button background color
+        paddingVertical: 10,
+        width: "60%",
+        paddingHorizontal: 40,
+        borderRadius: 10, // Rounded corners
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: 20,
+        elevation: 3, // Shadow effect for Android
+        shadowColor: "#000", // Shadow for iOS
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+    },
+    secondaryButton: {
+        backgroundColor: "red", // Secondary button color
+    },
+    buttonText: {
+        fontSize: 18,
+        fontWeight: "bold",
+        color: "#fff", // White text color
+    },
+    Button:{
+        backgroundColor: "#0388A6", // Button background color
+        paddingVertical: 15,
+        width: "60%",
+        paddingHorizontal: 40,
+        borderRadius: 10, // Rounded corners
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: 20,
+        elevation: 3, // Shadow effect for Android
+        shadowColor: "#000", // Shadow for iOS
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+    }
 });
 
 export default Fuel;
