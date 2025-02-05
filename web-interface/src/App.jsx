@@ -1,6 +1,6 @@
 
 import {BrowserRouter,Routes, Route} from 'react-router-dom'
-import Home from './pages/UserRegister';
+import Home from './pages/Home';
 import UserRegister from './pages/UserRegister';
 import VehicleRegister from './pages/VehicleRegister';
 import UserLogin from './pages/UserLogin';
@@ -34,9 +34,9 @@ function App() {
           <Route path="/userLogin" element={<UserLogin/>} />
 
           <Route path="/regVehicle/:vehicleId" element={
-            <VehicleProtectedPage>
+            
                 <RegVehicle/>
-            </VehicleProtectedPage>   
+              
           } />
 
           <Route path="/userProfile" element={
@@ -66,7 +66,7 @@ function App() {
           } />
 
           <Route path='/fuelStation' element={<FuelStationLogin />} />
-          <Route path='fuelStationReg' element={<FuelStationReg />} />
+          <Route path='/fuelStationReg' element={<FuelStationReg />} />
           <Route path='/fuelStation/dashboard' element={
             <FuelStationProtectPage>
               <FuelStationDashboard/>
