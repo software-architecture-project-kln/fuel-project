@@ -24,7 +24,15 @@ const VehicleRegister = () => {
 
     const vehicleNames = {
         "A": "Bike",
-        "A1": "Car"
+        "A1": "Car",
+        "B" : "B",
+        "B1": "B1",
+        "C": "C",
+        "C1": "C1",
+        "D": "D",
+        "D1": "D1",
+        "J": "J",
+        "G": "G"
     };
 
     const fuelDetails = async (token) => {
@@ -73,6 +81,10 @@ const VehicleRegister = () => {
             }
         }
     };
+
+    const userProfileNavigation = () => {
+        navigate("/userProfile");
+    }
 
     useEffect(() => {
         const token = localStorage.getItem("userAccessToken");
@@ -133,6 +145,10 @@ const VehicleRegister = () => {
 
             <Button className="register-btn" onClick={registerVehicle}>
                 Register Vehicle
+            </Button>
+
+            <Button onClick={userProfileNavigation}>
+                User Profile
             </Button>
 
             <ToastContainer />
