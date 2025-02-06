@@ -5,6 +5,10 @@ const domain:string  = "http://localhost:8080/api";
 const employee_login:string = `${domain}/v1/auth/employeeAuth`;
 const updating_fuel_capacity: string = `${domain}/v1/employee/fuel`;
 
+// Employee update
+
+const employee_uri: string = `${domain}/v1/employee`;
+
 
 // Vehicle
 const vehicle_uri : string = `${domain}/v1/vehicle`;
@@ -21,5 +25,6 @@ export {
     updating_fuel_capacity,
     vehicle_uri,
     fuel_uri,
-    vehicle_class_uri
+    vehicle_class_uri,
+    employee_uri
 }

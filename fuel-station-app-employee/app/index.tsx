@@ -1,100 +1,74 @@
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { TextInput, Button, StyleSheet, Alert, View, Text } from 'react-native';
-import { useState } from "react";
-import { employee_authentication } from "@/api/login-api/login";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React from "react";
+import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
-const Login: React.FC = () => {
+const Index: React.FC = () => {
     const router = useRouter();
-    const [username, setUsername] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-
-    const handleLogin = async () => {
-        if (username !== '' && password !== '') {
-            try {
-                const response: AuthResponse = await employee_authentication(username, password);
-                console.log(response);
-
-                // Save the employee data in AsyncStorage
-                await AsyncStorage.setItem('employeeAccessToken', response.accessToken);
-                await AsyncStorage.setItem('employeeId', response.data.employeeId);
-                await AsyncStorage.setItem('employeeUsername', response.data.employeeUsername);
-                await AsyncStorage.setItem('employeeEmail', response.data.employeeEmail);
-                await AsyncStorage.setItem('fuelStationId', response.data.fuelStationId);
-                await AsyncStorage.setItem("isLogin", 'true');
-
-                router.navigate('/dashboard/fuel');
-            } catch (error) {
-                console.error(error);
-                alert("Incorrect credentials");
-            }
-        } else {
-            Alert.alert('Error', 'Please fill in all fields', [{ text: 'OK' }]);
-        }
-    };
-
     return (
         <SafeAreaProvider>
             <SafeAreaView style={styles.container}>
-                <View style={styles.form}>
-                    <Text style={styles.title}>Login</Text>
-                    <TextInput
-                        placeholder="Username"
-                        style={styles.input}
-                        onChangeText={setUsername}
-                        value={username}
-                    />
-                    <TextInput
-                        placeholder="Password"
-                        style={styles.input}
-                        onChangeText={setPassword}
-                        value={password}
-                        secureTextEntry={true} // Hides the password input
-                    />
-                    <Button title="Login" onPress={handleLogin} />
+                <View style={styles.innerContainer}>
+                    <Image source={require("../assets/images/FuelIQ.png")} style={styles.logo} />
+                    <Text style={styles.greeting}>Your Fuel, Your Way</Text>
+                    {/* Custom styled Get Started button */}
+                    <TouchableOpacity 
+                        style={styles.getStartedButton}
+                        onPress={() => router.push("/login")}
+                    >
+                        <Text style={styles.buttonText}>Get Started</Text>
+                    </TouchableOpacity>
                 </View>
             </SafeAreaView>
         </SafeAreaProvider>
     );
 };
 
-export default Login;
+export default Index;
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 20,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#f8f8f8', // Adjust background color if needed
     },
-    form: {
+    innerContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
         width: '100%',
-        maxWidth: 400,
-        backgroundColor: 'white',
-        padding: 20,
-        borderRadius: 10,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
+        maxWidth: 400, // Limit the width for larger screens
     },
-    title: {
+    logo: {
+        width: 300, // Adjust the logo size
+        height: 200, // Adjust the logo height
+        resizeMode: 'contain',
+        marginBottom: 10, // Add margin for spacing
+    },
+    greeting: {
         fontSize: 24,
         fontWeight: 'bold',
-        textAlign: 'center',
+        color: '#333', // Change text color to match the design
         marginBottom: 20,
     },
-    input: {
-        height: 50,
-        borderColor: 'gray',
-        borderWidth: 1,
-        borderRadius: 5,
-        marginBottom: 15,
-        paddingHorizontal: 10,
-        backgroundColor: '#fff',
+    getStartedButton: {
+        backgroundColor: '#0388A6', // Button background color
+        paddingVertical: 15,
+        paddingHorizontal: 40,
+        borderRadius: 25, // Rounded corners
+        alignItems: 'center', // Center text inside button
+        justifyContent: 'center',
+        marginTop: 20,
+        elevation: 3, // Shadow effect on Android
+        shadowColor: '#000', // Shadow color for iOS
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+    },
+    buttonText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#fff', // White text color
     },
 });
-
