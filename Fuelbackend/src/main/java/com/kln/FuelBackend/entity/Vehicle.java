@@ -34,7 +34,7 @@ public class Vehicle {
     @Column(nullable = false)
     private Date yearOfManufacture;
 
-    @Column(nullable = true, columnDefinition = "double default 0")
+    @Column(nullable = true, columnDefinition = "DOUBLE DEFAULT 0")
     @Min(0)
     private Double currentFuelCapacity;
 
@@ -46,13 +46,6 @@ public class Vehicle {
     @Column(nullable = false)
     private Integer ownerId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id", referencedColumnName = "userId", nullable = true)
-//    private User user;
-
-//    @ManyToOne
-//    @JoinColumn(name= "business_government_id",referencedColumnName = "businessGovernmentId", nullable = true)
-//    private BusinessGovernment businessGovernment;
 
 
     @ManyToOne
@@ -62,6 +55,13 @@ public class Vehicle {
     @ManyToOne
     @JoinColumn(name = "fuel_id", referencedColumnName = "fuelId", nullable = false)
     private Fuel fuel;
+
+    @PrePersist
+    public void prePersist(){
+        if(currentFuelCapacity == null){
+            currentFuelCapacity = 0.0;
+        }
+    }
 
     public Vehicle(){}
 

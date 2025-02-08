@@ -149,7 +149,7 @@ const BusinessGovReg = () => {
                         <Flex gap="middle" align="flex-start" vertical>
                             <Title level={5}>Enter OTP</Title>
 
-                            <Input.OTP type="number" length={5} {...sharedProps}/>
+                            <Input.OTP type="number" length={6} {...sharedProps}/>
                         </Flex>
                         <Button onClick={otpVerificationBusinessGov}>Vefify</Button>
                     </div>

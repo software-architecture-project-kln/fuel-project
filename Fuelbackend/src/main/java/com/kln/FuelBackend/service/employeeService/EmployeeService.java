@@ -275,7 +275,7 @@ public class EmployeeService implements EmployeeServiceRepository{
         Double newFuelCap = FuelCalculation.calculateFuel(
                 maxFuelCapacityPerWeek,
                 currentFuelCapacity,
-                fuelCapacity
+                FuelCalculation.round(fuelCapacity,2)
         );
         Double available = maxFuelCapacityPerWeek - newFuelCap;
         // update currentFuelCapacity

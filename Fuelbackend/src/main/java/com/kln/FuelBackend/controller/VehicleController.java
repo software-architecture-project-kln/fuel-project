@@ -59,6 +59,10 @@ public class VehicleController {
         return vehicleServiceRepository.findVehicleByUserId(ownerId);
     }
 
+    @PatchMapping("{administratorId}")
+    public ResponseEntity<?> resetAllVehicleCurrentFuelCapacity(@PathVariable Integer administratorId){
+        return vehicleServiceRepository.resetAllVehicleCurrentFuelCapacity(administratorId);
+    }
 
 
 }

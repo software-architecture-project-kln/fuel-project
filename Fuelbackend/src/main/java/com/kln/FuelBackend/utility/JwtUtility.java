@@ -2,14 +2,19 @@ package com.kln.FuelBackend.utility;
 
 import com.kln.FuelBackend.exception.JwtValidationException;
 import io.jsonwebtoken.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @Component
 public class JwtUtility {
-    private final String SECRET_KEY = "adaefaefaefaeaefa79239r2fknahsidufhapidfhOIHFPQOIhefOIHFPqfasofnaoif";
-    private final long EXPIRATION_TIME = 1000 * 60 * 60;
+
+    @Value("${jwt.secret.key}")
+    private String SECRET_KEY;
+
+    @Value("${jwt.expiration.time}")
+    private long EXPIRATION_TIME;
 
     public String generateToken(String username) {
         return Jwts.builder()

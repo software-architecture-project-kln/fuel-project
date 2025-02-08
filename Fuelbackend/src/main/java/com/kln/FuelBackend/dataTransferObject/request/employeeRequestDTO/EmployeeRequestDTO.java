@@ -21,12 +21,18 @@ public class EmployeeRequestDTO {
     @NotBlank(message = "fuelStationId is required")
     private UUID fuelStationId;
 
-    public EmployeeRequestDTO(String employeeUsername, String password, String employeeEmail, UUID fuelStationId) {
+    public EmployeeRequestDTO(String employeeUsername,String password, String employeeEmail, UUID fuelStationId) {
         this.employeeUsername = employeeUsername;
         this.password = password;
         this.employeeEmail = employeeEmail;
         this.fuelStationId = fuelStationId;
     }
+
+//    public EmployeeRequestDTO(String employeeUsername, String employeeEmail, UUID fuelStationId) {
+//        this.employeeUsername = employeeUsername;
+//        this.employeeEmail = employeeEmail;
+//        this.fuelStationId = fuelStationId;
+//    }
 
     public String getEmployeeUsername() {
         return employeeUsername;

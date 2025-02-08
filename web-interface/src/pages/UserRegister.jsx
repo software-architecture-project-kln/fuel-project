@@ -102,6 +102,8 @@ const UserRegister = () => {
                 toast.success("User verified successfully");
                 await delay(2000);
                 navigate("/userLogin")
+            }else{
+                toast.error("Error verifying user");
             }
         }else{
             toast.error("Please enter OTP or missing User ID");
@@ -153,7 +155,7 @@ const UserRegister = () => {
                 regSuccess && (
                     <div className="container">
                         <Flex gap="middle" align="flex-start" vertical>
-                            <Title level={5}>Enter OTP</Title>
+                            <Title level={6}>Enter OTP</Title>
                     
                             <Input.OTP  length={5} {...sharedProps}/>
                         </Flex>

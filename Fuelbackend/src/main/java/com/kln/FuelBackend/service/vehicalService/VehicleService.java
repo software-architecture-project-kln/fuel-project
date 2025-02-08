@@ -32,11 +32,13 @@ public class VehicleService implements VehicleServiceRepository{
 
     private final RegisterVehicleRepository registerVehicleRepository;
 
+    private final AdministratorRepository administratorRepository;
+
     @Autowired
     public VehicleService(
             VehicleRepository vehicleRepository,
             VehicleClassesRepository vehicleClassesRepository,
-            UserRepository userRepository, FuelRepository fuelRepository, BusinessGovernmentRepository businessGovernmentRepository, RegisterVehicleRepository registerVehicleRepository
+            UserRepository userRepository, FuelRepository fuelRepository, BusinessGovernmentRepository businessGovernmentRepository, RegisterVehicleRepository registerVehicleRepository, AdministratorRepository administratorRepository
     ) {
         this.vehicleRepository = vehicleRepository;
         this.vehicleClassesRepository = vehicleClassesRepository;
@@ -44,6 +46,7 @@ public class VehicleService implements VehicleServiceRepository{
         this.fuelRepository = fuelRepository;
         this.businessGovernmentRepository = businessGovernmentRepository;
         this.registerVehicleRepository = registerVehicleRepository;
+        this.administratorRepository = administratorRepository;
     }
 
     @Override
@@ -290,6 +293,23 @@ public class VehicleService implements VehicleServiceRepository{
                         HttpStatus.OK.value(),
                         null,
                         vehicleResponseDTOList
+                ),
+                HttpStatus.OK
+        );
+    }
+
+    @Override
+    public ResponseEntity<?> resetAllVehicleCurrentFuelCapacity(Integer administratorId) {
+        administratorRepository.findById(administratorId).orElseThrow(
+                () -> new NotFoundException("administrator Not found")
+        );
+
+        vehicleRepository.resetCurrentCapacityAllVehicle();
+        return new ResponseEntity<>(
+                new CustomApiResponse(
+                        HttpStatus.OK.value(),
+                        "vehicles current fuel capacity update successfully",
+                        null
                 ),
                 HttpStatus.OK
         );
