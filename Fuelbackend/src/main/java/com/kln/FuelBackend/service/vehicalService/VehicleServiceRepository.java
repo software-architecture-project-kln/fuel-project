@@ -24,4 +24,6 @@ public interface VehicleServiceRepository {
     public ResponseEntity<?> findVehicleByBusinessID(Integer ownerId);
 
     public ResponseEntity<?> findVehicleByUserId(Integer ownerId);
+
+    public ResponseEntity<?> resetAllVehicleCurrentFuelCapacity(Integer administratorId);
 }

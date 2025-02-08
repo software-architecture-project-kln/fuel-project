@@ -26,8 +26,16 @@ public class EmployeeController {
     }
 
     @PutMapping("/{employeeId}")
-    public ResponseEntity<?> updateEmployee(@PathVariable UUID employeeId,@RequestBody EmployeeRequestDTO employeeRequestDTO){
-        return employeeServiceRepository.updateEmployee(employeeId,employeeRequestDTO);
+    public ResponseEntity<?> updateEmployee(@PathVariable UUID employeeId,@RequestBody Map<String,Object> reqBody){
+        String employeeUsername = reqBody.get("employeeUsername").toString();
+        String employeeEmail = reqBody.get("employeeEmail").toString();
+        return employeeServiceRepository.updateEmployee(employeeId,employeeUsername,employeeEmail);
+    }
+
+    @PutMapping("/password/{employeeId}")
+    public ResponseEntity<?> changeEmployeePassword(@PathVariable UUID employeeId, @RequestBody Map<String,Object> reqBody){
+        String employeePassword = reqBody.get("password").toString();
+        return employeeServiceRepository.updateEmployeePassword(employeeId,employeePassword);
     }
 
     @PatchMapping("/{employeeId}")

@@ -1,5 +1,8 @@
 package com.kln.FuelBackend.calculation;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class FuelCalculation  {
 
     public static Double calculateFuel (
@@ -13,5 +16,12 @@ public class FuelCalculation  {
         }else{
             throw new RuntimeException("fuel capacity is out of range");
         }
+    }
+
+    public static Double round(Double value, int place){
+        if(value == null){
+            return null;
+        }
+        return BigDecimal.valueOf(value).setScale(place, RoundingMode.HALF_UP).doubleValue();
     }
 }

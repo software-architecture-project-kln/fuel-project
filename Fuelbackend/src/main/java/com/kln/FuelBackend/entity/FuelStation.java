@@ -5,7 +5,6 @@ import jakarta.validation.constraints.Email;
 
 import java.util.UUID;
 
-//Entity class for fuel station
 @Entity
 @Table(
         name = "fuel_station",
@@ -15,35 +14,28 @@ import java.util.UUID;
 )
 public class FuelStation {
 
-    //primary key
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(updatable = false,nullable = false)
     private UUID fuelStationId;
 
-    //fuel station registraion ID
     @Column(nullable = false,unique = true,updatable = false)
     private String fuelStationRegisterId;
 
-    //name
     @Column(nullable = false)
     private String fuelStationOwnerName;
 
-    //email
     @Column(nullable = false,unique = true)
     @Email
     private String fuelStationEmail;
 
-    //password
     @Column(nullable = false)
     private String password;
 
-    //Default constructor required for JPA
     public FuelStation(){
 
     }
 
-    //Constructor for creating a FuelStation without a predefined ID
     public FuelStation(
             String fuelStationRegisterId,
             String fuelStationOwnerName,
@@ -56,7 +48,6 @@ public class FuelStation {
         this.password = password;
     }
 
-    //Constructor for creating a FuelStation with a predefined ID
     public FuelStation(
             UUID fuelStationId,
             String fuelStationRegisterId,
@@ -71,7 +62,6 @@ public class FuelStation {
         this.password = password;
     }
 
-    // Getters and Setters
     public UUID getFuelStationId() {
         return fuelStationId;
     }
