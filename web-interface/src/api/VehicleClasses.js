@@ -20,13 +20,13 @@ const getAllVehicleClasses = async(token) => {
     }
 }
 
-const updateFuelCapacity = async(maxFuelCapacityPerWeek,administratorId,token) => {
+const updateFuelCapacity = async(maxFuelCapacityPerWeek,vehicleClassId,token) => {
 
     let data = JSON.stringify({
         "maxFuelCapacityPerWeek": maxFuelCapacityPerWeek
     })
 
-    let url = `${updateMaxFuelCapacityPerWeekUri}/${administratorId}`
+    let url = `${updateMaxFuelCapacityPerWeekUri}/${vehicleClassId}`
 
     let config = {
         "method": "PUT",
@@ -47,12 +47,12 @@ const updateFuelCapacity = async(maxFuelCapacityPerWeek,administratorId,token) =
     }
 }
 
-const updateFuelCapacityBusinessGov = async(maxFuelCapacityPerWeekForBusinessGov,administratorId,token) => {
+const updateFuelCapacityBusinessGov = async(maxFuelCapacityPerWeekForBusinessGov,vehicleClassId,token) => {
     let data = JSON.stringify({
         "maxFuelCapacityPerWeekForBusinessGov": maxFuelCapacityPerWeekForBusinessGov
     })
 
-    let url = `${updatemaxFuelBusinessGovUri}/${administratorId}`
+    let url = `${updatemaxFuelBusinessGovUri}/${vehicleClassId}`
 
     let config = {
         "method": "PUT",

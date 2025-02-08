@@ -1,191 +1,126 @@
-import React, { useState ,useEffect} from "react";
-import { getAllVehicleClasses } from "../../api/VehicleClasses";
+import React, { useState, useEffect } from "react";
+import { getAllVehicleClasses, updateFuelCapacity, updateFuelCapacityBusinessGov } from "../../api/VehicleClasses";
 import { Table, Button, Modal, Input } from "antd";
 import { ToastContainer, toast } from "react-toastify";
-import { updateFuelCapacity, updateFuelCapacityBusinessGov } from "../../api/VehicleClasses";
-
+import "react-toastify/dist/ReactToastify.css";
 
 const ShowVehicleClasses = () => {
-
     const [vehicleClasses, setVehicleClasses] = useState([]);
-
-    const [token, setToken] = useState();
-    const [administrator, setAdministrator] = useState();
-
-    const [vehicleClassId, setVehiclassId] = useState();
+    const [token, setToken] = useState(null);
+    const [administrator, setAdministrator] = useState(null);
+    const [vehicleClassId, setVehiclassId] = useState(null);
     const [vehicleClassName, setVehicleClassName] = useState("");
-    const [maxFuelCapacityPerWeek, setMaxFuelCapacityPerWeek] = useState();
-    const [maxFuelCapacityPerWeekForBusinessGov, setMaxFuelCapacityPerWeekForBusinessGov] = useState();
+    const [maxFuelCapacityPerWeek, setMaxFuelCapacityPerWeek] = useState(null);
+    const [maxFuelCapacityPerWeekForBusinessGov, setMaxFuelCapacityPerWeekForBusinessGov] = useState(null);
+    const [showModal, setShowModal] = useState(false);
 
-    const [showModel, setShowModel] = useState(false);
+    useEffect(() => {
+        setToken(localStorage.getItem("accessToken"));
+        setAdministrator(localStorage.getItem("administratorData"));
+    }, []);
+
+    useEffect(() => {
+        if (token) retrieveVehicleClasses();
+    }, [token]);
 
     const retrieveVehicleClasses = async () => {
         if (token) {
             const response = await getAllVehicleClasses(token);
             if (response) {
-                const VehicleClassesWithKey = response.data.map((vehicleClass) => ({
-                    ...vehicleClass, 
-                    key: vehicleClass.vehicleClassId 
-                }));
-                console.log(VehicleClassesWithKey)
-                setVehicleClasses(VehicleClassesWithKey);
+                setVehicleClasses(response.data.map(vc => ({ ...vc, key: vc.vehicleClassId })));
             }
         }
     };
-    
 
     const handleUpdate = (data) => {
-        console.log(data);
         setVehiclassId(data.vehicleClassId);
         setVehicleClassName(data.vehicleClassName);
         setMaxFuelCapacityPerWeek(data.maxFuelCapacityPerWeek);
         setMaxFuelCapacityPerWeekForBusinessGov(data.maxFuelCapacityPerWeekForBusinessGov);
-        setShowModel(true);
-    }
-
-    const handleModalCancel = () => {
-        setMaxFuelCapacityPerWeek();
-        setMaxFuelCapacityPerWeekForBusinessGov();
-        setVehicleClassName("");
-        setVehiclassId();
-        setShowModel(false);
-        
+        setShowModal(true);
     };
 
-    const handleOk = () => {
-        setMaxFuelCapacityPerWeek();
-        setMaxFuelCapacityPerWeekForBusinessGov();
-        setVehicleClassName("");
-        setVehiclassId();
-        setShowModel(false);
-    }
+    const handleModalCancel = () => {
+        setShowModal(false);
+    };
 
     const handleUpdateFuelCapacity = async () => {
         if (token && administrator) {
             try {
-                const data = JSON.parse(administrator);
-                const response = await updateFuelCapacity(maxFuelCapacityPerWeek, data.administratorId, token);
-                console.log(response);
-                if (response) {
-                    toast.success("Updated successfully.");
-                    
-                    const updatedVehicleClasses = vehicleClasses.map((vehicleClass) =>
-                        vehicleClass.vehicleClassId === vehicleClassId
-                            ? { ...vehicleClass, maxFuelCapacityPerWeek: maxFuelCapacityPerWeek }
-                            : vehicleClass
-                    );
-    
-                    setVehicleClasses(updatedVehicleClasses);
-                }
+                const adminData = JSON.parse(administrator);
+                await updateFuelCapacity(maxFuelCapacityPerWeek, vehicleClassId, token);
+                toast.success("Updated successfully.");
+                setVehicleClasses(prev => prev.map(vc => vc.vehicleClassId === vehicleClassId ? { ...vc, maxFuelCapacityPerWeek } : vc));
             } catch (error) {
-                console.error("Error updating fuel capacity:", error);
                 toast.error("Failed to update.");
             }
         }
     };
-    
 
     const handleUpdateFuelCapacityBusinessGov = async () => {
         if (token && administrator) {
             try {
-                const data = JSON.parse(administrator);
-                const response = await updateFuelCapacityBusinessGov(
-                    maxFuelCapacityPerWeekForBusinessGov,
-                    data.administratorId,
-                    token
-                );
-                console.log(response);
-                if (response) {
-                    toast.success("Updated successfully.");
-                    
-                    // Ensure each vehicleClass is returned properly
-                    const updatedVehicleClasses = vehicleClasses.map((vehicleClass) =>
-                        vehicleClass.vehicleClassId === vehicleClassId
-                            ? { ...vehicleClass, maxFuelCapacityPerWeekForBusinessGov: maxFuelCapacityPerWeekForBusinessGov }
-                            : vehicleClass
-                    );
-    
-                    setVehicleClasses(updatedVehicleClasses);
-                }
+                const adminData = JSON.parse(administrator);
+                await updateFuelCapacityBusinessGov(maxFuelCapacityPerWeekForBusinessGov,vehicleClassId, token);
+                toast.success("Updated successfully.");
+                setVehicleClasses(prev => prev.map(vc => vc.vehicleClassId === vehicleClassId ? { ...vc, maxFuelCapacityPerWeekForBusinessGov } : vc));
             } catch (error) {
-                console.error("Error updating fuel capacity:", error);
                 toast.error("Failed to update.");
             }
         }
     };
-    
-
-    
-
-    useEffect(()=> {
-        setToken(localStorage.getItem("accessToken"));
-        setAdministrator(localStorage.getItem("administratorData"));
-    },[])
-
-    useEffect(() => {
-        retrieveVehicleClasses();
-    },[token])
 
     return (
-        <>
-
-        <Table dataSource={vehicleClasses} rowKey="vehicleClassId">
+        <div style={{ padding: "20px" }}>
+            <Table dataSource={vehicleClasses} rowKey="vehicleClassId" bordered>
                 <Table.Column title="Class Id" dataIndex="vehicleClassId" key="vehicleClassId" />
                 <Table.Column title="Class Name" dataIndex="vehicleClassName" key="vehicleClassName" />
                 <Table.Column title="Max Capacity Per Week" dataIndex="maxFuelCapacityPerWeek" key="maxFuelCapacityPerWeek" />
-                <Table.Column title="Max Capacity Per Week For business" dataIndex="maxFuelCapacityPerWeekForBusinessGov" key="maxFuelCapacityPerWeekForBusinessGov" />
+                <Table.Column title="Max Capacity Per Week (Business)" dataIndex="maxFuelCapacityPerWeekForBusinessGov" key="maxFuelCapacityPerWeekForBusinessGov" />
                 <Table.Column
                     title="Action"
                     key="action"
-                    render={(text, record) => (
-                            <Button onClick={() => handleUpdate(record)} >Update</Button>
+                    render={(_, record) => (
+                        <Button type="primary" onClick={() => handleUpdate(record)}>Update</Button>
                     )}
                 />
-        </Table>
+            </Table>
 
-        {
-            showModel && (
-                <Modal
-                    onCancel={handleModalCancel}
-                    open={showModel}
-                    title="update fuel capacity per week"
-                    onOk={handleOk}
-                >
+            <Modal
+                open={showModal}
+                title="Update Fuel Capacity"
+                onCancel={handleModalCancel}
+                footer={null}
+            >
+                <div style={{ marginBottom: 16 }}>
+                    <label><strong>Class Name:</strong></label>
+                    <Input value={vehicleClassName} disabled style={{ marginTop: 8 }} />
+                </div>
+                <div style={{ marginBottom: 16 }}>
+                    <label><strong>Max Fuel Capacity Per Week:</strong></label>
+                    <Input
+                        type="number"
+                        value={maxFuelCapacityPerWeek}
+                        onChange={(e) => setMaxFuelCapacityPerWeek(e.target.value)}
+                        style={{ marginTop: 8 }}
+                    />
+                    <Button type="primary" onClick={handleUpdateFuelCapacity} style={{ marginTop: 8, width: "100%" }}>Update</Button>
+                </div>
+                <div style={{ marginBottom: 16 }}>
+                    <label><strong>Max Fuel Capacity Per Week (Business):</strong></label>
+                    <Input
+                        type="number"
+                        value={maxFuelCapacityPerWeekForBusinessGov}
+                        onChange={(e) => setMaxFuelCapacityPerWeekForBusinessGov(e.target.value)}
+                        style={{ marginTop: 8 }}
+                    />
+                    <Button type="primary" onClick={handleUpdateFuelCapacityBusinessGov} style={{ marginTop: 8, width: "100%" }}>Update</Button>
+                </div>
+            </Modal>
 
-                    <div style={{ marginBottom: 16 }}>
-                        <label>Class Name: </label>
-                        <Input value={vehicleClassName} disabled />
-                    </div>
-                    <div style={{ marginBottom: 16 }}>
-                        <label>maxFuelCapacityPerWeek: </label>
-                        <Input
-                            type="number"
-                            value={maxFuelCapacityPerWeek}
-                            onChange={(e) => setMaxFuelCapacityPerWeek(e.target.value)}
-                        />
-                        <Button onClick={handleUpdateFuelCapacity}>
-                            update
-                        </Button>
-                    </div>
-                    <div style={{ marginBottom: 16 }}>
-                        <label>maxFuelCapacityPerWeekForBusinessGov: </label>
-                        <Input
-                            type="number"
-                            value={maxFuelCapacityPerWeekForBusinessGov}
-                            onChange={(e) => setMaxFuelCapacityPerWeekForBusinessGov(e.target.value)}
-                        />
-                        <Button onClick={handleUpdateFuelCapacityBusinessGov}>
-                            update
-                        </Button>
-                    </div>
-
-                </Modal>
-            )
-        }
-
-        <ToastContainer />
-        </>
-    )
-}
+            <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
+        </div>
+    );
+};
 
 export default ShowVehicleClasses;

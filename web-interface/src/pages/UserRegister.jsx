@@ -21,7 +21,7 @@ const UserRegister = () => {
     const [password, setPassword] = useState("");
     const [confirm_password, setConfirm_password] = useState("");
     const [mobile, setMobile] = useState("");
-    const [error, setError] = useState();
+    const [error, setError] = useState(false);
 
     const [otp, setOtp] = useState();
     
@@ -62,11 +62,7 @@ const UserRegister = () => {
             return;
         }
 
-        if (mobile.length !== 10) {
-            toast.error("Mobile number should be 10 digits");
-            setError(true);
-            return;
-        }
+        
 
         const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!regex.test(email)) {
@@ -157,7 +153,7 @@ const UserRegister = () => {
                         <Flex gap="middle" align="flex-start" vertical>
                             <Title level={6}>Enter OTP</Title>
                     
-                            <Input.OTP  length={5} {...sharedProps}/>
+                            <Input.OTP  length={6} {...sharedProps}/>
                         </Flex>
                         <Button onClick={otpverifyUser}>Vefify</Button>
                     </div>
