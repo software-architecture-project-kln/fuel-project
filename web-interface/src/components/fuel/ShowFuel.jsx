@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button, Modal, Input } from "antd";
+import { Table, Button, Modal, Input, Popconfirm } from "antd";
 import { getAllFuel, updateFuelPrice } from "../../api/Fuel";
 import { ToastContainer, toast } from "react-toastify";
+import { resetCurrentCapacity } from "../../api/Vehicle";
 
 const ShowFuel = () => {
     const [fuels, setFuels] = useState([]);
@@ -68,6 +69,17 @@ const ShowFuel = () => {
         }
     };
 
+    const handleReset = async() =>{
+        const data = JSON.parse(administrator);
+        console.log(data.administratorId);
+        const res = await resetCurrentCapacity(data.administratorId,token);
+        if(res){
+            toast.success("Reset Successfully");
+            return;
+        }
+        toast.error("Failed to reset");
+    }
+
     return (
         <>
             <Table dataSource={fuels} rowKey="fuelId">
@@ -111,6 +123,20 @@ const ShowFuel = () => {
                     </div>
                 </Modal>
             )}
+
+            <Popconfirm 
+                title="Reset"
+                description="are you sure reset capacity"
+                okText="Yes"
+                cancelText="No"
+                onConfirm={handleReset}
+                onCancel={() => console.log("reset cansel")}
+            >
+                <Button danger>
+                    Reset for All Vehicle Current Capacity
+                </Button>
+            </Popconfirm>
+            
             <ToastContainer />
         </>
     );

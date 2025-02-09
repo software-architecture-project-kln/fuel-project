@@ -150,13 +150,35 @@ const findVehicleByVehicleId = async(vehicleId,token) => {
 }
 
 
+const resetCurrentCapacity =async(administratorId,token) => {
+    let uri = `${createvehicleUri}/${administratorId}`;
+
+    let config = {
+        "method": 'patch',
+        "url": uri,
+        "headers": {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+            }
+    }
+
+    try{
+        let response = await axios.request(config);
+        return response.data;
+    }catch (err){
+        console.log(err);
+        return null;
+    }
+}
+
 
 export {
     createVehicle,
     createBusinessGovVehicle,
     findVehicleByBusinessId,
     findVehicleByUserId,
-    findVehicleByVehicleId
+    findVehicleByVehicleId,
+    resetCurrentCapacity
 }
 
 
